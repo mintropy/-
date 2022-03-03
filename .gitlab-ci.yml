@@ -1,6 +1,9 @@
 stages:
   - build
 
+default:
+  image: ubuntu:20.04
+
 build:
   stage: build
   script:
