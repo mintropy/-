@@ -1,12 +1,11 @@
 stages:
   - build
 
-default:
-  image: ubuntu:20.04
+image:
+  name: docker/compose:latest
 
 build:
   stage: build
-  image: docker:latest
   script:
     - docker-compose build
   tags:
