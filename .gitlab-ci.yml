@@ -4,6 +4,9 @@ stages:
 image:
   name: docker/compose:latest
 
+services:
+  - docker:dind
+
 build:
   stage: build
   script:
