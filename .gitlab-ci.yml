@@ -6,6 +6,7 @@ default:
 
 build:
   stage: build
+  image: docker:latest
   script:
     - docker-compose build
   tags:
