@@ -16,17 +16,18 @@ class Flower(models.Model):
     dairies = models.ForeignKey(
         Dairy,
         on_delete=models.SET_NULL,
-        related_name='flower'
+        related_name='flower',
+        null=True
     )
-    name = models.CharField()
-    sumbol = models.CharField()
+    name = models.CharField(max_length=20)
+    sumbol = models.CharField(max_length=20)
 
 
 class Photo(models.Model):
     id = models.IntegerField(primary_key=True)
     dairies = models.ForeignKey(
         Dairy,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         related_name='photos'
     )
     photo = models.ImageField()
