@@ -10,20 +10,33 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
+import os
+
+import environ
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, 'SECRET_KEY'),
+    DB_NAME=(str, 'DB_NAME'),
+    DB_USER=(str, 'DB_USER'),
+    DB_PASSWORD=(str, 'DB_PASSWORD'),
+    DB_HOST=(str, 'localhost'),
+    DB_PORT=(str, '3306'),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -92,11 +105,11 @@ WSGI_APPLICATION = 'back.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # mysqlclient librarly 설치
-        'NAME': 'test3',       # DB 이름
-        'USER': 'root',
-        'PASSWORD': 'horang22', # 설치 시 입력한 root 비밀번호 입력
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'NAME': env('DB_NAME'),       # DB 이름
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT')
     }
 }
 
