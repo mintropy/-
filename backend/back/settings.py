@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
 
     'rest_framework',
     
@@ -84,20 +85,23 @@ WSGI_APPLICATION = 'back.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
+#         'ENGINE': 'django.db.backends.sqlite3',``
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # mysqlclient librarly 설치
-        'NAME': 'testdb',       # DB 이름
+        'NAME': 'test3',       # DB 이름
         'USER': 'root',
         'PASSWORD': 'horang22', # 설치 시 입력한 root 비밀번호 입력
         'HOST': 'localhost',
         'PORT': '3306'
     }
 }
+
+
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
@@ -142,3 +146,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+SITE_ID = 3
