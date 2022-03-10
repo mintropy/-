@@ -46,6 +46,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'rest_framework',
+    'corsheaders',
+    'drf_spectacular',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -149,3 +152,22 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Third Party Settings
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API',
+    'DESCRIPTION': 'API page',
+    'VERSION': '1.0',
+    # OTHER SETTINGS
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+        'filter': True,
+    },
+}
