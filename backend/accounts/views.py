@@ -6,6 +6,7 @@ from django.http import HttpResponse
 import environ
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from back.settings import BASE_DIR
 
@@ -62,4 +63,7 @@ def getUserInfo(reqeust):
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     }
     res = requests.get(userUrl, headers=HEADER)
-    return HttpResponse(res.text)
+    # return HttpResponse(res.text)
+    return Response(
+        tokenJson
+    )
