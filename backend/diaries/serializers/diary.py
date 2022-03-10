@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..models import Dairy
 
 
-class DairySerializer(serializers.ModelSerializer):
+class DiarySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Dairy

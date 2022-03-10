@@ -20,5 +20,5 @@ dairy_detail = DairyViewSet.as_view(
 
 urlpatterns = [
     path("diary/", dairy_list),
-    path("diary/<int:pk>/", dairy_detail),
+    path("diary/<int:diary_id>/", dairy_detail),
 ]
