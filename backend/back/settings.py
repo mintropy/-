@@ -44,10 +44,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'diaries',
 
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,7 +101,7 @@ WSGI_APPLICATION = 'back.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
+#         'ENGINE': 'django.db.backends.sqlite3',``
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
@@ -108,6 +115,9 @@ DATABASES = {
         'PORT': env('DB_PORT')
     }
 }
+
+
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
@@ -171,3 +181,5 @@ SPECTACULAR_SETTINGS = {
         'filter': True,
     },
 }
+
+SITE_ID = 3
