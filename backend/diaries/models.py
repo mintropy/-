@@ -1,8 +1,13 @@
+import uuid
 from django.db import models
 
 # Create your models here.
 class Diary(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     content = models.CharField(
         max_length=100,
         null=True,
@@ -12,7 +17,11 @@ class Diary(models.Model):
 
 
 class Flower(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     dairies = models.ForeignKey(
         Diary,
         on_delete=models.SET_NULL,
@@ -27,7 +36,11 @@ class Photo(models.Model):
     def photo_upload_path(self, instance, filename):
         return f'submission/{instance.photo.id}/{filename}'
     
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     dairies = models.ForeignKey(
         Diary,
         on_delete=models.CASCADE,
