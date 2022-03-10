@@ -1,15 +1,15 @@
 from django.urls import path
 
-from .views.diary import DairyViewSet
+from .views.diary import DiaryViewSet
 
 
-dairy_list = DairyViewSet.as_view(
+dairy_list = DiaryViewSet.as_view(
     {
         "get": "list",
         "post": "create",
     }
 )
-dairy_detail = DairyViewSet.as_view(
+dairy_detail = DiaryViewSet.as_view(
     {
         "get": "retrieve",
         "put": "update",

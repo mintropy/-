@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from ..models import Dairy
+from ..models import Diary
 
 
 class DiarySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Dairy
+        model = Diary
         fields = '__all__'

@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Dairy(models.Model):
+class Diary(models.Model):
     id = models.IntegerField(primary_key=True)
     content = models.CharField(
         max_length=100,
@@ -14,7 +14,7 @@ class Dairy(models.Model):
 class Flower(models.Model):
     id = models.IntegerField(primary_key=True)
     dairies = models.ForeignKey(
-        Dairy,
+        Diary,
         on_delete=models.SET_NULL,
         related_name='flower',
         null=True
@@ -29,7 +29,7 @@ class Photo(models.Model):
     
     id = models.IntegerField(primary_key=True)
     dairies = models.ForeignKey(
-        Dairy,
+        Diary,
         on_delete=models.CASCADE,
         related_name='photos'
     )

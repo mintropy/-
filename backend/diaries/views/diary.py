@@ -8,17 +8,17 @@ from .schema.diary import (
     diary_list_schema,
     diary_retrieve_schema
 )
-from ..models import Dairy
+from ..models import Diary
 from ..serializers.diary import DiarySerializer
 
 
-class DairyViewSet(ViewSet):
-    model = Dairy
-    queryset = Dairy.objects.all()
+class DiaryViewSet(ViewSet):
+    model = Diary
+    queryset = Diary.objects.all()
 
     @diary_list_schema
     def list(self, request):
-        diaries = Dairy.objects.all()
+        diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -31,12 +31,12 @@ class DairyViewSet(ViewSet):
 
     @diary_retrieve_schema
     def retrieve(self, request, diary_id):
-        diary = get_object_or_404(Dairy, id=diary_id)
+        diary = get_object_or_404(Diary, id=diary_id)
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, diary_id):
-        diary = get_object_or_404(Dairy, id=diary_id)
+        diary = get_object_or_404(Diary, id=diary_id)
         serializer = DiarySerializer(diary, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -44,8 +44,8 @@ class DairyViewSet(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, diary_id):
-        diary = get_object_or_404(Dairy, id=diary_id)
+        diary = get_object_or_404(Diary, id=diary_id)
         diary.delete()
-        diaries = Dairy.objects.all()
+        diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
