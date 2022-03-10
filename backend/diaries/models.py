@@ -24,10 +24,17 @@ class Flower(models.Model):
 
 
 class Photo(models.Model):
+    def photo_upload_path(self, instance, filename):
+        return f'submission/{instance.photo.id}/{filename}'
+    
     id = models.IntegerField(primary_key=True)
     dairies = models.ForeignKey(
         Dairy,
         on_delete=models.CASCADE,
         related_name='photos'
     )
-    photo = models.ImageField()
+    photo = models.ImageField(
+        upload_to=photo_upload_path,
+        null=True,
+        blank=True,
+    )
