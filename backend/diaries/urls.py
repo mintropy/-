@@ -1,10 +1,24 @@
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
-from .views import views
+
+from .views.diary import DairyViewSet
+
+
+dairy_list = DairyViewSet.as_view(
+    {
+        "get": "list",
+        "post": "create",
+    }
+)
+dairy_detail = DairyViewSet.as_view(
+    {
+        "get": "retrieve",
+        "put": "update",
+        "delete": "destroy",
+    }
+)
+
 
 urlpatterns = [
-    path('diary/', views.DairyViewSet.as_view()),
-    path('diary/<int:pk>/', views.DairyDetailViewSet.as_view()),
+    path("diary/", dairy_list),
+    path("diary/<int:pk>/", dairy_detail),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
