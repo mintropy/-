@@ -4,8 +4,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from .schema.diary import (
+    dairy_list_schema,
+    dairy_retrieve_schema
+)
 from ..models import Dairy
-from ..serializers.serializers import DairySerializer
+from ..serializers.dairy import DairySerializer
 
 
 class DairyViewSet(ViewSet):
