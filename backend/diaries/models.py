@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+import os
 
 # Create your models here.
 class Diary(models.Model):
@@ -25,7 +27,11 @@ class Flower(models.Model):
 
 class Photo(models.Model):
     def photo_upload_path(self, instance, filename):
-        return f'submission/{instance.photo.id}/{filename}'
+        date_path = timezone.now().strftime('%Y/%m/%d') 
+        name = os.path.splitext(filename)[-1].lower()   #확장자
+        return '/'.join([
+            date_path, name,
+        ])
     
     id = models.IntegerField(primary_key=True)
     dairies = models.ForeignKey(

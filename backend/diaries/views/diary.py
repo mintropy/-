@@ -49,3 +49,4 @@ class DiaryViewSet(ViewSet):
         diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
