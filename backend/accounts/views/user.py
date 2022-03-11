@@ -48,4 +48,8 @@ class AccountViewSet(ViewSet):
             "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         }
         response = requests.get(user_url, headers=headers)
+        user_info = response.text
+        user_id = user_info['id']
+        user_nickname = user_info['properties']
+        
         return HttpResponse(response.text)

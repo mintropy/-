@@ -63,6 +63,7 @@ def getUserInfo(reqeust):
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     }
     res = requests.get(userUrl, headers=HEADER)
+    print(res.text)
     # return HttpResponse(res.text)
     return Response(
         tokenJson
