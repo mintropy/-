@@ -22,9 +22,12 @@ from drf_spectacular.views import (
 )
 
 
+api_version = ""
+url_preset = f"api/{api_version}"
+
 urlpatterns = [
     # admin
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # swagger
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
@@ -38,7 +41,6 @@ urlpatterns = [
         name="redoc",
     ),
     # apps
-    path('accounts/', include('accounts.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('diaries/', include('diaries.urls')),
+    path(f"{url_preset}accounts/", include("allauth.urls")),
+    path(f"{url_preset}diaries/", include("diaries.urls")),
 ]
