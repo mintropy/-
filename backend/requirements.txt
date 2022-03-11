@@ -40,28 +40,19 @@ pylint==2.12.2
 pylint-django==2.5.2
 pylint-plugin-utils==0.7
 pyparsing==3.0.7
-<<<<<<< HEAD
 pyrsistent==0.18.1
-=======
->>>>>>> d72e07f5832182a09e91e4f1c9a924fac03b5b08
 pytest==7.0.1
 pytest-django==4.5.2
 python-dateutil==2.8.2
 python3-openid==3.2.0
 pytz==2021.3
-<<<<<<< HEAD
 PyYAML==6.0
-=======
->>>>>>> d72e07f5832182a09e91e4f1c9a924fac03b5b08
 requests==2.27.1
 requests-oauthlib==1.3.1
 six==1.16.0
 sqlparse==0.4.2
 toml==0.10.2
 tomli==2.0.1
-<<<<<<< HEAD
 uritemplate==4.1.1
-=======
->>>>>>> d72e07f5832182a09e91e4f1c9a924fac03b5b08
 urllib3==1.26.8
 wrapt==1.13.3
