@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..models import Photo
 
 
-class PhotoSerialzier(serializers.ModelSerializer):
+class PhotoSerializier(serializers.ModelSerializer):
 
     class Meta:
         model = Photo

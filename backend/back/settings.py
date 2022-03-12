@@ -176,6 +176,11 @@ SITE_ID = 3
 # Third Party Settings
 
 REST_FRAMEWORK = {
+    # DRF
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    # drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
@@ -193,3 +198,5 @@ SPECTACULAR_SETTINGS = {
 }
 
 SITE_ID = 3
+
+AUTH_USER_MODEL = "accounts.User"
