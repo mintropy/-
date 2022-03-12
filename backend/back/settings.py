@@ -38,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
 
 
 # Application definition
@@ -197,6 +197,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-SITE_ID = 3
+SITE_ID = 8
 
 AUTH_USER_MODEL = "accounts.User"

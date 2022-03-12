@@ -6,7 +6,6 @@ from django.http import HttpResponse
 import environ
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 
 from back.settings import BASE_DIR
 
@@ -23,11 +22,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
     ]
 )
 def kakaoGetLogin(request):
+    print("@#!@$")
     CLIENT_ID = env("kakao_client_id")
-    REDIRET_URL = "http://127.0.0.1:8000/accounts/kakao/login/callback/"
+    REDIRET_URL = "http://127.0.0.1:8000/api/accounts/kakao/login/callback/"
     base_url = "https://kauth.kakao.com/oauth/authorize?response_type=code"
     url = base_url + f"&client_id={CLIENT_ID}" + f"&redirect_uri={REDIRET_URL}"
     res = redirect(url)
+    print(res)
     return res
 
 
@@ -44,7 +45,7 @@ def getUserInfo(reqeust):
     res = {
         "grant_type": "authorization_code",
         "client_id": env("kakao_client_id"),
-        "redirect_url": "http://127.0.0.1:8000/accounts/kakao/login/callback/",
+        "redirect_url": "http://127.0.0.1:8000/api/accounts/kakao/login/callback/",
         "client_secret": "none",
         "code": CODE,
     }
@@ -63,8 +64,23 @@ def getUserInfo(reqeust):
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     }
     res = requests.get(userUrl, headers=HEADER)
-    print(res.text)
-    # return HttpResponse(res.text)
-    return Response(
-        tokenJson
-    )
+    return HttpResponse(res.text)
+
+
+@api_view(["POST"])
+@permission_classes(
+    [
+        AllowAny,
+    ]
+)
+def kakaoUnlink(request):
+    TOKEN = 'c7fUP-PS_Tow2M0Rbra4y5ear5BoChgyDkeTZQo9cpgAAAF_fPtJdQ'
+    url = "https://kapi.kakao.com/v1/user/unlink"
+    auth = "Bearer " + TOKEN 
+    HEADER = {
+        "Authorization": auth,
+        "Content-Type" : "application/x-www-form-urlencoded",
+    }
+    res = requests.post(url, headers=HEADER)
+    
+    return HttpResponse(res)
