@@ -1,9 +1,6 @@
 from drf_spectacular.utils import (
-    extend_schema,
-    OpenApiResponse
+    extend_schema
 )
-
-from diaries.serializers.diary import DiarySerializer
 
 
 diary_list_schema = extend_schema(
