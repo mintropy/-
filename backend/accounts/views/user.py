@@ -22,7 +22,7 @@ class AccountViewSet(ViewSet):
 
     def kakao_login(self, request):
         client_id = env("kakao_client_id")
-        redirect_url = "http://127.0.0.1:8000/accounts/kakao/login/callback/"
+        redirect_url = "http://127.0.0.1:8000/api/accounts/kakao/login/callback/"
         base_url = "https://kauth.kakao.com/oauth/authorize?response_type=code"
         url = base_url + f"&client_id={client_id}" + f"&redirect_uri={redirect_url}"
         response = redirect(url)
@@ -34,13 +34,14 @@ class AccountViewSet(ViewSet):
         data = {
             "grant_type": "authorization_code",
             "client_id": env("kakao_client_id"),
-            "redirect_url": "http://127.0.0.1:8000/accounts/kakao/login/callback/",
+            "redirect_url": "http://127.0.0.1:8000/api/accounts/kakao/login/callback/",
             "client_secret": "none",
             "code": code,
         }
         headers = {"Content-type": "application/x-www-form-urlencoded;charset=utf-8"}
         response = requests.post(url, data=data, headers=headers)
         token_json = response.json()
+        print(token_json)
         user_url = "https://kapi.kakao.com/v2/user/me"
         auth = "Bearer " + token_json["access_token"]
         headers = {
@@ -49,7 +50,20 @@ class AccountViewSet(ViewSet):
         }
         response = requests.get(user_url, headers=headers)
         user_info = response.text
-        user_id = user_info['id']
-        user_nickname = user_info['properties']
+        # user_id = user_info['id']
+        # user_nickname = user_info['properties']
         
         return HttpResponse(response.text)
+    
+    def kakao_unlink(self, request):
+        print("##")
+        TOKEN = 'gnHraIjEES0B0pgwSoZUSCoLBInOsOVYBxVdpgo9dRoAAAF_hj1WeA' # access Token 직접 입력
+        url = "https://kapi.kakao.com/v1/user/unlink"
+        auth = "Bearer " + TOKEN 
+        HEADER = {
+            "Authorization": auth,
+            "Content-Type" : "application/x-www-form-urlencoded",
+        }
+        res = requests.post(url, headers=HEADER)
+        
+        return HttpResponse(res)
