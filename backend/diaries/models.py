@@ -1,9 +1,10 @@
+import os
 import uuid
+
 from django.db import models
 from django.utils import timezone
-import os
 
-# Create your models here.
+
 class Diary(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     content = models.CharField(
@@ -26,13 +27,8 @@ class Flower(models.Model):
 class Photo(models.Model):
     def photo_upload_path(self, instance, filename):
         date_path = timezone.now().strftime("%Y/%m/%d")
-        name = os.path.splitext(filename)[-1].lower()  # 확장자
-        return "/".join(
-            [
-                date_path,
-                name,
-            ]
-        )
+        name = os.path.splitext(filename)[-1].lower()
+        return f"{date_path}/{name}"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dairies = models.ForeignKey(Diary, on_delete=models.CASCADE, related_name="photos")
