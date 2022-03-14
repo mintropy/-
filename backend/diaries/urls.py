@@ -33,8 +33,8 @@ photo_detail = PhotoViewSet.as_view(
 urlpatterns = [
     #일기
     path("dairy/", dairy_list),
-    path("dairy/<int:diary_id>/", dairy_detail),
+    path("dairy/<str:diary_id>/", dairy_detail),
     #사진(업로드)
-    path("dairy/<int:diary_id>/photo/", photo_list),
-    path("dairy/<int:diary_id>/photo/<int:photo_id>/", photo_detail),
+    path("dairy/<str:diary_id>/photo/", photo_list),
+    path("dairy/<str:diary_id>/photo/<str:photo_id>/", photo_detail),
 ]
