@@ -11,7 +11,7 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary
+from ..models import Diary, Photo
 from ..serializers.diary import DiarySerializer
 
 
@@ -29,6 +29,11 @@ class DiaryViewSet(ViewSet):
     @diary_create_schema
     def create(self, request):
         serializer = DiarySerializer(data=request.data)
+        dairies=serializer.save()
+        photoes_data = request.FILES.getlist['photo']
+        for item in photoes_data:
+            photoes=Photo.objects.create(dairies=dairies, photo=item)
+            photoes.save()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
