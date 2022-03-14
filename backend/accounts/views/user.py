@@ -10,6 +10,12 @@ from rest_framework.response import Response
 from accounts.models import User
 from back.settings import BASE_DIR
 
+from .schema.user import (
+    kakao_login_schema,
+    kakao_user_info_schema,
+    kakao_unlink_schema
+)
+
 env = environ.Env(
     kakao_client_id=(str, "")
 )
@@ -20,6 +26,7 @@ class AccountViewSet(ViewSet):
     model = User
     queryset = User.objects.all()
 
+    @kakao_login_schema
     def kakao_login(self, request):
         client_id = env("kakao_client_id")
         redirect_url = "http://127.0.0.1:8000/api/accounts/kakao/login/callback/"
@@ -28,6 +35,7 @@ class AccountViewSet(ViewSet):
         response = redirect(url)
         return response
 
+    @kakao_user_info_schema
     def kakao_user_info(self, request):
         code = request.query_params.get("code", None)
         url = "https://kauth.kakao.com/oauth/token"
