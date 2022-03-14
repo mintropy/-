@@ -62,7 +62,8 @@ class AccountViewSet(ViewSet):
         # user_nickname = user_info['properties']
         
         return HttpResponse(response.text)
-    
+
+    @kakao_unlink_schema
     def kakao_unlink(self, request):
         print("##")
         TOKEN = 'gnHraIjEES0B0pgwSoZUSCoLBInOsOVYBxVdpgo9dRoAAAF_hj1WeA' # access Token 직접 입력
