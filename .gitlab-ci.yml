@@ -1,16 +1,5 @@
 stages:
-  - build
-
-image:
-  name: docker:latest
-
-services:
-  - docker:dind
-
-before_script:
-  - apk add --update python py-pip python-dev && pip install docker-compose # install docker-compose
-  - docker version
-  - docker-compose version
+  - build 
 
 build:
   stage: build
