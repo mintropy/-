@@ -46,7 +46,8 @@ ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
 INSTALLED_APPS = [
     'accounts',
     'diaries',
-
+    
+    'rest_auth',
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
@@ -169,10 +170,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-SITE_ID = 3
-
-
 # Third Party Settings
 
 REST_FRAMEWORK = {
@@ -197,6 +194,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-SITE_ID = 8
+SITE_ID = 2
 
 AUTH_USER_MODEL = "accounts.User"

@@ -1,14 +1,17 @@
 import requests
 import os
+import json
 
 from django.shortcuts import redirect
-from django.http import HttpResponse
 import environ
+from django.http import HttpResponse
+from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
 from accounts.models import User
 from back.settings import BASE_DIR
+from ..serializers.user import UserSerializer
 
 from .schema.user import (
     kakao_login_schema,
@@ -58,15 +61,29 @@ class AccountViewSet(ViewSet):
         }
         response = requests.get(user_url, headers=headers)
         user_info = response.text
-        # user_id = user_info['id']
-        # user_nickname = user_info['properties']
+        user_info = json.loads(user_info)
+        print(user_info)
+        user_id = str(user_info['id'])
+        user_nickname = user_info['properties']['nickname']
+        check_user = User.objects.filter(social_id=user_id)[0]
+        if check_user:
+            return HttpResponse(check_user)
         
-        return HttpResponse(response.text)
+        data = {
+            "social" : "KA",
+            "social_id" : user_id,
+            "username" : user_nickname,
+            "password" : user_id,
+        }
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @kakao_unlink_schema
     def kakao_unlink(self, request):
-        print("##")
-        TOKEN = 'gnHraIjEES0B0pgwSoZUSCoLBInOsOVYBxVdpgo9dRoAAAF_hj1WeA' # access Token 직접 입력
+        TOKEN = 'bdxSavZVE3QZRWCIOf9qV8onVfEyYu_M0TSKLwo9dRoAAAF_iE18Yg' # access Token 직접 입력
         url = "https://kapi.kakao.com/v1/user/unlink"
         auth = "Bearer " + TOKEN 
         HEADER = {
@@ -75,4 +92,4 @@ class AccountViewSet(ViewSet):
         }
         res = requests.post(url, headers=HEADER)
         
-        return HttpResponse(res)
+        return Response(res)

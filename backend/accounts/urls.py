@@ -6,6 +6,7 @@ from .views.user import AccountViewSet
 kakaoGetLogin = AccountViewSet.as_view({'get':'kakao_login'})
 getUserInfo = AccountViewSet.as_view({'get':'kakao_user_info'})
 kakaoUnlink = AccountViewSet.as_view({'get':'kakao_unlink'})
+kakaoLoginFinish = AccountViewSet.as_view({'get':'kakao_finish'})
 
 urlpatterns = [
     # path('logins/', kakaoGetLogin),
@@ -15,4 +16,5 @@ urlpatterns = [
     path('logins/', kakaoGetLogin),
     path('kakao/login/callback/', getUserInfo),
     path('unlink/', kakaoUnlink),
+    path('kakao/login/finish/', kakaoLoginFinish),
 ]
