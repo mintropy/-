@@ -1,10 +1,15 @@
+import uuid
 from django.db import models
 from django.utils import timezone
 import os
 
 # Create your models here.
 class Diary(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     content = models.CharField(
         max_length=100,
         null=True,
@@ -14,7 +19,11 @@ class Diary(models.Model):
 
 
 class Flower(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     dairies = models.ForeignKey(
         Diary,
         on_delete=models.SET_NULL,
@@ -33,7 +42,11 @@ class Photo(models.Model):
             date_path, name,
         ])
     
-    id = models.IntegerField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     dairies = models.ForeignKey(
         Diary,
         on_delete=models.CASCADE,
