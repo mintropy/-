@@ -65,9 +65,10 @@ class AccountViewSet(ViewSet):
         print(user_info)
         user_id = str(user_info['id'])
         user_nickname = user_info['properties']['nickname']
-        check_user = User.objects.filter(social_id=user_id)[0]
+        # if User.objects.filter(social_id=user_id).exists():
+        check_user = User.objects.filter(social_id=user_id)
         if check_user:
-            return HttpResponse(check_user)
+            return HttpResponse(check_user[0])
         
         data = {
             "social" : "KA",
