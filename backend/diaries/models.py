@@ -4,9 +4,16 @@ import uuid
 from django.db import models
 from django.utils import timezone
 
+from accounts.models import User
+
 
 class Diary(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        User,
+        related_name='diaries',
+        on_delete=models.CASCADE
+    )
     content = models.CharField(
         max_length=100,
         null=True,

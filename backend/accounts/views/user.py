@@ -22,11 +22,27 @@ kakao_oauth_base_url = "https://kauth.kakao.com"
 kakao_user_info_url = "https://kapi.kakao.com/v2/user/me" 
 
 
+def get_kakao_user_info(token: str):
+    user_url = kakao_user_info_url
+    auth = "Bearer " + token
+    headers = {
+        "Authorization": auth,
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+    }
+    response = requests.get(user_url, headers=headers)
+    if response.status_code == status.HTTP_401_UNAUTHORIZED:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    user_info = response.text
+    user_info = json.loads(user_info)
+    return user_info
+
+
 class AccountViewSet(ViewSet):
     model = User
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
+
 
     @kakao_login_schema
     def kakao_login(self, request):

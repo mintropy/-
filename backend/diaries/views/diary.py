@@ -13,6 +13,7 @@ from .schema.diary import (
 )
 from ..models import Diary
 from ..serializers.diary import DiarySerializer
+from accounts.views.user import get_kakao_user_info
 
 
 class DiaryViewSet(ViewSet):
@@ -28,6 +29,10 @@ class DiaryViewSet(ViewSet):
 
     @diary_create_schema
     def create(self, request):
+        token = request.data.get("token", "")
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = DiarySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
