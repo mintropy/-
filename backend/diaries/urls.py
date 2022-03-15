@@ -3,13 +3,14 @@ from django.urls import path
 from .views.diary import DiaryViewSet
 from .views.photo import PhotoViewSet
 
-dairy_list = DiaryViewSet.as_view(
+
+diary_list = DiaryViewSet.as_view(
     {
         "get": "list",
         "post": "create",
     }
 )
-dairy_detail = DiaryViewSet.as_view(
+diary_detail = DiaryViewSet.as_view(
     {
         "get": "retrieve",
         "put": "update",
@@ -29,12 +30,9 @@ photo_detail = PhotoViewSet.as_view(
     }
 )
 
-
 urlpatterns = [
-    #일기
-    path("dairy/", dairy_list),
-    path("dairy/<int:diary_id>/", dairy_detail),
-    #사진(업로드)
-    path("dairy/<int:diary_id>/photo/", photo_list),
-    path("dairy/<int:diary_id>/photo/<int:photo_id>/", photo_detail),
+    path("", diary_list, name="diary_list"),
+    path("<str:diary_id>/", diary_detail, name="diary_detail"),
+    path("dairy/<str:diary_id>/photo/", photo_list),
+    path("dairy/<str:diary_id>/photo/<str:photo_id>/", photo_detail),
 ]
