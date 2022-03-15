@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -40,15 +42,25 @@ class DiaryViewSet(ViewSet):
         user_info = get_kakao_user_info(token)
         if not user_info:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        
+        if Diary.objects.filter(user=user, date=date.today()).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        diary = Diary.objects.create(user=user, date=date.today())
+        photos = [
+            {
+                'diaries': diary.id,
+                'files': photo
+            }
+            for photo in request.FILES.values()
+        ]
         data = {
-            'content': request.data.get('content', None)
+            'content': request.data.get('content', None),
+            'user': user.id,
+            'photos': photos
         }
-        serializer = DiarySerializer(data=request.data)
-        dairies=serializer.save()
-        photoes_data = request.FILES.getlist['photo']
-        for item in photoes_data:
-            photoes=Photo.objects.create(dairies=dairies, photo=item)
-            photoes.save()
+        serializer = DiarySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
