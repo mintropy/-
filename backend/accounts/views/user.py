@@ -26,7 +26,7 @@ def get_kakao_user_info(token: str):
     user_url = kakao_user_info_url
     auth = "Bearer " + token
     headers = {
-        "Authorization": auth,
+        "Authorization": token,
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     }
     response = requests.get(user_url, headers=headers)
