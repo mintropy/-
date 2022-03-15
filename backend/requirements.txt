@@ -15,12 +15,14 @@ Django==3.2.12
 django-allauth==0.49.0
 django-cors-headers==3.11.0
 django-environ==0.8.1
+django-rest-auth==0.9.5
 djangorestframework==3.13.1
 drf-spectacular==0.21.2
 factory-boy==3.2.1
 Faker==13.3.1
 idna==3.3
 inflection==0.5.1
+iniconfig==1.1.1
 isort==5.10.1
 jsonschema==4.4.0
 lazy-object-proxy==1.7.1
