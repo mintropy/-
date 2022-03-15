@@ -11,7 +11,7 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary
+from ..models import Diary, Photo
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 
@@ -34,6 +34,11 @@ class DiaryViewSet(ViewSet):
         if not user_info:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = DiarySerializer(data=request.data)
+        dairies=serializer.save()
+        photoes_data = request.FILES.getlist['photo']
+        for item in photoes_data:
+            photoes=Photo.objects.create(dairies=dairies, photo=item)
+            photoes.save()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
