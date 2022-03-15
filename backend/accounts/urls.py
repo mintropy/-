@@ -5,7 +5,7 @@ from .views.user import AccountViewSet
 
 kakaoGetLogin = AccountViewSet.as_view({'get':'kakao_login'})
 getUserInfo = AccountViewSet.as_view({'get':'kakao_user_info'})
-kakaoUnlink = AccountViewSet.as_view({'get':'kakao_unlink'})
+kakaoUnlink = AccountViewSet.as_view({'post':'kakao_unlink'})
 kakaoLoginFinish = AccountViewSet.as_view({'get':'kakao_finish'})
 
 urlpatterns = [

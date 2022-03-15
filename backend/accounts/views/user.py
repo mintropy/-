@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.authentication import BaseAuthentication
 
 from accounts.models import User
 from back.settings import BASE_DIR
@@ -28,6 +30,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 class AccountViewSet(ViewSet):
     model = User
     queryset = User.objects.all()
+    permission_classes = []
+    # authentication_classes = (BaseAuthentication,)
 
     @kakao_login_schema
     def kakao_login(self, request):
@@ -68,8 +72,7 @@ class AccountViewSet(ViewSet):
         # if User.objects.filter(social_id=user_id).exists():
         check_user = User.objects.filter(social_id=user_id)
         if check_user:
-            return HttpResponse(check_user[0])
-        
+            return Response(token_json, status=status.HTTP_200_OK)
         data = {
             "social" : "KA",
             "social_id" : user_id,
@@ -79,18 +82,44 @@ class AccountViewSet(ViewSet):
         serializer = UserSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(token_json, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @kakao_unlink_schema
     def kakao_unlink(self, request):
-        TOKEN = 'bdxSavZVE3QZRWCIOf9qV8onVfEyYu_M0TSKLwo9dRoAAAF_iE18Yg' # access Token 직접 입력
+        # token = 'VdkVPphz-bDmggokXc1_YBWdNJXFEHqOl9hbZwopyNgAAAF_i1bslQ' # access Token 직접 입력
+        token = request.data.get('token', '')
+        
+        user_url = "https://kapi.kakao.com/v2/user/me"
+        auth = "Bearer " + token
+        headers = {
+            "Authorization": auth,
+            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        }
+        response = requests.get(user_url, headers=headers)
+        if response.status_code == status.HTTP_401_UNAUTHORIZED:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        user_info = response.text
+        user_info = json.loads(user_info)
+        print(user_info)
+        user_id = str(user_info['id'])
+        
+        if not User.objects.filter(social_id=user_id).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user = User.objects.get(social_id=user_id)
+        
         url = "https://kapi.kakao.com/v1/user/unlink"
-        auth = "Bearer " + TOKEN 
+        auth = "Bearer " + token 
         HEADER = {
             "Authorization": auth,
             "Content-Type" : "application/x-www-form-urlencoded",
         }
         res = requests.post(url, headers=HEADER)
         
-        return Response(res)
+        if response.status_code == status.HTTP_401_UNAUTHORIZED:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        user.delete()
+        
+        return Response(status=status.HTTP_200_OK)
