@@ -16,6 +16,11 @@ from back.settings import BASE_DIR
 env = environ.Env(kakao_client_id=(str, ""))
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+# .env 추가 등 작업 필요
+host_base_url = "http://127.0.0.1:8000/api/accounts/"
+kakao_oauth_base_url = "https://kauth.kakao.com"
+kakao_user_info_url = "https://kapi.kakao.com/v2/user/me" 
+
 
 class AccountViewSet(ViewSet):
     model = User
@@ -26,27 +31,27 @@ class AccountViewSet(ViewSet):
     @kakao_login_schema
     def kakao_login(self, request):
         client_id = env("kakao_client_id")
-        redirect_url = "http://127.0.0.1:8000/api/accounts/kakao/login/callback/"
-        base_url = "https://kauth.kakao.com/oauth/authorize?response_type=code"
-        url = base_url + f"&client_id={client_id}" + f"&redirect_uri={redirect_url}"
+        redirect_url = f"{host_base_url}kakao/login/callback/"
+        oauth_url = f"{kakao_oauth_base_url}/oauth/authorize?response_type=code"
+        url = f"{oauth_url}&client_id={client_id}&redirect_uri={redirect_url}"
         response = redirect(url)
         return response
 
     @kakao_user_info_schema
     def kakao_user_info(self, request):
         code = request.query_params.get("code", None)
-        url = "https://kauth.kakao.com/oauth/token"
+        url = f"{kakao_oauth_base_url}/oauth/token"
         data = {
             "grant_type": "authorization_code",
             "client_id": env("kakao_client_id"),
-            "redirect_url": "http://127.0.0.1:8000/api/accounts/kakao/login/callback/",
+            "redirect_url": f"{host_base_url}/kakao/login/callback/",
             "client_secret": "none",
             "code": code,
         }
         headers = {"Content-type": "application/x-www-form-urlencoded;charset=utf-8"}
         response = requests.post(url, data=data, headers=headers)
         token_json = response.json()
-        user_url = "https://kapi.kakao.com/v2/user/me"
+        user_url = kakao_user_info_url
         auth = "Bearer " + token_json["access_token"]
         headers = {
             "Authorization": auth,
@@ -75,7 +80,7 @@ class AccountViewSet(ViewSet):
     @kakao_unlink_schema
     def kakao_unlink(self, request):
         token = request.data.get("token", "")
-        user_url = "https://kapi.kakao.com/v2/user/me"
+        user_url = kakao_user_info_url
         auth = "Bearer " + token
         headers = {
             "Authorization": auth,
@@ -86,7 +91,6 @@ class AccountViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_info = response.text
         user_info = json.loads(user_info)
-        print(user_info)
         user_id = str(user_info["id"])
         if not User.objects.filter(social_id=user_id).exists():
             return Response(status=status.HTTP_400_BAD_REQUEST)
