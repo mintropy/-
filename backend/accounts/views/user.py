@@ -105,3 +105,20 @@ class AccountViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         user.delete()
         return Response(status=status.HTTP_200_OK)
+
+    def update(self, request):
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        user_id = str(user_info["id"])
+        if not User.objects.filter(social_id=user_id).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user = User.objects.get(social_id=user_id)
+        data = {
+            "email": request.data.get("email", user.email),
+            "username": request.data.get("username", user.username),
+        }
+        serializer = UserSerializer(user, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
