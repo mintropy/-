@@ -4,7 +4,7 @@ from .models import Diary, Flower, Photo
 
 @admin.register(Diary)
 class DiaryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'date',)
 
 
 @admin.register(Flower)
