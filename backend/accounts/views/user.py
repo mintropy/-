@@ -24,7 +24,6 @@ kakao_user_info_url = "https://kapi.kakao.com/v2/user/me"
 
 def get_kakao_user_info(token: str):
     user_url = kakao_user_info_url
-    auth = "Bearer " + token
     headers = {
         "Authorization": token,
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -67,15 +66,9 @@ class AccountViewSet(ViewSet):
         headers = {"Content-type": "application/x-www-form-urlencoded;charset=utf-8"}
         response = requests.post(url, data=data, headers=headers)
         token_json = response.json()
-        user_url = kakao_user_info_url
-        auth = "Bearer " + token_json["access_token"]
-        headers = {
-            "Authorization": auth,
-            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        }
-        response = requests.get(user_url, headers=headers)
-        user_info = response.text
-        user_info = json.loads(user_info)
+
+        token = "Bearer " + token_json["access_token"]
+        user_info = get_kakao_user_info(token)
         user_id = str(user_info["id"])
         user_nickname = user_info["properties"]["nickname"]
         check_user = User.objects.filter(social_id=user_id)
@@ -95,18 +88,8 @@ class AccountViewSet(ViewSet):
 
     @kakao_unlink_schema
     def kakao_unlink(self, request):
-        token = request.data.get("token", "")
-        user_url = kakao_user_info_url
-        auth = "Bearer " + token
-        headers = {
-            "Authorization": auth,
-            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        }
-        response = requests.get(user_url, headers=headers)
-        if response.status_code == status.HTTP_401_UNAUTHORIZED:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user_info = response.text
-        user_info = json.loads(user_info)
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
         user_id = str(user_info["id"])
         if not User.objects.filter(social_id=user_id).exists():
             return Response(status=status.HTTP_400_BAD_REQUEST)
