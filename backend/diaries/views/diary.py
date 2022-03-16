@@ -79,9 +79,20 @@ class DiaryViewSet(ViewSet):
 
     @diary_update_schema
     def update(self, request, year, month, day):
+        token = request.headers.get("Authorization", "")
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get("id", None)
+        user = get_object_or_404(User, social_id=user_id)
+
         target_day = date(year, month, day)
-        diary = get_object_or_404(Diary, date=target_day)
-        serializer = DiarySerializer(diary, data=request.data)
+        diary = get_object_or_404(Diary, user=user, date=target_day)
+        data = {
+            "content": request.data.get("content", None),
+            "user": user.id,
+        }
+        serializer = DiarySerializer(diary, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -89,8 +100,15 @@ class DiaryViewSet(ViewSet):
 
     @diary_delete_schema
     def destroy(self, request, year, month, day):
+        token = request.headers.get("Authorization", "")
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get("id", None)
+        user = get_object_or_404(User, social_id=user_id)
+
         target_day = date(year, month, day)
-        diary = get_object_or_404(Diary, date=target_day)
+        diary = get_object_or_404(Diary, user=user, date=target_day)
         diary.delete()
         diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
