@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .schema.user import kakao_login_schema, kakao_user_info_schema, kakao_unlink_schema
+from .schema.user import kakao_login_schema, kakao_user_info_schema, kakao_unlink_schema, user_update_schema
 from ..serializers.user import UserSerializer
 from accounts.models import User
 from back.settings import BASE_DIR
@@ -106,6 +106,7 @@ class AccountViewSet(ViewSet):
         user.delete()
         return Response(status=status.HTTP_200_OK)
 
+    @user_update_schema
     def update(self, request):
         token = request.headers.get('Authorization', '')
         user_info = get_kakao_user_info(token)
