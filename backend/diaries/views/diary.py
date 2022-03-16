@@ -68,7 +68,13 @@ class DiaryViewSet(ViewSet):
 
     @diary_retrieve_schema
     def retrieve(self, request, diary_id):
-        diary = get_object_or_404(Diary, id=diary_id)
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        diary = get_object_or_404(Diary, user_id=user.id, id=diary_id)
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
