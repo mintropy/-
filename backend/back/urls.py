@@ -41,6 +41,7 @@ urlpatterns = [
         name="redoc",
     ),
     # apps
+    path(f"{url_preset}accounts/", include("accounts.urls")),
     path(f"{url_preset}accounts/", include("allauth.urls")),
     path(f"{url_preset}diaries/", include("diaries.urls")),
 ]
