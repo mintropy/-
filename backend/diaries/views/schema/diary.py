@@ -6,7 +6,10 @@ diary_montly_schema = extend_schema(
 )
 
 diary_daily_schema = extend_schema(
-    description=("<h1>특정 날짜 일기를 조회합니다.</h1>"), summary="일간 일기 조회", tags=["일기"], examples=[]
+    description=("<h1>특정 날짜 일기를 조회합니다.</h1>"),
+    summary="일간 일기 조회",
+    tags=["일기"],
+    examples=[],
 )
 
 diary_create_schema = extend_schema(
