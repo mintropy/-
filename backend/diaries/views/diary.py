@@ -60,12 +60,19 @@ class DiaryViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get("id", None)
         user = get_object_or_404(User, social_id=user_id)
+        try:
+            target_day = date.fromisoformat(request.data['date'])
+        except Exception:
+            target_day = date.today()
 
-        if Diary.objects.filter(user=user, date=date.today()).exists():
+        if Diary.objects.filter(user=user, date=target_day).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         data = {
             "content": request.data.get("content", None),
             "user": user.id,
+            "date": target_day,
         }
         serializer = DiarySerializer(data=data)
         if serializer.is_valid():

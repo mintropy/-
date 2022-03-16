@@ -1,4 +1,3 @@
-import os
 import uuid
 
 from django.db import models
@@ -19,7 +18,7 @@ class Diary(models.Model):
         null=True,
         blank=True,
     )
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
 
 
 class Flower(models.Model):
