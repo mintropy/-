@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from .schema.diary import (
-    diary_list_schema,
+    diary_montly_schema,
+    diary_daily_schema,
     diary_create_schema,
-    diary_retrieve_schema,
     diary_update_schema,
     diary_delete_schema,
 )
@@ -24,7 +24,7 @@ class DiaryViewSet(ViewSet):
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
 
-    @diary_list_schema
+    @diary_montly_schema
     def montly(self, request, year, month):
         token = request.headers.get('Authorization', '')
         user_info = get_kakao_user_info(token)
@@ -36,7 +36,7 @@ class DiaryViewSet(ViewSet):
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @diary_retrieve_schema
+    @diary_daily_schema
     def daily(self, request, year, month, day):
         token = request.headers.get('Authorization', '')
         user_info = get_kakao_user_info(token)
