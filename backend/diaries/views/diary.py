@@ -44,7 +44,8 @@ class DiaryViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get('id', None)
         user = get_object_or_404(User, social_id=user_id)
-        diary = get_object_or_404(Diary, user_id=user.id, date__year=year, date__month=month, date__day=day)
+        target_day = date(year, month, day)
+        diary = get_object_or_404(Diary, user_id=user.id, date=target_day)
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -79,8 +80,9 @@ class DiaryViewSet(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @diary_update_schema
-    def update(self, request, diary_id):
-        diary = get_object_or_404(Diary, id=diary_id)
+    def update(self, request, year, month, day):
+        target_day = date(year, month, day)
+        diary = get_object_or_404(Diary, date=target_day)
         serializer = DiarySerializer(diary, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -88,8 +90,9 @@ class DiaryViewSet(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @diary_delete_schema
-    def destroy(self, request, diary_id):
-        diary = get_object_or_404(Diary, id=diary_id)
+    def destroy(self, request, year, month, day):
+        target_day = date(year, month, day)
+        diary = get_object_or_404(Diary, date=target_day)
         diary.delete()
         diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
