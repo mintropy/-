@@ -25,15 +25,27 @@ class DiaryViewSet(ViewSet):
     serializer_class = DiarySerializer
 
     @diary_list_schema
-    def list(self, request):
+    def montly(self, request, year, month):
         token = request.headers.get('Authorization', '')
         user_info = get_kakao_user_info(token)
         if not user_info:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get('id', None)
         user = get_object_or_404(User, social_id=user_id)
-        diaries = Diary.objects.filter(user_id=user.id)
+        diaries = Diary.objects.filter(user_id=user.id, date__year=year, date__month=month)
         serializer = DiarySerializer(diaries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @diary_retrieve_schema
+    def daily(self, request, year, month, day):
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        diary = get_object_or_404(Diary, user_id=user.id, date__year=year, date__month=month, date__day=day)
+        serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_create_schema
@@ -65,18 +77,6 @@ class DiaryViewSet(ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @diary_retrieve_schema
-    def retrieve(self, request, diary_id):
-        token = request.headers.get('Authorization', '')
-        user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user_id = user_info.get('id', None)
-        user = get_object_or_404(User, social_id=user_id)
-        diary = get_object_or_404(Diary, user_id=user.id, id=diary_id)
-        serializer = DiarySerializer(diary)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_update_schema
     def update(self, request, diary_id):
