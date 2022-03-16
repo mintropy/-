@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -11,8 +13,10 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary
+from ..models import Diary, Photo
 from ..serializers.diary import DiarySerializer
+from accounts.views.user import get_kakao_user_info
+from accounts.models import User
 
 
 class DiaryViewSet(ViewSet):
@@ -22,13 +26,41 @@ class DiaryViewSet(ViewSet):
 
     @diary_list_schema
     def list(self, request):
-        diaries = Diary.objects.all()
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        diaries = Diary.objects.filter(user_id=user.id)
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_create_schema
     def create(self, request):
-        serializer = DiarySerializer(data=request.data)
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        
+        if Diary.objects.filter(user=user, date=date.today()).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        diary = Diary.objects.create(user=user, date=date.today())
+        photos = [
+            {
+                'diaries': diary.id,
+                'files': photo
+            }
+            for photo in request.FILES.values()
+        ]
+        data = {
+            'content': request.data.get('content', None),
+            'user': user.id,
+            'photos': photos
+        }
+        serializer = DiarySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -36,7 +68,13 @@ class DiaryViewSet(ViewSet):
 
     @diary_retrieve_schema
     def retrieve(self, request, diary_id):
-        diary = get_object_or_404(Diary, id=diary_id)
+        token = request.headers.get('Authorization', '')
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get('id', None)
+        user = get_object_or_404(User, social_id=user_id)
+        diary = get_object_or_404(Diary, user_id=user.id, id=diary_id)
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
