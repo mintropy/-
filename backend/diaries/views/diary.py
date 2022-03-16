@@ -15,6 +15,7 @@ from .schema.diary import (
 )
 from ..models import Diary, Photo
 from ..serializers.diary import DiarySerializer
+from ..serializers.photo import PhotoSerializier
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
 
@@ -62,18 +63,21 @@ class DiaryViewSet(ViewSet):
 
         if Diary.objects.filter(user=user, date=date.today()).exists():
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        diary = Diary.objects.create(user=user, date=date.today())
-        photos = [
-            {"diaries": diary.id, "files": photo} for photo in request.FILES.values()
-        ]
         data = {
             "content": request.data.get("content", None),
             "user": user.id,
-            "photos": photos,
         }
         serializer = DiarySerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            diary = serializer.save()
+            for photo in request.FILES.values():
+                data = {
+                    'dairies': diary.id,
+                    'photo': photo
+                }
+                serializer = PhotoSerializier(data=data)
+                if serializer.is_valid():
+                    serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
