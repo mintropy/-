@@ -1,14 +1,17 @@
 stages:
   - build 
+  - deploy
 
 build:
   stage: build
-  # image: docker:latest
-  # services:
-  #   - docker:dind
   script:
     - docker --version
     - docker-compose --version
     - docker-compose build
   tags:
     - dev
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose up -d

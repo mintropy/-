@@ -14,7 +14,6 @@ services:
       MYSQL_ROOT_PASSWORD: horang22
     command: --default-authentication-plugin=mysql_native_password --mysqlx=0
   backend:
-    # restart: unless-stopped
     container_name: service_django
     build:
       context: .
