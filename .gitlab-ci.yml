@@ -1,17 +1,11 @@
 stages:
   - build 
 
-image: docker/compose:latest
-
-services:
-  - docker:dind
-
-before_script:
-  - docker info
-  - docker-compose --version
-
 build:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
   script:
     - docker-compose build
   tags:
