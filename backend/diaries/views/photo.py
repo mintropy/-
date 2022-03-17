@@ -1,3 +1,6 @@
+from datetime import date
+
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -11,6 +14,8 @@ from .schema.photo import (
 
 from ..models import Diary, Photo
 from ..serializers.photo import PhotoSerializier
+from accounts.views.user import get_kakao_user_info
+from accounts.models import User
 
 
 class PhotoViewSet(ViewSet):
@@ -18,41 +23,39 @@ class PhotoViewSet(ViewSet):
     queryset = Diary.objects.all()
     serializer_class = PhotoSerializier
 
-    @photo_list_schema
-    def list(self, request, diary_id):
-        photo = Photo.objects.filter(dairies=diary_id)
-        serializer = PhotoSerializier(photo, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
     @photo_create_schema
-    def create(self, request, diary_id):
-        if not Diary.objects.filter(pk=diary_id).exists():
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        data = {
-            "id": request.data.get("id", None),
-            "photo": request.FILES.get("photo", None),
-            "diaries": diary_id,
-        }
-        photo = Photo.objects.filter(dairies=diary_id)
-        if photo:
-            serializer = PhotoSerializier(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, year, month, day):
+        token = request.headers.get("Authorization", "")
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get("id", None)
+        user = get_object_or_404(User, social_id=user_id)
 
-    @photo_retrieve_schema
-    def retrieve(self, request, diary_id):
-        if not Diary.objects.filter(pk=diary_id).exists():
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        photo = Photo.objects.filter(dairies=diary_id)
-        serializer = PhotoSerializier(photo)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        target_day = date(year, month, day)
+        diary = get_object_or_404(Diary, user=user, date=target_day)
+        response = []
+        for photo in request.FILES.values():
+            data = {
+                'dairies': diary.id,
+                'photo': photo,
+            }
+            serializer = PhotoSerializier(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                response.append(serializer.data)
+        return Response(response, status.HTTP_201_CREATED)
 
     @photo_destroy_schema
-    def destroy(self, request, diary_id):
-        if not Diary.objects.filter(pk=diary_id).exists():
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        photo = Photo.objects.filter(dairies=diary_id)
-        photo.delete()
+    def destroy(self, request, year, month, day):
+        token = request.headers.get("Authorization", "")
+        user_info = get_kakao_user_info(token)
+        if not user_info:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        user_id = user_info.get("id", None)
+        user = get_object_or_404(User, social_id=user_id)
+
+        target_day = date(year, month, day)
+        diary = get_object_or_404(Diary, user=user, date=target_day)
+        deletion_list = []
         return Response(status=status.HTTP_200_OK)

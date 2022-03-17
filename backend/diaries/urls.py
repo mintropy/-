@@ -20,14 +20,12 @@ diary_daily = DiaryViewSet.as_view(
 
 photo_list = PhotoViewSet.as_view(
     {
-        "get": "list",
         "post": "create",
     }
 )
-photo_detail = PhotoViewSet.as_view(
+photo_delete = PhotoViewSet.as_view(
     {
-        "get": "retrieve",
-        "delete": "destroy",
+        "post": "delete_photos",
     }
 )
 
@@ -35,6 +33,6 @@ urlpatterns = [
     path("", diary_list, name="diary_list"),
     path("<int:year>/<int:month>/", diary_montly),
     path("<int:year>/<int:month>/<int:day>/", diary_daily),
-    path("<str:diary_id>/photo/", photo_list),
-    path("<str:diary_id>/photo/<str:photo_id>/", photo_detail),
+    path("<int:year>/<int:month>/<int:day>/photo/", photo_list),
+    path("<int:year>/<int:month>/<int:day>/photo/delete/", photo_delete),
 ]
