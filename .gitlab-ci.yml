@@ -1,6 +1,8 @@
 stages:
   - build 
 
+image: tmaier/docker-compose:latest
+
 services:
   - docker:dind
 
