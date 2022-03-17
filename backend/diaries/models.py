@@ -1,4 +1,3 @@
-import os
 import uuid
 
 from django.db import models
@@ -19,7 +18,7 @@ class Diary(models.Model):
         null=True,
         blank=True,
     )
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
 
 
 class Flower(models.Model):
@@ -32,10 +31,10 @@ class Flower(models.Model):
 
 
 class Photo(models.Model):
-    def photo_upload_path(self, instance, filename):
+    def photo_upload_path(instance, filename):
         date_path = timezone.now().strftime("%Y/%m/%d")
-        name = os.path.splitext(filename)[-1].lower()
-        return f"{date_path}/{name}"
+        # name = os.path.splitext(filename)[-1].lower()
+        return f"{date_path}/{filename}"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     dairies = models.ForeignKey(Diary, on_delete=models.CASCADE, related_name="photos")

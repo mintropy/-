@@ -6,9 +6,8 @@ from ..models import Diary
 
 
 class DiarySerializer(serializers.ModelSerializer):
-    photo = PhotoSerializier(many=True, read_only=True)
-    
+    photos = PhotoSerializier(many=True, read_only=True)
+
     class Meta:
         model = Diary
-        fields = '__all__'
- 
+        fields = "__all__"
