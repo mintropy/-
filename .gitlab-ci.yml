@@ -15,3 +15,5 @@ deploy:
   stage: deploy
   script:
     - docker-compose up -d
+  tags:
+    - dev
