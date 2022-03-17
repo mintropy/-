@@ -17,9 +17,9 @@ import environ
 env = environ.Env(
     DEBUG=(bool, False),
     SECRET_KEY=(str, 'SECRET_KEY'),
-    DB_NAME=(str, 'DB_NAME'),
-    DB_USER=(str, 'DB_USER'),
-    DB_PASSWORD=(str, 'DB_PASSWORD'),
+    DB_NAME=(str, 'horang22'),
+    DB_USER=(str, 'horang22'),
+    DB_PASSWORD=(str, 'horang22'),
     DB_HOST=(str, 'localhost'),
     DB_PORT=(str, '3306'),
 )

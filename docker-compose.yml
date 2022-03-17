@@ -8,26 +8,11 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: horang22
       MYSQL_USER: horang22
       MYSQL_PASSWORD: horang22
       MYSQL_ROOT_PASSWORD: horang22
-    # command:
-    #   - --character-set-server=utf8mb4
-    #   - --collation-server=utf8mb4_unicode_ci
-    # volumes:
-    #   - /Users/Shared/data/mysql-test:/var/lib/mysql
-
-    # command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --default-authentication-plugin=mysql_native_password
-    # command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
-    # command:
-    #   - --character-set-server=utf8mb4
-    #   - --collation-server=utf8mb4_unicode_ci
-    # volumes:
-    #   - /mnt/disks/disk1/mysql-data:/var/lib/mysql
-    # volumes:
-    #   - /opt/slack_bot/mysql_data:/var/lib/mysql
-    #   - /tmp/slack_bot/mysqld:/var/run/mysqld
+    command: --default-authentication-plugin=mysql_native_password --mysqlx=0
   backend:
     # restart: unless-stopped
     container_name: service_django
@@ -37,8 +22,5 @@ services:
     ports:
       - 8000:8000
     command: python manage.py runserver 0.0.0.0:8000
-    # command: gunicorn composeexample.wsgi:application --bind 0.0.0.0:8000 --reload
     depends_on:
       - db
-    # volumes:
-    #   - /tmp/slack_bot/mysqld:/run/mysqld
