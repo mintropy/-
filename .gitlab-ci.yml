@@ -3,9 +3,9 @@ stages:
 
 build:
   stage: build
-  image: docker:latest
-  services:
-    - docker:dind
+  # image: docker:latest
+  # services:
+  #   - docker:dind
   script:
     - docker --version
     - docker-compose --version
