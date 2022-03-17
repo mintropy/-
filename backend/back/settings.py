@@ -38,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
 
 
 # Application definition
@@ -46,7 +46,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'diaries',
-
+    
+    'rest_auth',
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
@@ -169,16 +170,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-SITE_ID = 3
-
-
 # Third Party Settings
 
 REST_FRAMEWORK = {
     # DRF
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     # drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -197,6 +194,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-SITE_ID = 3
+SITE_ID = 2
 
 AUTH_USER_MODEL = "accounts.User"
