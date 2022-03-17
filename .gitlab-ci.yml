@@ -5,6 +5,6 @@ build:
   stage: build
   script:
     # - docker-compose build
-    - 'test'
+    - echo hello
   tags:
     - dev
