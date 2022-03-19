@@ -5,9 +5,8 @@ stages:
 build:
   stage: build
   script:
-    - docker --version
-    - docker-compose --version
     - docker-compose build
+    - docker-compose run backend python manage.py migrate
   tags:
     - dev
 
