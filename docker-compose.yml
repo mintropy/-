@@ -36,6 +36,6 @@ services:
     #   - ./docker/nginx/cert/etc/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
-      - 443:443
+      # - 443:443
     depends_on:
       - backend
