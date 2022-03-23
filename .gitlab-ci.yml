@@ -6,7 +6,12 @@ build:
   stage: build
   script:
     - docker-compose build
-    # - docker-compose run backend python manage.py migrate
+    - cd backend
+    - echo "SECRET_KEY=$SECRET_KEY" >> .env
+    - echo "kakao_client_id=$kakao_client_id" >> .env
+  artifacts:
+    reports:
+      dotenv: .env
   tags:
     - dev
 
