@@ -14,8 +14,4 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
 COPY ./backend .
-# RUN python manage.py migrate
 RUN python manage.py collectstatic
-
-# ENTRYPOINT ["./docker-entrypoint.sh"]
-# ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "-timeout", "20s"]
