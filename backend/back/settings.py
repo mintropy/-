@@ -20,7 +20,7 @@ env = environ.Env(
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
     DB_PASSWORD=(str, 'horang22'),
-    DB_HOST=(str, 'localhost'),
+    DB_HOST=(str, 'db'),
     DB_PORT=(str, '3306'),
 )
 
@@ -38,7 +38,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
+# ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

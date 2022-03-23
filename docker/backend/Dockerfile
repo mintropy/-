@@ -18,3 +18,4 @@ COPY ./backend .
 RUN python manage.py collectstatic
 
 # ENTRYPOINT ["./docker-entrypoint.sh"]
+# ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "-timeout", "20s"]
