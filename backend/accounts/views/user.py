@@ -13,11 +13,13 @@ from ..serializers.user import UserSerializer
 from accounts.models import User
 from back.settings import BASE_DIR
 
-env = environ.Env(kakao_client_id=(str, ""))
+env = environ.Env(
+    host_base_url=(str, "http://127.0.0.1:8000/api/accounts/"),
+    kakao_client_id=(str, "")
+)
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-# .env 추가 등 작업 필요
-host_base_url = "http://127.0.0.1:8000/api/accounts/"
+host_base_url = env('host_base_url')
 kakao_oauth_base_url = "https://kauth.kakao.com"
 kakao_user_info_url = "https://kapi.kakao.com/v2/user/me" 
 
