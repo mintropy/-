@@ -108,7 +108,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # mysqlclient librarly 설치
         'NAME': env('DB_NAME'),       # DB 이름
         'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
+        # 'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
+        'PASSWORD': 'rkd159357', # 로컬에서 테스트를 위해 따로 작성
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT')
     }
