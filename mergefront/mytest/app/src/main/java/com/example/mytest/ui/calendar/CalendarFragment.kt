@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import com.example.mytest.AdapterMonth
 import com.example.mytest.databinding.FragmentCalendarBinding
-
+import kotlinx.android.synthetic.main.fragment_calendar.*
 
 
 class CalendarFragment : Fragment() {
@@ -26,16 +29,26 @@ class CalendarFragment : Fragment() {
     ): View {
         val calendarViewModel =
             ViewModelProvider(this).get(CalendarViewModel::class.java)
-
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val crecyclerView = binding.calendarCustom
+
         val root: View = binding.root
 
-        val textView: TextView = binding.textCalendar
-        calendarViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+
+        val monthListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val monthListAdapter = AdapterMonth()
+////      이 밑은 페이지슬라이드 기능 이다
+        crecyclerView.apply {
+            layoutManager = monthListManager
+            adapter = monthListAdapter
+            scrollToPosition(Int.MAX_VALUE/2)
         }
+        val snap = PagerSnapHelper()
+        snap.attachToRecyclerView(crecyclerView)
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

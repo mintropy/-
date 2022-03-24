@@ -8,7 +8,7 @@
 <!--    <uses-permission android:name="android.permission.CAMERA"/>-->
 <!--&lt;!&ndash;  하드웨어적 카메라 사용&ndash;&gt;-->
 <!--    <uses-feature android:name="android.hardware.camera2"/>-->
-    <!-- 인터넷 사용 권한 설정-->
+<!-- retrofit 사용을 위한 인터넷 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,8 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mytest">
-
-
         <activity
             android:name=".BottomNav"
             android:exported="false"
@@ -31,7 +29,7 @@
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
         </activity>

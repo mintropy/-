@@ -22,9 +22,9 @@
 
     <ImageView
         android:id="@+id/image_home"
-        android:layout_width="245dp"
-        android:layout_height="404dp"
-        android:layout_marginTop="129dp"
+        android:layout_width="244dp"
+        android:layout_height="393dp"
+
         android:src="@drawable/login_bg_garden"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
