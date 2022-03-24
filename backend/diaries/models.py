@@ -6,8 +6,27 @@ from django.utils import timezone
 from accounts.models import User
 
 
-class Diary(models.Model):
+class Flower(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=20)
+    symbol = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class Diary(models.Model):
+    def photo_upload_path(instance, filename):
+        date_path = timezone.now().strftime("%Y/%m/%d")
+        # name = os.path.splitext(filename)[-1].lower()
+        return f"{date_path}/{filename}"
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    flower = models.ForeignKey(
+        Flower,
+        on_delete=models.CASCADE,
+        related_name='diaries',
+        null=True
+    )
     user = models.ForeignKey(
         User,
         related_name='diaries',
@@ -19,15 +38,14 @@ class Diary(models.Model):
         blank=True,
     )
     date = models.DateField()
-
-
-class Flower(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    dairies = models.ForeignKey(
-        Diary, on_delete=models.SET_NULL, related_name="flower", null=True
+    photo = models.ImageField(
+        upload_to=photo_upload_path,
+        null=True,
+        blank=True,
     )
-    name = models.CharField(max_length=20)
-    sumbol = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.user} {self.date}"
 
 
 class Photo(models.Model):
