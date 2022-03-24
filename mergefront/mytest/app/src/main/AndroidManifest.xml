@@ -2,12 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mytest">
 
-<!--&lt;!&ndash;   앨범승인?&ndash;&gt;-->
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
-<!--&lt;!&ndash;  카메라 승인&ndash;&gt;-->
-<!--    <uses-permission android:name="android.permission.CAMERA"/>-->
-<!--&lt;!&ndash;  하드웨어적 카메라 사용&ndash;&gt;-->
-<!--    <uses-feature android:name="android.hardware.camera2"/>-->
+<!--   앨범승인?-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 <!-- retrofit 사용을 위한 인터넷 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
 

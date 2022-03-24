@@ -1,5 +1,6 @@
 package com.example.mytest.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -37,6 +39,12 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.image.observe(viewLifecycleOwner){
             imageView.setImageResource(it)
+        }
+        binding.imageHome.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
         return root
     }
