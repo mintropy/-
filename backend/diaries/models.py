@@ -7,7 +7,8 @@ from accounts.models import User
 
 
 class Flower(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=20)
     symbol = models.CharField(max_length=20)
 
@@ -36,6 +37,9 @@ class Diary(models.Model):
         max_length=100,
         null=True,
         blank=True,
+    )
+    custom_content = models.TextField(
+        null=True
     )
     date = models.DateField()
     photo = models.ImageField(
