@@ -28,9 +28,9 @@ class DiaryViewSet(ViewSet):
     def montly(self, request, year, month):
         token = request.headers.get("Authorization", "")
         user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get("id", None)
+        if user_id is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user = get_object_or_404(User, social_id=user_id)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
@@ -42,9 +42,9 @@ class DiaryViewSet(ViewSet):
     def daily(self, request, year, month, day):
         token = request.headers.get("Authorization", "")
         user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get("id", None)
+        if user_id is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user = get_object_or_404(User, social_id=user_id)
         target_day = date(year, month, day)
         diary = get_object_or_404(Diary, user_id=user.id, date=target_day)
@@ -55,9 +55,9 @@ class DiaryViewSet(ViewSet):
     def create(self, request):
         token = request.headers.get("Authorization", "")
         user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user_id = user_info.get("id", None)
+        if user_id is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         user = get_object_or_404(User, social_id=user_id)
         try:
             target_day = date.fromisoformat(request.data['date'])
