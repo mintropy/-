@@ -85,7 +85,7 @@ class DiaryViewSet(ViewSet):
         if custom_content is not None:
             diary.custom_content = custom_content
         serializer = DiarySerializer(diary)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     @diary_update_schema
     def update(self, request, year, month, day):
