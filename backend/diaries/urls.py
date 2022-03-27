@@ -20,7 +20,7 @@ diary_daily = DiaryViewSet.as_view(
 )
 
 photo_list = PhotoViewSet.as_view(
-    {
+    { 
         "get": "list",
         "post": "create",
     }
