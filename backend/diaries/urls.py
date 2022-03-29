@@ -35,6 +35,6 @@ urlpatterns = [
     path("", diary_list, name="diary_list"),
     path("<int:year>/<int:month>/", diary_montly),
     path("<int:year>/<int:month>/<int:day>/", diary_daily),
-    path("<str:diary_id>/photo/", photo_list),
-    path("<str:diary_id>/photo/<str:photo_id>/", photo_detail),
+    path("photo/", photo_list),
+    path("photo/<str:photo_id>/", photo_detail),
 ]
