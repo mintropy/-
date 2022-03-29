@@ -2,6 +2,7 @@ package com.example.mytest
 
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.mytest.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,6 +36,9 @@ class MainActivity : BaseActivity() {
         //2. 앨범 버튼이 클릭되면 수정 가능
         binding.buttonGallery.setOnClickListener {
             openGallery()
+        }
+        binding.mainActivityLayout.setOnClickListener {
+            hideKeyboard()
         }
     }
 
@@ -91,5 +96,9 @@ class MainActivity : BaseActivity() {
             // 다이얼로그를 띄워주기
             builder.show()
         }
+    }
+    fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(diaryText.windowToken, 0)
     }
 }

@@ -34,6 +34,18 @@
         <entry key="..\:/Users/USER/Desktop/project/S06P22D102/mergefront/mytest/app/src/main/res/layout/garden.xml" value="0.1" />
         <entry key="..\:/Users/USER/Desktop/project/S06P22D102/mergefront/mytest/app/src/main/res/layout/list_item_day.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/USER/Desktop/project/S06P22D102/mergefront/mytest/app/src/main/res/layout/list_item_month.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.236" />
+        <entry key="app/src/main/res/layout-w936dp/fragment_calendar.xml" value="0.416015625" />
+        <entry key="app/src/main/res/layout/activity_bottom_nav.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_diary_detail.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1533203125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_diary.xml" value="0.1533203125" />
+        <entry key="app/src/main/res/layout/fragment_garden.xml" value="0.1533203125" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/garden.xml" value="0.335" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.32222900390625003" />
       </map>
     </option>
   </component>

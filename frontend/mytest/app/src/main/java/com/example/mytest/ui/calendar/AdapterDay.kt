@@ -1,10 +1,13 @@
 package com.example.mytest
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_day.view.*
 import java.util.*
@@ -38,7 +41,9 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerVie
             holder.layout.item_day_image.alpha = 0.0f
         }else{
             holder.layout.item_day_layout.setOnClickListener {
-            Toast.makeText(holder.layout.context, "${dayList[position]}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(holder.layout.context, "${dayList[position]}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(holder.itemView.context, DiaryDetail::class.java)
+                ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
 
         }
