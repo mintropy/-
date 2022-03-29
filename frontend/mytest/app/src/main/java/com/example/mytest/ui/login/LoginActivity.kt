@@ -83,13 +83,16 @@ class LoginActivity : AppCompatActivity() {
         
 
         binding.btnKakao?.setOnClickListener {
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
-
-
-            }else{
-                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-            }
+//            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+//                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+//
+//
+//            }else{
+//                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+//            }
+            val intent = Intent(this, BottomNav::class.java)
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            finish()
         }
     }
 
