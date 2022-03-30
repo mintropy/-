@@ -15,12 +15,12 @@ import os
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
     DB_PASSWORD=(str, 'horang22'),
-    DB_HOST=(str, 'db'),
+    DB_HOST=(str, 'mysql'),
     DB_PORT=(str, '3306'),
 )
 
@@ -40,6 +40,7 @@ DEBUG = env('DEBUG')
 
 # ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1', '0.0.0.0', 'localhost']
 ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -158,8 +159,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media File
 MEDIA_URL = '/media/'
@@ -195,6 +196,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-# SITE_ID = 2
+SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.User"

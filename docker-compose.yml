@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  db:
+  mysql:
     image: mysql:8.0.28
     restart: always
     container_name: service_mysql
@@ -12,9 +12,6 @@ services:
       MYSQL_USER: horang22
       MYSQL_PASSWORD: horang22
       MYSQL_ROOT_PASSWORD: horang22
-    command: --default-authentication-plugin=mysql_native_password --mysqlx=0
-    volumes:
-      - ./mysql_database:/var/lib/mysql
   backend:
     container_name: service_django
     build:
@@ -22,28 +19,7 @@ services:
       dockerfile: ./docker/backend/Dockerfile
     ports:
       - 8000:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn back.wsgi:application --bind 0.0.0.0:8000
     depends_on:
-      - db
-    volumes:
-      - ./static_volume:/app/backend/static
-      - ./media_volume:/app/backend/media
-  nginx:
-    container_name: service_nginx
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: ./docker/nginx/Dockerfile
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - backend
-    volumes:
-      - ./static_volume:/data/staticfiles
-      - ./media_volume:/data/media
-
-volumes:
-  mysql_database:
-  static_volume:
-  media_volume:
+      - mysql
