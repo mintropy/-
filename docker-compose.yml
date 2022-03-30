@@ -23,3 +23,13 @@ services:
     command: gunicorn back.wsgi:application --bind 0.0.0.0:8000
     depends_on:
       - mysql
+  nginx:
+    container_name: service_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
