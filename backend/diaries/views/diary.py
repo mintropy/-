@@ -26,12 +26,8 @@ class DiaryViewSet(ViewSet):
 
     @diary_montly_schema
     def montly(self, request, year, month):
-        token = request.headers.get("   ", "")
-        user_info = get_kakao_user_info(token)
-        user_id = user_info.get("id", None)
-        if user_id is None:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user = get_object_or_404(User, social_id=user_id)
+        token = request.headers.get("Authorization", "")
+        user = get_kakao_user_info(token)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
         )
@@ -41,11 +37,7 @@ class DiaryViewSet(ViewSet):
     @diary_daily_schema
     def daily(self, request, year, month, day):
         token = request.headers.get("Authorization", "")
-        user_info = get_kakao_user_info(token)
-        user_id = user_info.get("id", None)
-        if user_id is None:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user = get_object_or_404(User, social_id=user_id)
+        user = get_kakao_user_info(token)
         target_day = date(year, month, day)
         diary = get_object_or_404(Diary, user_id=user.id, date=target_day)
         serializer = DiarySerializer(diary)
@@ -54,11 +46,7 @@ class DiaryViewSet(ViewSet):
     @diary_create_schema
     def create(self, request):
         token = request.headers.get("Authorization", "")
-        user_info = get_kakao_user_info(token)
-        user_id = user_info.get("id", None)
-        if user_id is None:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user = get_object_or_404(User, social_id=user_id)
+        user = get_kakao_user_info(token)
         try:
             target_day = date.fromisoformat(request.data['date'])
         except Exception:
@@ -92,11 +80,7 @@ class DiaryViewSet(ViewSet):
     @diary_update_schema
     def update(self, request, year, month, day):
         token = request.headers.get("Authorization", "")
-        user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user_id = user_info.get("id", None)
-        user = get_object_or_404(User, social_id=user_id)
+        user = get_kakao_user_info(token)
 
         target_day = date(year, month, day)
         diary = get_object_or_404(Diary, user=user, date=target_day)
@@ -113,11 +97,7 @@ class DiaryViewSet(ViewSet):
     @diary_delete_schema
     def destroy(self, request, year, month, day):
         token = request.headers.get("Authorization", "")
-        user_info = get_kakao_user_info(token)
-        if not user_info:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        user_id = user_info.get("id", None)
-        user = get_object_or_404(User, social_id=user_id)
+        user = get_kakao_user_info(token)
 
         target_day = date(year, month, day)
         diary = get_object_or_404(Diary, user=user, date=target_day)
