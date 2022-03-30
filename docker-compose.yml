@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  mysql:
+  db:
     image: mysql:8.0.28
     restart: always
     container_name: service_mysql

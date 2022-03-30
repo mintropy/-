@@ -20,7 +20,7 @@ env = environ.Env(
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
     DB_PASSWORD=(str, 'horang22'),
-    DB_HOST=(str, 'mysql'),
+    DB_HOST=(str, 'db'),
     DB_PORT=(str, '3306'),
 )
 
