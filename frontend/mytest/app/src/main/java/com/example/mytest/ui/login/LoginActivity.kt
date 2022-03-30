@@ -3,13 +3,20 @@ package com.example.mytest.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.mytest.BottomNav
 import com.example.mytest.databinding.ActivityLoginBinding
+import com.example.mytest.dto.DiaryCreate
+import com.example.mytest.dto.User
+import com.example.mytest.retrofit.RetrofitService
+import com.kakao.sdk.auth.TokenManager
 
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.user.UserApiClient
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LoginActivity : AppCompatActivity() {
@@ -19,14 +26,18 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:8000/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val service = retrofit.create(RetrofitService::class.java)
+        var testToken2 = TokenManager.instance.getToken()
+        var head = "Bearer "+testToken2?.accessToken
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // 로그인 정보 확인
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
-            }
-            else if (tokenInfo != null) {
+            } else if (tokenInfo != null) {
                 Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, BottomNav::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
@@ -34,11 +45,32 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+//        service.getLogin()?.enqueue(object : Callback<User>{
+//            override fun onResponse(call: Call<User>, response: Response<User>) {
+//                println(response.toString())
+//                if(response.isSuccessful){
+//                    var result: User? = response.body()
+//                    Log.d("Test","성공"+result?.socialId.toString())
+//                }else{
+//                    Log.d("test","실패")
+//                }
+//
+//            }
+//
+//            override fun onFailure(call: Call<User>, t: Throwable) {
+//                Log.d("test","에러"+t.message.toString())
+//            }
+//        })
 
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
 
 
+
+////        token값 불러오는 코드: 해당값을 api 통신으로 보내면 된다.
+
+////        val keyHash = Utility.getKeyHash(this)
+////        Log.d("Hash", keyHash)
+//
+//
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -73,6 +105,24 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+
+//                service.createDiary(head)?.enqueue(object : Callback<DiaryCreate>{
+//                    override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
+//                        println("qwer"+response.toString())
+//                        if(response.isSuccessful){
+//                            var result: DiaryCreate? = response.body()
+//                            Log.d("Test","성공")
+//                        }else{
+//                            Log.d("test","실패")
+//                        }
+//
+//                    }
+
+//                    override fun onFailure(call: Call<DiaryCreate>, t: Throwable) {
+//                        Log.d("test","에러"+t.message.toString())
+//                    }
+//                })
+
                 val intent = Intent(this, BottomNav::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
@@ -80,19 +130,16 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        
+
 
         binding.btnKakao?.setOnClickListener {
-//            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-//                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
-//
-//
-//            }else{
-//                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-//            }
-            val intent = Intent(this, BottomNav::class.java)
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-            finish()
+            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+
+
+            }else{
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
         }
     }
 

@@ -1,22 +1,33 @@
 package com.example.mytest
 
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
+import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.mytest.databinding.ActivityMainBinding
+import com.example.mytest.dto.DiaryCreate
+import com.example.mytest.retrofit.RetrofitService
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.kakao.sdk.auth.TokenManager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+
 
 class MainActivity : BaseActivity() {
 
@@ -28,6 +39,8 @@ class MainActivity : BaseActivity() {
 
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
+    var filepath:String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //1. 공용저장소 권한이 있는지 확인
@@ -37,8 +50,14 @@ class MainActivity : BaseActivity() {
         binding.buttonGallery.setOnClickListener {
             openGallery()
         }
+        binding.create.setOnClickListener {
+            var custom_content = binding.diaryText.text.toString()
+            testRetrofit(null, custom_content)
+        }
+
         binding.mainActivityLayout.setOnClickListener {
             hideKeyboard()
+
         }
     }
 
@@ -74,8 +93,89 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         data?.data?.let { uri ->
             binding.imagePreview.setImageURI(uri)
+            filepath = absolutelyPath(uri)
+            testRetrofit(filepath, null)
+
+
         }
     }
+
+//    파일 절대 경로 추출
+    fun absolutelyPath(path: Uri): String? {
+
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor? = contentResolver.query(path, proj, null, null, null)
+        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c?.moveToFirst()
+        return index?.let { c?.getString(it) }
+    }
+
+    private fun testRetrofit(path : String?,custom_content:String?){
+        //creating a file
+        var body : MultipartBody.Part? =null
+        if (path != null){
+            val file = File(path)
+            var fileName = "hello"
+            fileName += ".png"
+            var requestBody : RequestBody = RequestBody.create(MediaType.parse("image/*"),file)
+            body  = MultipartBody.Part.createFormData("photo",fileName,requestBody)
+
+        }
+
+        //The gson builder
+        var gson : Gson =  GsonBuilder()
+            .setLenient()
+            .create()
+
+        var testToken2 = TokenManager.instance.getToken()
+        var head = "Bearer "+testToken2?.accessToken
+
+//        var content = binding.diaryText.text.toString()
+        //creating retrofit object
+        var retrofit =
+            Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8000/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        //creating our api
+
+        var server = retrofit.create(RetrofitService::class.java)
+
+        // 파일, 사용자 아이디, 파일이름
+
+        server.createDiary(head,null,custom_content,body).enqueue(object:Callback<DiaryCreate>{
+            override fun onFailure(call: Call<DiaryCreate>, t: Throwable) {
+                Log.d("test","에러"+t.message.toString())
+            }
+
+            override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
+                if (response?.isSuccessful ) {
+                    Log.d("레트로핏 결과2",""+response?.body().toString())
+                    if (response?.body()?.content != null && response?.body()?.photo !=null){
+//                        var date = response.body()?.date
+//                        var year = date?.year
+//                        var month = date?.month
+//                        var day = date?.day
+//                        var photo = response.body()?.photo.toString()
+                        var intent= Intent(this@MainActivity, BottomNav::class.java)
+//                        var bundle= DailyDiary(year,month,day,photo)
+//                        val homeFragment = HomeFragment()
+//                        val bundle2 = Bundle()
+//                        bundle2.putString("url",photo)
+//                        homeFragment.arguments = bundle2
+//                        intent.putExtra("date", bundle )
+                        startActivity(intent)
+                        finish()
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
+                }
+            }
+        })
+    }
+
 
     override fun onBackPressed() {
         if(diaryText.text.toString().trim().isEmpty()){

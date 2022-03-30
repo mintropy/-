@@ -38,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,11 +46,9 @@ ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
 INSTALLED_APPS = [
     'accounts',
     'diaries',
-    
-    'rest_auth',
+
     'rest_framework',
-    'corsheaders',
-    'drf_spectacular',
+    
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -66,7 +64,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,41 +157,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-# Media File
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Third Party Settings
 
-REST_FRAMEWORK = {
-    # DRF
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    # drf-spectacular
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'API',
-    'DESCRIPTION': 'API page',
-    'VERSION': '1.0',
-    # OTHER SETTINGS
-    'SWAGGER_UI_SETTINGS': {
-        'persistAuthorization': True,
-        'filter': True,
-    },
-}
-
-# SITE_ID = 2
-
-AUTH_USER_MODEL = "accounts.User"
+SITE_ID = 3
