@@ -12,7 +12,7 @@ build:
 deploy:
   stage: deploy
   script:
-    # - docker-compose run backend python manage.py migrate
+    - docker-compose run backend python manage.py migrate
     - docker-compose up -d
   tags:
     - dev
