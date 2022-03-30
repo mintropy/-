@@ -17,7 +17,7 @@ from ..models import Diary
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
-
+from .caption_model import cap
 
 class DiaryViewSet(ViewSet):
     model = Diary
@@ -26,7 +26,7 @@ class DiaryViewSet(ViewSet):
 
     @diary_montly_schema
     def montly(self, request, year, month):
-        token = request.headers.get("Authorization", "")
+        token = request.headers.get("   ", "")
         user_info = get_kakao_user_info(token)
         user_id = user_info.get("id", None)
         if user_id is None:
@@ -74,6 +74,8 @@ class DiaryViewSet(ViewSet):
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
             
             # 이미지 캡셔닝
+            print("$$$")
+            cap(photo)
             # 꽃 추천
             
             serializer = DiarySerializer(diary)
