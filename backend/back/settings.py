@@ -15,7 +15,7 @@ import os
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True),
+    DEBUG=(bool, False),
     SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
