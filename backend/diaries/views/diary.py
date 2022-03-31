@@ -14,7 +14,7 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary
+from ..models import Diary, Flower
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
@@ -71,6 +71,12 @@ class DiaryViewSet(ViewSet):
             print(pathh)
             print("!@#!@",cap(pathh))
             # 꽃 추천
+            
+            # 꽃 결과 유저 꽃 목록 추가
+            # API 실험을 위한 꽃 임의 지정, 꽃추천 완료되면 수정 필요
+            flower = Flower.objects.get(id=1)
+            # 해당 꽃을 유저가 가지고 있는 것으로 추가
+            user.flowers.add(flower)
             
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

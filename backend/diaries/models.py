@@ -7,8 +7,11 @@ from accounts.models import User
 
 
 class Flower(models.Model):
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id = models.IntegerField(primary_key=True)
+    users = models.ManyToManyField(
+        User,
+        related_name="flowers",
+    )
     name = models.CharField(max_length=20)
     symbol = models.CharField(max_length=20)
 
@@ -18,28 +21,26 @@ class Flower(models.Model):
 
 class Diary(models.Model):
     def photo_upload_path(instance, filename):
-        date_path = timezone.now().strftime("%Y/%m/%d")
-        # name = os.path.splitext(filename)[-1].lower()
+        date_path = instance.date.strftime("%Y/%m/%d")
         return f"{date_path}/{filename}"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     flower = models.ForeignKey(
         Flower,
         on_delete=models.CASCADE,
-        related_name='diaries',
-        null=True
+        related_name="diaries",
+        null=True,
+        blank=True,
     )
-    user = models.ForeignKey(
-        User,
-        related_name='diaries',
-        on_delete=models.CASCADE
-    )
+    user = models.ForeignKey(User, related_name="diaries", on_delete=models.CASCADE)
     content = models.CharField(
         max_length=100,
         null=True,
         blank=True,
     )
     custom_content = models.TextField(
-        null=True
+        null=True,
+        blank=True,
     )
     date = models.DateField()
     photo = models.ImageField(
@@ -55,7 +56,6 @@ class Diary(models.Model):
 class Photo(models.Model):
     def photo_upload_path(instance, filename):
         date_path = timezone.now().strftime("%Y/%m/%d")
-        # name = os.path.splitext(filename)[-1].lower()
         return f"{date_path}/{filename}"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
