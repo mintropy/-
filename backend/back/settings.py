@@ -16,11 +16,11 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SECRET_KEY=(str, 'SECRET_KEY'),
-    DB_NAME=(str, 'DB_NAME'),
-    DB_USER=(str, 'DB_USER'),
-    DB_PASSWORD=(str, 'DB_PASSWORD'),
-    DB_HOST=(str, 'localhost'),
+    SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
+    DB_NAME=(str, 'horang22'),
+    DB_USER=(str, 'horang22'),
+    DB_PASSWORD=(str, 'horang22'),
+    DB_HOST=(str, 'db'),
     DB_PORT=(str, '3306'),
 )
 
@@ -38,7 +38,11 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = []
+=======
+ALLOWED_HOSTS = ["*"]
+>>>>>>> develop
 
 
 # Application definition
@@ -108,8 +112,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # mysqlclient librarly 설치
         'NAME': env('DB_NAME'),       # DB 이름
         'USER': env('DB_USER'),
-        # 'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
-        'PASSWORD': 'rkd159357', # 로컬에서 테스트를 위해 따로 작성
+        'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT')
     }
@@ -155,7 +158,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+<<<<<<< HEAD
 STATIC_URL = '/static/'
+=======
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media File
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+>>>>>>> develop
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -163,4 +176,28 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-SITE_ID = 3
+REST_FRAMEWORK = {
+    # DRF
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    # drf-spectacular
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API',
+    'DESCRIPTION': 'API page',
+    'VERSION': '1.0',
+    # OTHER SETTINGS
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+        'filter': True,
+    },
+}
+
+SITE_ID = 1
+
+AUTH_USER_MODEL = "accounts.User"
