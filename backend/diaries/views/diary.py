@@ -58,25 +58,28 @@ class DiaryViewSet(ViewSet):
         photo = request.FILES.get('photo', None)
         custom_content = request.data.get('custom_content', None)
         
-        print("############")
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
             
-            print("!!!",type(target_day)) 
-            # pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
-            pathh = os.path.join(BASE_DIR,'media','2022','03','31',str(request.FILES['photo']))
-            print(pathh)
-            print("!@#!@",cap(pathh))
-            # 꽃 추천
+            pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
+
+            diary.content = cap(pathh)
+            diary.save()
+            
+            # 모델 수정
+            # 번역
+            # 주석 제거
+            # black
+            
             
             # 꽃 결과 유저 꽃 목록 추가
             # API 실험을 위한 꽃 임의 지정, 꽃추천 완료되면 수정 필요
-            flower = Flower.objects.get(id=1)
+            # flower = Flower.objects.get(id=1)
             # 해당 꽃을 유저가 가지고 있는 것으로 추가
-            user.flowers.add(flower)
+            # user.flowers.add(flower)
             
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
