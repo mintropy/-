@@ -1,9 +1,6 @@
 package com.example.mytest.retrofit
 
-import com.example.mytest.dto.DailyDiary
-import com.example.mytest.dto.DiaryCreate
-import com.example.mytest.dto.Photos
-import com.example.mytest.dto.User
+import com.example.mytest.dto.*
 import com.kakao.sdk.auth.TokenManager
 import com.kakao.sdk.auth.model.OAuthToken
 import okhttp3.MultipartBody
@@ -40,6 +37,13 @@ interface RetrofitService {
         @Path("month")month:String,
         @Path("day")day:String
     ): Call<DailyDiary>
+
+    @GET("api/diaries/{year}/{month}/")
+    fun monthDiary(
+        @Header("Authorization")token: String,
+        @Path("year")year:String,
+        @Path("month")month:String,
+    ):Call<List<DailyDiary>>
 //    @GET()
 //    @GET()
 //    @GET()

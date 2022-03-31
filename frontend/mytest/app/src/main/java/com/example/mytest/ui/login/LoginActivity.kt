@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val retrofit = Retrofit.Builder().baseUrl("http://10.0.2.2:8000/")
+        val retrofit = Retrofit.Builder().baseUrl("http://j6d102.p.ssafy.io/")
             .addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(RetrofitService::class.java)
         var testToken2 = TokenManager.instance.getToken()

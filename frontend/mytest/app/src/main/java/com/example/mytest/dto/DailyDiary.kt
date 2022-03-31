@@ -11,6 +11,8 @@ data class DailyDiary(
 //    var month: String,
 //    @SerializedName("day")
 //    var day: String,
+    @SerializedName("date")
+    var date: String,
     @SerializedName("photo")
     var photo: String,
     @SerializedName("content")

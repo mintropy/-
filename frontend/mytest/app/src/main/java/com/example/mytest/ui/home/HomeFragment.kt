@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -122,7 +122,7 @@ class HomeFragment : Fragment() {
 
     }
     private fun checkFlower(){
-        url = "http://10.0.2.2:8000"+url
+        url = "http://j6d102.p.ssafy.io/"+url
         activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
     }
     private fun Date.dateToString(format: String): String {
