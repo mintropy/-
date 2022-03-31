@@ -21,7 +21,7 @@ class Flower(models.Model):
 
 class Diary(models.Model):
     def photo_upload_path(instance, filename):
-        date_path = timezone.now().strftime("%Y/%m/%d")
+        date_path = instance.date.strftime("%Y/%m/%d")
         return f"{date_path}/{filename}"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
