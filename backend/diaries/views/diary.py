@@ -1,4 +1,5 @@
 from datetime import date
+import os
 
 from django.shortcuts import get_object_or_404
 
@@ -18,6 +19,7 @@ from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
 from .caption_model import cap
+from back.settings import BASE_DIR
 
 class DiaryViewSet(ViewSet):
     model = Diary
@@ -55,15 +57,19 @@ class DiaryViewSet(ViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         photo = request.FILES.get('photo', None)
         custom_content = request.data.get('custom_content', None)
+        
+        print("############")
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
             
-            # 이미지 캡셔닝
-            print("$$$")
-            cap(photo)
+            print("!!!",type(target_day)) 
+            # pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
+            pathh = os.path.join(BASE_DIR,'media','2022','03','31',str(request.FILES['photo']))
+            print(pathh)
+            print("!@#!@",cap(pathh))
             # 꽃 추천
             
             serializer = DiarySerializer(diary)
