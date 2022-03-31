@@ -1,16 +1,20 @@
 package com.example.mytest
 
+import android.R
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.mytest.databinding.ActivityMainBinding
 import com.example.mytest.dto.DiaryCreate
 import com.example.mytest.retrofit.RetrofitService
@@ -27,6 +31,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainActivity : BaseActivity() {
@@ -40,12 +50,22 @@ class MainActivity : BaseActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     var filepath:String? = null
+    var date:String? = null
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //1. 공용저장소 권한이 있는지 확인
         requirePermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), PERM_STORAGE)
         setContentView(binding.root)
+        var localDate = Date().time
+        var format = SimpleDateFormat("yyyy-MM-dd")
+        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        date = format.format(localDate)
+
+        println("date: "+date)
         //2. 앨범 버튼이 클릭되면 수정 가능
         binding.buttonGallery.setOnClickListener {
             openGallery()
@@ -58,6 +78,34 @@ class MainActivity : BaseActivity() {
         binding.mainActivityLayout.setOnClickListener {
             hideKeyboard()
 
+        }
+        binding.daySelect.setOnClickListener() {
+            var c = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(
+                this@MainActivity, R.style.Theme_Holo_Light_Dialog_MinWidth,
+                { view, year, monthOfYear, dayOfMonth ->
+                    // TODO Auto-generated method stub
+                    try {
+                         var year =year.toString()
+                         var month =String.format("%02d",monthOfYear + 1)
+                         var day = String.format("%02d",dayOfMonth)
+                        date = year+"-"+month+"-"+day
+                        println("date2: "+date)
+                    } catch (e: Exception) {
+
+                        // TODO: handle exception
+                        e.printStackTrace()
+                    }
+                },
+                c[Calendar.YEAR],
+                c[Calendar.MONTH],
+                c[Calendar.DAY_OF_MONTH]
+            )
+            datePickerDialog.getDatePicker().setCalendarViewShown(false);
+
+            datePickerDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
+
+            datePickerDialog.show();
         }
     }
 
@@ -144,7 +192,7 @@ class MainActivity : BaseActivity() {
 
         // 파일, 사용자 아이디, 파일이름
 
-        server.createDiary(head,null,custom_content,body).enqueue(object:Callback<DiaryCreate>{
+        server.createDiary(head,date,custom_content,body).enqueue(object:Callback<DiaryCreate>{
             override fun onFailure(call: Call<DiaryCreate>, t: Throwable) {
                 Log.d("test","에러"+t.message.toString())
             }
@@ -153,18 +201,9 @@ class MainActivity : BaseActivity() {
                 if (response?.isSuccessful ) {
                     Log.d("레트로핏 결과2",""+response?.body().toString())
                     if (response?.body()?.content != null && response?.body()?.photo !=null){
-//                        var date = response.body()?.date
-//                        var year = date?.year
-//                        var month = date?.month
-//                        var day = date?.day
-//                        var photo = response.body()?.photo.toString()
+//
                         var intent= Intent(this@MainActivity, BottomNav::class.java)
-//                        var bundle= DailyDiary(year,month,day,photo)
-//                        val homeFragment = HomeFragment()
-//                        val bundle2 = Bundle()
-//                        bundle2.putString("url",photo)
-//                        homeFragment.arguments = bundle2
-//                        intent.putExtra("date", bundle )
+//
                         startActivity(intent)
                         finish()
                     }

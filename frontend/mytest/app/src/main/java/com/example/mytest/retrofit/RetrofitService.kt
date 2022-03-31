@@ -26,7 +26,7 @@ interface RetrofitService {
     @POST("api/diaries/")
    fun createDiary(
                     @Header("Authorization")token: String,
-                    @Part("date")date: Date?,
+                    @Part("date")date: String?,
                     @Part("custom_content") custom_content: String?,
                     @Part image: MultipartBody.Part?,
 //                    @Part ("id") id:String?,
