@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.test import TestCase
 
-from ..models import Diary, Flower, Photo
+from ..models import Dairy, Flower, Photo
 
 
 class TestModel(TestCase):
