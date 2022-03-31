@@ -9,6 +9,10 @@ from accounts.models import User
 class Flower(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id = models.IntegerField(primary_key=True)
+    users = models.ManyToManyField(
+        User,
+        related_name='flowers',
+    )
     name = models.CharField(max_length=20)
     symbol = models.CharField(max_length=20)
 
@@ -26,7 +30,8 @@ class Diary(models.Model):
         Flower,
         on_delete=models.CASCADE,
         related_name='diaries',
-        null=True
+        null=True,
+        blank=True,
     )
     user = models.ForeignKey(
         User,
@@ -39,7 +44,8 @@ class Diary(models.Model):
         blank=True,
     )
     custom_content = models.TextField(
-        null=True
+        null=True,
+        blank=True,
     )
     date = models.DateField()
     photo = models.ImageField(

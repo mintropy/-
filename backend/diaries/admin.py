@@ -9,15 +9,16 @@ class PhotoInline(admin.TabularInline):
 
 @admin.register(Diary)
 class DiaryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'date',)
+    list_display = ('user', 'date', 'custom_content', 'flower',)
     inlines = (PhotoInline,)
+    ordering = ('-date',)
 
 
 @admin.register(Flower)
 class FlowerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'symbol',)
+    list_display = ('name', 'symbol',)
 
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'dairies', 'photo',)
+    list_display = ('dairies', 'photo',)
