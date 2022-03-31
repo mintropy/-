@@ -56,4 +56,14 @@ dependencies {
     implementation "com.kakao.sdk:v2-story:2.8.5" // 카카오스토리
     implementation "com.kakao.sdk:v2-link:2.8.5" // 메시지(카카오링크)
     implementation "com.kakao.sdk:v2-navi:2.8.5" // 카카오내비
+
+    // Retrofit 라이브러리
+    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
+
+    // Gson 변환기 라이브러리:JSON 타입의 응답결과를 객체로 매핑(변환)해주는 Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
+
+//    glide: url로 이미지 불러오기
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }

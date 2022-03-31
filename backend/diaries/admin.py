@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Diary, Flower, Photo
 
 
 class PhotoInline(admin.TabularInline):

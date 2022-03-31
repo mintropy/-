@@ -15,9 +15,9 @@
         android:id="@+id/navigation_garden"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_garden" />
-<!--    <item-->
-<!--        android:id="@+id/navigation_diary"-->
-<!--        android:icon="@drawable/ic_notifications_black_24dp"-->
-<!--        android:title="@string/title_diary" />-->
+    <item
+        android:id="@+id/navigation_diary"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_diary" />
 
 </menu>

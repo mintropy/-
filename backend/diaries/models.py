@@ -1,13 +1,7 @@
-import uuid
-
 from django.db import models
-from django.utils import timezone
 
-from accounts.models import User
-
-
-class Flower(models.Model):
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+# Create your models here.
+class Dairy(models.Model):
     id = models.IntegerField(primary_key=True)
     users = models.ManyToManyField(
         User,
@@ -47,27 +41,15 @@ class Diary(models.Model):
         null=True,
         blank=True,
     )
-    date = models.DateField()
-    photo = models.ImageField(
-        upload_to=photo_upload_path,
-        null=True,
-        blank=True,
-    )
-
-    def __str__(self):
-        return f"{self.user} {self.date}"
+    name = models.CharField(max_length=20)
+    sumbol = models.CharField(max_length=20)
 
 
 class Photo(models.Model):
-    def photo_upload_path(instance, filename):
-        date_path = timezone.now().strftime("%Y/%m/%d")
-        # name = os.path.splitext(filename)[-1].lower()
-        return f"{date_path}/{filename}"
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    dairies = models.ForeignKey(Diary, on_delete=models.CASCADE, related_name="photos")
-    photo = models.ImageField(
-        upload_to=photo_upload_path,
-        null=True,
-        blank=True,
+    id = models.IntegerField(primary_key=True)
+    dairies = models.ForeignKey(
+        Dairy,
+        on_delete=models.CASCADE,
+        related_name='photos'
     )
+    photo = models.ImageField()
