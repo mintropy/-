@@ -1,11 +1,13 @@
 package com.example.mytest
 
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytest.dto.DailyDiary
 import com.example.mytest.retrofit.RetrofitService
@@ -53,11 +55,17 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerVie
         }else{
             testRetrofit(year,month, day,holder)
             holder.layout.item_day_layout.setOnClickListener {
-            Toast.makeText(holder.layout.context, "${dayList[position]}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(holder.layout.context, "${dayList[position]}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(holder.layout.item_day_layout.context, DiaryDetail::class.java)
+                intent.putExtra("year",year)
+                intent.putExtra("month",month)
+                intent.putExtra("day",day)
+                ContextCompat.startActivity(holder.layout.item_day_layout.context, intent,null)
+                }
             }
 
         }
-    }
+
 
     override fun getItemCount(): Int {
         return ROW * 7

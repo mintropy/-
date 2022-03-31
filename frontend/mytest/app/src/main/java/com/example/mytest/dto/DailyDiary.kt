@@ -12,6 +12,10 @@ data class DailyDiary(
 //    @SerializedName("day")
 //    var day: String,
     @SerializedName("photo")
-    var photo: String
+    var photo: String,
+    @SerializedName("content")
+    val content: String?,
+    @SerializedName("custom_content")
+    val customContent: String?
 )
 
