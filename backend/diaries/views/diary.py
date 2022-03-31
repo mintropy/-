@@ -19,6 +19,7 @@ from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
 from .caption_model import cap
+from .translate import get_translate
 from back.settings import BASE_DIR
 
 class DiaryViewSet(ViewSet):
@@ -65,8 +66,11 @@ class DiaryViewSet(ViewSet):
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
             
             pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
-
-            diary.content = cap(pathh)
+            
+            caption = cap(pathh)
+            diary.en_content = caption
+            diary.ko_content = get_translate(caption)
+            
             diary.save()
             
             # 모델 수정

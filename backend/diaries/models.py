@@ -33,7 +33,12 @@ class Diary(models.Model):
         blank=True,
     )
     user = models.ForeignKey(User, related_name="diaries", on_delete=models.CASCADE)
-    content = models.CharField(
+    ko_content = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    en_content = models.CharField(
         max_length=100,
         null=True,
         blank=True,

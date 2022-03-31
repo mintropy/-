@@ -194,7 +194,7 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-# SITE_ID = 1
-SITE_ID = 8
+SITE_ID = 1
+# SITE_ID = 8
 
 AUTH_USER_MODEL = "accounts.User"
