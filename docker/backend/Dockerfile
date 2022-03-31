@@ -23,7 +23,3 @@ RUN pip install gunicorn
 
 COPY ./backend .
 RUN python manage.py collectstatic
-# RUN python manage.py migrate
-
-# COPY docker-entrypoint.sh /docker-entrypoint.sh
-# RUN chmod +x /docker-entrypoint.sh
