@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views.diary import DiaryViewSet
-from .views.photo import PhotoViewSet
+from .views.flower import FlowerViewSet
 
 
 diary_list = DiaryViewSet.as_view(
@@ -17,22 +17,13 @@ diary_daily = DiaryViewSet.as_view(
         "delete": "destroy",
     }
 )
-
-photo_list = PhotoViewSet.as_view(
-    {
-        "post": "create",
-    }
-)
-photo_delete = PhotoViewSet.as_view(
-    {
-        "post": "delete_photos",
-    }
-)
+flower_list = FlowerViewSet.as_view({"get": "list"})
+flower_detail = FlowerViewSet.as_view({"get": "retrieve"})
 
 urlpatterns = [
     path("", diary_list, name="diary_list"),
     path("<int:year>/<int:month>/", diary_montly),
     path("<int:year>/<int:month>/<int:day>/", diary_daily),
-    path("<int:year>/<int:month>/<int:day>/photo/", photo_list),
-    path("<int:year>/<int:month>/<int:day>/photo/delete/", photo_delete),
+    path("flowers/", flower_list),
+    path("flowers/<int:flower_id>/", flower_detail),
 ]
