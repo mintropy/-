@@ -16,11 +16,11 @@ import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SECRET_KEY=(str, 'SECRET_KEY'),
-    DB_NAME=(str, 'DB_NAME'),
-    DB_USER=(str, 'DB_USER'),
-    DB_PASSWORD=(str, 'DB_PASSWORD'),
-    DB_HOST=(str, 'localhost'),
+    SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
+    DB_NAME=(str, 'horang22'),
+    DB_USER=(str, 'horang22'),
+    DB_PASSWORD=(str, 'horang22'),
+    DB_HOST=(str, 'db'),
     DB_PORT=(str, '3306'),
 )
 
@@ -38,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['kubernetes.docker.internal','127.0.0.1']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -111,8 +111,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # mysqlclient librarly 설치
         'NAME': env('DB_NAME'),       # DB 이름
         'USER': env('DB_USER'),
-        # 'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
-        'PASSWORD': 'rkd159357', # 로컬에서 테스트를 위해 따로 작성
+        'PASSWORD': env('DB_PASSWORD'), # 설치 시 입력한 root 비밀번호 입력
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT')
     }
@@ -158,8 +157,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media File
 MEDIA_URL = '/media/'
@@ -195,6 +194,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-SITE_ID = 2
+SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.User"

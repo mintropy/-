@@ -42,7 +42,7 @@ class BottomNav : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_diary, R.id.navigation_garden, R.id.navigation_calendar
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         binding.kakaoLogoutButton.setOnClickListener {
             UserApiClient.instance.logout { error ->
@@ -57,5 +57,4 @@ class BottomNav : AppCompatActivity() {
             }
         }
     }
-
 }

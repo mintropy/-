@@ -4,25 +4,34 @@ import os
 import requests
 
 from django.shortcuts import redirect
+from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .schema.user import kakao_login_schema, kakao_user_info_schema, kakao_unlink_schema, user_update_schema
+from .schema.user import (
+    kakao_login_schema,
+    kakao_user_info_schema,
+    kakao_unlink_schema,
+    user_update_schema,
+)
 from ..serializers.user import UserSerializer
 from accounts.models import User
 from back.settings import BASE_DIR
 
-env = environ.Env(kakao_client_id=(str, ""))
+
+env = environ.Env(
+    host_base_url=(str, "http://j6d102.p.ssafy.io/api/accounts/"),
+    kakao_client_id=(str, "057aa14f717c54ff1889493df84553ed")
+)
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-# .env 추가 등 작업 필요
-host_base_url = "http://127.0.0.1:8000/api/accounts/"
+host_base_url = env('host_base_url')
 kakao_oauth_base_url = "https://kauth.kakao.com"
-kakao_user_info_url = "https://kapi.kakao.com/v2/user/me" 
+kakao_user_info_url = "https://kapi.kakao.com/v2/user/me"
 
 
-def get_kakao_user_info(token: str):
+def get_kakao_user_info(token: str) -> User:
     user_url = kakao_user_info_url
     headers = {
         "Authorization": token,
@@ -33,7 +42,15 @@ def get_kakao_user_info(token: str):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     user_info = response.text
     user_info = json.loads(user_info)
-    return user_info
+    user_id = user_info.get("id", None)
+    if user_id is None:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    user, created = User.objects.get_or_create(social="KA", social_id=user_id)
+    if created:
+        user.username = user_info["properties"]["nickname"]
+        user.password = make_password(str(user.social_id))
+        user.save()
+    return user
 
 
 class AccountViewSet(ViewSet):
@@ -41,7 +58,6 @@ class AccountViewSet(ViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
-
 
     @kakao_login_schema
     def kakao_login(self, request):
@@ -68,36 +84,16 @@ class AccountViewSet(ViewSet):
         token_json = response.json()
 
         token = "Bearer " + token_json["access_token"]
-        user_info = get_kakao_user_info(token)
-        user_id = str(user_info["id"])
-        user_nickname = user_info["properties"]["nickname"]
-        check_user = User.objects.filter(social_id=user_id)
-        if check_user:
-            return Response(token_json, status=status.HTTP_200_OK)
-        data = {
-            "social": "KA",
-            "social_id": user_id,
-            "username": user_nickname,
-            "password": user_id,
-        }
-        serializer = UserSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(token_json, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user = get_kakao_user_info(token)
+        return Response(token_json, status=status.HTTP_200_OK)
 
     @kakao_unlink_schema
     def kakao_unlink(self, request):
-        token = request.headers.get('Authorization', '')
-        user_info = get_kakao_user_info(token)
-        user_id = str(user_info["id"])
-        if not User.objects.filter(social_id=user_id).exists():
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        user = User.objects.get(social_id=user_id)
+        token = request.headers.get("Authorization", "")
+        user = get_kakao_user_info(token)
         url = "https://kapi.kakao.com/v1/user/unlink"
-        auth = "Bearer " + token
         HEADER = {
-            "Authorization": auth,
+            "Authorization": token,
             "Content-Type": "application/x-www-form-urlencoded",
         }
         response = requests.post(url, headers=HEADER)
@@ -108,12 +104,8 @@ class AccountViewSet(ViewSet):
 
     @user_update_schema
     def update(self, request):
-        token = request.headers.get('Authorization', '')
-        user_info = get_kakao_user_info(token)
-        user_id = str(user_info["id"])
-        if not User.objects.filter(social_id=user_id).exists():
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        user = User.objects.get(social_id=user_id)
+        token = request.headers.get("Authorization", "")
+        user = get_kakao_user_info(token)
         data = {
             "email": request.data.get("email", user.email),
             "username": request.data.get("username", user.username),

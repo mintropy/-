@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:8.0.28
+    restart: always
+    container_name: service_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: horang22
+      MYSQL_USER: horang22
+      MYSQL_PASSWORD: horang22
+      MYSQL_ROOT_PASSWORD: horang22
+  backend:
+    container_name: service_django
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - 8000:8000
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn back.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - db
+  nginx:
+    container_name: service_nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
