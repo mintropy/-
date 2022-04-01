@@ -9,21 +9,26 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .schema.user import kakao_login_schema, kakao_user_info_schema, kakao_unlink_schema, user_update_schema
+from .schema.user import (
+    kakao_login_schema,
+    kakao_user_info_schema,
+    kakao_unlink_schema,
+    user_update_schema,
+)
 from ..serializers.user import UserSerializer
 from accounts.models import User
 from back.settings import BASE_DIR
 
+
 env = environ.Env(
     host_base_url=(str, "http://j6d102.p.ssafy.io/api/accounts/"),
-    # host_base_url=(str, "http://127.0.0.1:8000/api/accounts/"),
     kakao_client_id=(str, "057aa14f717c54ff1889493df84553ed")
 )
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 host_base_url = env('host_base_url')
 kakao_oauth_base_url = "https://kauth.kakao.com"
-kakao_user_info_url = "https://kapi.kakao.com/v2/user/me" 
+kakao_user_info_url = "https://kapi.kakao.com/v2/user/me"
 
 
 def get_kakao_user_info(token: str) -> User:
@@ -37,12 +42,10 @@ def get_kakao_user_info(token: str) -> User:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     user_info = response.text
     user_info = json.loads(user_info)
-    user_id = user_info.get('id', None)
+    user_id = user_info.get("id", None)
     if user_id is None:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
-    user, created = User.objects.get_or_create(
-        social='KA', social_id=user_id
-    )
+    user, created = User.objects.get_or_create(social="KA", social_id=user_id)
     if created:
         user.username = user_info["properties"]["nickname"]
         user.password = make_password(str(user.social_id))
@@ -55,7 +58,6 @@ class AccountViewSet(ViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
-
 
     @kakao_login_schema
     def kakao_login(self, request):
@@ -87,7 +89,7 @@ class AccountViewSet(ViewSet):
 
     @kakao_unlink_schema
     def kakao_unlink(self, request):
-        token = request.headers.get('Authorization', '')
+        token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         url = "https://kapi.kakao.com/v1/user/unlink"
         HEADER = {
@@ -102,7 +104,7 @@ class AccountViewSet(ViewSet):
 
     @user_update_schema
     def update(self, request):
-        token = request.headers.get('Authorization', '')
+        token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         data = {
             "email": request.data.get("email", user.email),

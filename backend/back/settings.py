@@ -15,7 +15,7 @@ import os
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
@@ -46,7 +46,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'accounts',
     'diaries',
-    
+
     'rest_auth',
     'rest_framework',
     'corsheaders',
