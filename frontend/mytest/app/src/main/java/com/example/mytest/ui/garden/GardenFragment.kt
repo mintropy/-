@@ -37,14 +37,14 @@ class GardenFragment : Fragment() {
 //        gardenViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
-        val arr = arrayOf("blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow" )
+        val arr = arrayOf("azalea","azalea")
         val length = arr.size
 
         for (i in 1 until (length+1)) {
 //            val random = Random()
 //            val ranNum = random.nextInt(31) + 1
             val flowerNum = arr[i-1]
-            val flowerImage = "@/drawable/$flowerNum"
+            val flowerImage = "@/drawable/drawable-flower/$flowerNum"
             val flowerImageId = resources.getIdentifier(flowerImage, "drawable", requireContext().packageName ?:null)
             val imageViewId = resources.getIdentifier("flower_$i", "id", requireContext().packageName)
             val imageView = view?.findViewById<ImageView>(imageViewId)

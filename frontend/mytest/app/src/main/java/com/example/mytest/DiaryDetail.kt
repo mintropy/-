@@ -42,7 +42,8 @@ class DiaryDetail : AppCompatActivity() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://j6d102.p.ssafy.io/")
+                .baseUrl("http://10.0.2.2:8000/")
+//                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -64,8 +65,8 @@ class DiaryDetail : AppCompatActivity() {
                     if (url != null) {
                         checkFlower()
                     }
-                    diaryText.text = response.body()?.customContent.toString()
-                    imageCaption.text = response.body()?.content.toString()
+                    diaryText.text = response.body()?.custom_content.toString()
+                    imageCaption.text = response.body()?.ko_content.toString()
                     flower.setImageResource(R.drawable.chowon)
                     flower.alpha = 0.3f
                 } else {
