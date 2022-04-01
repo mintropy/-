@@ -14,17 +14,14 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary, Flower
+from ..models import Diary
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
-<<<<<<< HEAD
 from .recommend_flower import recommend
-=======
 from .caption_model import cap
 from .translate import get_translate
 from back.settings import BASE_DIR
->>>>>>> e873a27f243865608297cd3786273d45bc539e2b
 
 class DiaryViewSet(ViewSet):
     model = Diary
@@ -62,18 +59,12 @@ class DiaryViewSet(ViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         photo = request.FILES.get('photo', None)
         custom_content = request.data.get('custom_content', None)
-        
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
             
-<<<<<<< HEAD
-            # 이미지 캡셔닝
-            # 꽃 추천
-            a=recommend("Everything is good")
-=======
             pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
             
             caption = cap(pathh)
@@ -93,8 +84,12 @@ class DiaryViewSet(ViewSet):
             # flower = Flower.objects.get(id=1)
             # 해당 꽃을 유저가 가지고 있는 것으로 추가
             # user.flowers.add(flower)
->>>>>>> e873a27f243865608297cd3786273d45bc539e2b
+
             
+            # 이미지 캡셔닝
+            # 꽃 추천
+            a=recommend(caption)
+            print(a)
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

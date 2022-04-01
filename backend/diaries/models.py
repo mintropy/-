@@ -10,11 +10,7 @@ class Flower(models.Model):
     id = models.IntegerField(primary_key=True)
     users = models.ManyToManyField(
         User,
-<<<<<<< HEAD
-        related_name='flowers',
-=======
         related_name="flowers",
->>>>>>> e873a27f243865608297cd3786273d45bc539e2b
     )
     name = models.CharField(max_length=20)
     symbol = models.CharField(max_length=20)
