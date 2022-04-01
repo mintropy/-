@@ -1,6 +1,19 @@
 stages:
+  - test
   - build 
   - deploy
+
+test:
+  stage: test
+  image: python:3
+  script:
+    - pip install pytest pytest-cov
+    - coverage run -m pytest
+    - coverage report
+    - coverage xml
+  artifacts:
+    reports:
+      cobertura: coverage.xml
 
 build:
   stage: build
