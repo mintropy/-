@@ -23,6 +23,7 @@ from .caption_model import cap
 from .translate import get_translate
 from back.settings import BASE_DIR
 
+
 class DiaryViewSet(ViewSet):
     model = Diary
     queryset = Diary.objects.all()
@@ -52,28 +53,32 @@ class DiaryViewSet(ViewSet):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         try:
-            target_day = date.fromisoformat(request.data['date'])
+            target_day = date.fromisoformat(request.data["date"])
         except Exception:
             target_day = date.today()
         if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        photo = request.FILES.get('photo', None)
-        custom_content = request.data.get('custom_content', None)
+        photo = request.FILES.get("photo", None)
+        custom_content = request.data.get("custom_content", None)
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
-            
-            pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
-            
+            pathh = os.path.join(
+                BASE_DIR,
+                "media",
+                str(target_day)[:4],
+                str(target_day)[5:7],
+                str(target_day)[8:],
+                str(request.FILES["photo"]),
+            )
             caption = cap(pathh)
+            flower_id = recommend(caption)
+            flower = Flower.objects.get(id=flower_id)
+
             diary.en_content = caption
             diary.ko_content = get_translate(caption)
-            
-            flower_id=recommend(caption)
-            
-            flower = Flower.objects.get(id=flower_id)
             diary.flower = flower
             diary.save()
             user.flowers.add(flower)
@@ -85,6 +90,7 @@ class DiaryViewSet(ViewSet):
             diary.photo = photo
         if custom_content is not None:
             diary.custom_content = custom_content
+        diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
