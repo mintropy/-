@@ -44,4 +44,3 @@ urlpatterns = [
     path("flowers/", flower_list),
     path("flowers/<int:flower_id>/", flower_detail),
 ]
-
