@@ -24,8 +24,8 @@
         tools:layout="@layout/fragment_garden" />
 
     <fragment
-        android:id="@+id/navigation_diary"
-        android:name="com.example.mytest.ui.diary.DiaryFragment"
-        android:label="@string/title_diary"
-        tools:layout="@layout/fragment_garden" />
+        android:id="@+id/navigation_dogam"
+        android:name="com.example.mytest.ui.dogam.DogamFragment"
+        android:label="@string/title_dogam"
+        tools:layout="@layout/fragment_dogam" />
 </navigation>
