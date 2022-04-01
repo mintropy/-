@@ -9,6 +9,10 @@ from accounts.models import User
 class Flower(models.Model):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id = models.IntegerField(primary_key=True)
+    users = models.ManyToManyField(
+        User,
+        related_name='flowers',
+    )
     name = models.CharField(max_length=20)
     symbol = models.CharField(max_length=20)
 

@@ -17,7 +17,7 @@ from ..models import Diary
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
-
+from .recommend_flower import recommend
 
 class DiaryViewSet(ViewSet):
     model = Diary
@@ -63,6 +63,7 @@ class DiaryViewSet(ViewSet):
             
             # 이미지 캡셔닝
             # 꽃 추천
+            a=recommend("Everything is good")
             
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
