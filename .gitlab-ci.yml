@@ -6,6 +6,9 @@ stages:
 test:
   stage: test
   image: python:3
+  only:
+    - tests@s06-ai-image-sub2/S06P22D102
+    - develop@s06-ai-image-sub2/S06P22D102
   script:
     - pip install pytest pytest-cov
     - coverage run -m pytest
