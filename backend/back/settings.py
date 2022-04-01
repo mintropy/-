@@ -15,7 +15,7 @@ import os
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True),
+    DEBUG=(bool, False),
     SECRET_KEY=(str, 'django-insecure-m^b)l3!)t4b2171u1xm=zl*_k0y$4%!ta=)de$nzo4k!ke79gr'),
     DB_NAME=(str, 'horang22'),
     DB_USER=(str, 'horang22'),
@@ -179,12 +179,15 @@ REST_FRAMEWORK = {
     ],
     # drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # Parser & Renderer
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
     ),
-
     'DEFAULT_PARSER_CLASSES': (
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FileUploadParser',
+        'rest_framework.parsers.FormParser',
     ),
 }
 

@@ -59,13 +59,12 @@ class DiaryViewSet(ViewSet):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         try:
-            target_day = date.fromisoformat(request.data["date"])
+            target_day = date.fromisoformat(request.data["date"].replace('"', ""))
         except Exception:
             target_day = date.today()
         if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         photo = request.FILES.get("photo", None)
-        custom_content = request.data.get("custom_content", None)
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
@@ -92,10 +91,11 @@ class DiaryViewSet(ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         diary = Diary.objects.get(user=user, date=target_day)
+        custom_content = request.data.get("customContent", None)
         if photo is not None:
             diary.photo = photo
         if custom_content is not None:
-            diary.custom_content = custom_content
+            diary.custom_content = custom_content.replace('"', "")
         diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
