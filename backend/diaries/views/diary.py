@@ -79,7 +79,7 @@ class DiaryViewSet(ViewSet):
                 str(target_day)[8:],
                 str(request.FILES["photo"]),
             )
-            en_caption = cap(pathh).replace("<unk>")
+            en_caption = cap(pathh).replace("<unk>", "").replace("  ", " ")
             flower_id = recommend(en_caption)
             flower = Flower.objects.get(id=flower_id)
 
