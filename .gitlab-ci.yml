@@ -17,6 +17,8 @@ test:
   artifacts:
     reports:
       cobertura: coverage.xml
+  tags:
+    - dev
 
 build:
   stage: build
