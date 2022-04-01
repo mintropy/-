@@ -60,7 +60,9 @@ def recommend(caption):
     
     for i in top_indices:
         recommended_flower.append(list(df['f_name'])[i])
-        
-    return recommended_flower
+          
+    flower_num=df.index[df['f_name']==recommended_flower[0]].tolist()[0]      
+          
+    return flower_num
 
-recommend("Everything is good")
+# print(recommend("Everything is good"))

@@ -88,8 +88,8 @@ class DiaryViewSet(ViewSet):
             
             # 이미지 캡셔닝
             # 꽃 추천
-            a=recommend(caption)
-            print(a)
+            num=recommend(caption)
+            print(num)
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
