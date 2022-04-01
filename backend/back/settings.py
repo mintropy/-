@@ -179,6 +179,13 @@ REST_FRAMEWORK = {
     ],
     # drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ),
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -194,6 +201,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-SITE_ID = 1
+# SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.User"

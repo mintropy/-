@@ -3,9 +3,13 @@ import os
 
 from django.shortcuts import get_object_or_404
 
+from djangorestframework_camel_case.parser import CamelCaseJSONParser
+from djangorestframework_camel_case.render import CamelCaseJSONRenderer
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.parsers import MultiPartParser, FileUploadParser, FormParser
 
 from .schema.diary import (
     diary_montly_schema,
@@ -28,6 +32,8 @@ class DiaryViewSet(ViewSet):
     model = Diary
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
+    renderer_classes = [CamelCaseJSONRenderer]
+    parser_classes = [CamelCaseJSONParser, MultiPartParser, FileUploadParser, FormParser]
 
     @diary_montly_schema
     def montly(self, request, year, month):
