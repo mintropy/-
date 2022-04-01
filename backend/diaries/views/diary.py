@@ -98,6 +98,7 @@ class DiaryViewSet(ViewSet):
             diary.photo = photo
         if custom_content is not None:
             diary.custom_content = custom_content
+        diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
