@@ -1,10 +1,15 @@
 from datetime import date
+import os
 
 from django.shortcuts import get_object_or_404
+
+from djangorestframework_camel_case.parser import CamelCaseJSONParser
+from djangorestframework_camel_case.render import CamelCaseJSONRenderer
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.parsers import MultiPartParser, FileUploadParser, FormParser
 
 from .schema.diary import (
     diary_montly_schema,
@@ -17,12 +22,18 @@ from ..models import Diary, Flower
 from ..serializers.diary import DiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
+from .recommend_flower import recommend
+from .caption_model import cap
+from .translate import get_translate
+from back.settings import BASE_DIR
 
 
 class DiaryViewSet(ViewSet):
     model = Diary
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
+    renderer_classes = [CamelCaseJSONRenderer]
+    parser_classes = [CamelCaseJSONParser, MultiPartParser, FileUploadParser, FormParser]
 
     @diary_montly_schema
     def montly(self, request, year, month):
@@ -48,36 +59,44 @@ class DiaryViewSet(ViewSet):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         try:
-            target_day = date.fromisoformat(request.data['date'])
+            target_day = date.fromisoformat(request.data["date"].replace('"', ""))
         except Exception:
             target_day = date.today()
         if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        photo = request.FILES.get('photo', None)
-        custom_content = request.data.get('custom_content', None)
+        photo = request.FILES.get("photo", None)
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
-            
-            # 이미지 캡셔닝
-            # 꽃 추천
-            
-            # 꽃 결과 유저 꽃 목록 추가
-            # API 실험을 위한 꽃 임의 지정, 꽃추천 완료되면 수정 필요
-            flower = Flower.objects.get(id=1)
-            # 해당 꽃을 유저가 가지고 있는 것으로 추가
+            pathh = os.path.join(
+                BASE_DIR,
+                "media",
+                str(target_day)[:4],
+                str(target_day)[5:7],
+                str(target_day)[8:],
+                str(request.FILES["photo"]),
+            )
+            en_caption = cap(pathh).replace("<unk>", "").replace("  ", " ")
+            flower_id = recommend(en_caption)
+            flower = Flower.objects.get(id=flower_id)
+
+            diary.en_content = en_caption
+            diary.ko_content = get_translate(en_caption)
+            diary.flower = flower
+            diary.save()
             user.flowers.add(flower)
-            
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         diary = Diary.objects.get(user=user, date=target_day)
+        custom_content = request.data.get("customContent", None)
         if photo is not None:
             diary.photo = photo
         if custom_content is not None:
-            diary.custom_content = custom_content
+            diary.custom_content = custom_content.replace('"', "")
+        diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

@@ -16,7 +16,7 @@ class DiaryAdmin(admin.ModelAdmin):
 
 @admin.register(Flower)
 class FlowerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'symbol',)
+    list_display = ('id', 'name', 'symbol',)
 
 
 @admin.register(Photo)
