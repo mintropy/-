@@ -45,7 +45,7 @@ class AdapterDogam(val flowerList: List<FlowerList>) : RecyclerView.Adapter<Adap
 
         fun bind(item: String,flower: Int){
             flowerName.text = item
-            flowerImage.setImageResource(R.drawable.login_kakao)
+            flowerImage.setImageResource(flower)
         }
     }
 
