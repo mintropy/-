@@ -1,0 +1,255 @@
+[
+{
+    "model": "diaries.flower",
+    "pk": 0,
+    "fields": {
+        "name": "노랑 국화",
+        "symbol": "실망, 짝사랑",
+        "users": [
+            1
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 1,
+    "fields": {
+        "name": "빨강 국화",
+        "symbol": "나는 당신을 사랑합니다",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 2,
+    "fields": {
+        "name": "보라 국화",
+        "symbol": "내 모든것을 그대에게",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 3,
+    "fields": {
+        "name": "붉은 장미",
+        "symbol": "사랑, 아름다움",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 4,
+    "fields": {
+        "name": "푸른 장미",
+        "symbol": "기적, 포기하지 않는 사랑",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 5,
+    "fields": {
+        "name": "노랑 장미",
+        "symbol": "이별, 변하지 않는 사랑",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 6,
+    "fields": {
+        "name": "주황 튤립",
+        "symbol": "수줍음, 부끄러움",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 7,
+    "fields": {
+        "name": "보라 튤립",
+        "symbol": "영원한 사랑",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 8,
+    "fields": {
+        "name": "분홍 튤립",
+        "symbol": "사랑의 시작, 애정 배려",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 9,
+    "fields": {
+        "name": "분홍 수국",
+        "symbol": "소녀의 꿈",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 10,
+    "fields": {
+        "name": "보라 수국",
+        "symbol": "진심, 변덕",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 11,
+    "fields": {
+        "name": "파랑 수국",
+        "symbol": "냉정, 거만, 무정",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 12,
+    "fields": {
+        "name": "해바라기",
+        "symbol": "동경, 숭배, 기다림",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 13,
+    "fields": {
+        "name": "클로버",
+        "symbol": "약속, 행운, 평화",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 14,
+    "fields": {
+        "name": "개나리",
+        "symbol": "희망",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 15,
+    "fields": {
+        "name": "벚꽃",
+        "symbol": "아름다움",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 16,
+    "fields": {
+        "name": "백합",
+        "symbol": "순결, 순수한 사랑",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 17,
+    "fields": {
+        "name": "프리지아",
+        "symbol": "새로운 시작을 응원합니다, 순결 우정",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 18,
+    "fields": {
+        "name": "코스모스",
+        "symbol": "순결, 순정",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 19,
+    "fields": {
+        "name": "진달래",
+        "symbol": "사랑, 기쁨",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 20,
+    "fields": {
+        "name": "무궁화",
+        "symbol": "끈기",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 21,
+    "fields": {
+        "name": "민들레",
+        "symbol": "사랑의 사도, 행복, 불사신",
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "diaries.flower",
+    "pk": 22,
+    "fields": {
+        "name": "연꽃",
+        "symbol": "소원해진 사랑",
+        "users": [
+            2
+        ]
+    }
+}
+]

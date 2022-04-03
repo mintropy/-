@@ -12,6 +12,7 @@ $ source venv/scripts/activate
 ```bash
 $ pip install -r requirements.txt
 $ python manage.py migrate
+$ python manage.py loaddate flower.json
 $ python manage.py runserver
 ```
 
