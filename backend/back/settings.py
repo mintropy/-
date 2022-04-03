@@ -204,6 +204,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-# SITE_ID = 1
+SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.User"
