@@ -4,6 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 from rake_nltk import Rake
 import nltk
+import random
 
 # /backend/diaries/flower.csv
 # nltk.download("popular")
@@ -20,7 +21,7 @@ def recommend(caption):
     #꽃말에서 키워드 추출
     df['Key_words']=''
     
-        #행에 대해 순환 반복
+    #행에 대해 순환 반복
     for index, row in df.iterrows():
         r.extract_keywords_from_text(row['f_language']) #꽃말의 키워드 추출
         key_words_dict_scores = r.get_word_degrees()  #관련성이 높은 단어 
@@ -54,15 +55,14 @@ def recommend(caption):
     #꽃 추천
     recommended_flower = []
     idx = indices[indices == captioned_st].index[0]
-    # print(idx)
     score_series = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
-    top_indices = list(score_series.iloc[1:2].index)
+    top_indices = list(score_series.iloc[1:6].index)
+    rv=random.choice(top_indices)
     
-    for i in top_indices:
-        recommended_flower.append(list(df['f_name'])[i])
+    recommended_flower.append(list(df['f_name'])[rv])
           
     flower_num=df.index[df['f_name']==recommended_flower[0]].tolist()[0]      
           
     return flower_num
 
-# print(recommend("Everything is good"))
+# print(recommend("Everything is good")) 
