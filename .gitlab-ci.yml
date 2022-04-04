@@ -14,9 +14,10 @@ test:
     - coverage run -m pytest
     - coverage report
     - coverage xml
-  artifacts:
-    reports:
-      cobertura: coverage.xml
+    - python setup.py test
+  # artifacts:
+  #   reports:
+  #     cobertura: coverage.xml
   tags:
     - dev
 
