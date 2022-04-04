@@ -12,6 +12,8 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="background">@android:color/transparent</item>
+        <item name="android:radius">35dp</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@drawable/dialog_round</item>
     </style>
 </resources>

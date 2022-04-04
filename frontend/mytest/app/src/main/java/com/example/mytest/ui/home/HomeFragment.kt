@@ -19,9 +19,11 @@ import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 import com.example.mytest.dto.DailyDiary
 import com.example.mytest.retrofit.RetrofitService
+import com.example.mytest.ui.login.LoginActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.TokenManager
+import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,6 +71,20 @@ class HomeFragment : Fragment() {
             activity?.let{
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
+
+            }
+        }
+        binding.kakaoLogoutButton.setOnClickListener {
+
+            UserApiClient.instance.logout { error ->
+                if (error != null) {
+                    Toast.makeText(activity, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+                }else {
+                    Toast.makeText(activity, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+                }
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
 
             }
         }
@@ -134,4 +150,5 @@ class HomeFragment : Fragment() {
         //return the formatted date string
         return dateFormatter.format(this)
     }
+
 }

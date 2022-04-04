@@ -64,19 +64,7 @@ class BottomNav : AppCompatActivity() {
 //        }
 
 
-        binding.kakaoLogoutButton.setOnClickListener {
 
-//            UserApiClient.instance.logout { error ->
-//                if (error != null) {
-//                    Toast.makeText(this, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
-//                }else {
-//                    Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-//                }
-//                val intent = Intent(this, LoginActivity::class.java)
-//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                finish()
-//            }
-        }
     }
 
 }

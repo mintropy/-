@@ -3,6 +3,7 @@ package com.example.mytest.ui.dogam
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.Window
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mytest.R
@@ -21,16 +22,18 @@ class FlowerDetail : Activity() {
         println("language: "+story)
         val detail:ConstraintLayout = findViewById(R.id.flowerDetail)
         compile(title, image, language, story,detail)
-
-        detail.setOnClickListener {
-                finish()
+        detail.point.setOnClickListener {
+            finish()
         }
+
+
     }
     fun compile(title:String?,image:Int,language:String?,story:String?,detail:ConstraintLayout){
         detail.flowerName.text = title
         detail.flowerImage.setImageResource(image)
         detail.flowerLanguage.text = language
         detail.flowerStory.text = story
+        detail.flowerStory.movementMethod = ScrollingMovementMethod()
     }
 }
 

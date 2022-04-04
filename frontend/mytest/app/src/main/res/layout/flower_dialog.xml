@@ -3,72 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flowerDetail"
-    android:background="#FBEEE5"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FBEEE5"
+    app:layout_constraintCircleRadius="50dp">
 
 
-    <ImageView
-        android:id="@+id/flowerImage"
-        android:layout_width="249dp"
-        android:layout_height="279dp"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/flowerLanguage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flowerName"
-        app:srcCompat="@drawable/azalea" />
-
-    <TextView
-        android:id="@+id/flowerName"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/point"
+        android:layout_width="369dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:text="꽃이름"
-        android:textColor="@color/black"
-        android:textAlignment="center"
-        android:fontFamily="@font/cafe24_oneprettynight"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/flowerImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/flowerLanguage"
-        android:layout_width="239dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="21dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="24dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/cafe24_oneprettynight"
         app:layout_constraintBottom_toTopOf="@+id/flowerStory"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flowerImage" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24">
+
+        <ImageView
+            android:id="@+id/flowerImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/flowerLanguage"
+            app:layout_constraintDimensionRatio="1:1.2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flowerName"
+            app:layout_constraintWidth_percent="0.55"
+            app:srcCompat="@drawable/azalea" />
+
+        <TextView
+            android:id="@+id/flowerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/cafe24_oneprettynight"
+            android:gravity="center"
+            android:text="꽃이름"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/flowerImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/flowerLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:fontFamily="@font/cafe24_oneprettynight"
+            android:gravity="center"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flowerImage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/flowerStory"
-        android:layout_width="349dp"
-        android:layout_height="272dp"
-        android:layout_marginBottom="81dp"
-        android:padding="10dp"
-        android:text="TextView"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:letterSpacing="0.1"
-        android:lineSpacingExtra ="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintDimensionRatio="1:0.8"
         android:fontFamily="@font/cafe24_oneprettynight"
+        android:letterSpacing="0.1"
+        android:lineSpacingExtra="5dp"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flowerLanguage" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
