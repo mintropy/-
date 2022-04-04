@@ -19,11 +19,13 @@ diary_daily = DiaryViewSet.as_view(
 )
 flower_list = FlowerViewSet.as_view({"get": "list"})
 flower_detail = FlowerViewSet.as_view({"get": "retrieve"})
+flower_user = FlowerViewSet.as_view({"get": "user"})
 
 urlpatterns = [
     path("", diary_list, name="diary_list"),
     path("<int:year>/<int:month>/", diary_montly),
     path("<int:year>/<int:month>/<int:day>/", diary_daily),
     path("flowers/", flower_list),
+    path("flowers/user/", flower_user),
     path("flowers/<int:flower_id>/", flower_detail),
 ]
