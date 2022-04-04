@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from .schema.flower import flower_user_schema
 from ..models import Flower
 from ..serializers.flower import FlowerSerializer
 from accounts.views.user import get_kakao_user_info
@@ -24,6 +25,7 @@ class FlowerViewSet(ViewSet):
         serialiezr = FlowerSerializer(flower)
         return Response(serialiezr.data, status=status.HTTP_200_OK)
 
+    @flower_user_schema
     def user(self, request):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
