@@ -13,8 +13,6 @@ diary_montly = DiaryViewSet.as_view({"get": "montly"})
 diary_daily = DiaryViewSet.as_view(
     {
         "get": "daily",
-        "put": "update",
-        "delete": "destroy",
     }
 )
 nltk_download = DiaryViewSet.as_view({"get": "nltk_download"})
