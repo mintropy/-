@@ -39,7 +39,7 @@ class AdapterDay(private val tempMonth:Int, private val dayList: MutableList<Day
         val day = dayList[position].day?.dateToString("dd")
 
         if (dayList[position].flower !=null){
-            holder.layout.item_day_image.setImageResource(R.drawable.login_kakao)
+            dayList[position].flower?.let { holder.layout.item_day_image.setImageResource(it) }
         }
 
         holder.layout.item_day_text.setTextColor(when(position % 7) {

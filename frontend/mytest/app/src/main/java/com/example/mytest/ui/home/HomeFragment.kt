@@ -18,6 +18,8 @@ import com.example.mytest.BottomNav
 import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 import com.example.mytest.dto.DailyDiary
+import com.example.mytest.dto.FlowerDetail
+import com.example.mytest.dto.FlowerList
 import com.example.mytest.retrofit.RetrofitService
 import com.example.mytest.ui.login.LoginActivity
 import com.google.gson.Gson
@@ -41,6 +43,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var url:String? = null
+    var flower:Int? = null
 
 
     override fun onCreateView(
@@ -127,10 +130,9 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<DailyDiary>, response: Response<DailyDiary>) {
                 if (response?.isSuccessful ) {
                     Log.d("레트로핏 결과2",""+response?.body().toString())
-                    url = response.body()?.photo.toString()
-                    if (url != null) {
-                        checkFlower()
-                    }
+                    flower = response?.body()?.flower
+//                    url = response.body()?.photo.toString()
+                    flower?.let { checkFlower(it) }
                 } else {
                     Log.d("레트로핏 결과2","실패")
                 }
@@ -138,10 +140,12 @@ class HomeFragment : Fragment() {
         })
 
     }
-    private fun checkFlower(){
-        url = "http://10.0.2.2:8000"+url
-//        url = "http://j6d102.p.ssafy.io"+url
-        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+    private fun checkFlower(int: Int){
+//        url = "http://10.0.2.2:8000"+url
+////        url = "http://j6d102.p.ssafy.io"+url
+//        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+        val flowerNum = FlowerList(null,int,null).getFlower(int)
+        flowerNum?.let { binding.imageHome.setImageResource(it.image) }
     }
     private fun Date.dateToString(format: String): String {
         //simple date formatter

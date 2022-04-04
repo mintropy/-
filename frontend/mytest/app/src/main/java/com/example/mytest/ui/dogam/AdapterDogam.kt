@@ -54,11 +54,11 @@ class AdapterDogam(val flowerList: List<FlowerList>) : RecyclerView.Adapter<Adap
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: DogamView, position: Int) {
         val dogam = flowerList[position]
-         holder.bind(dogam.name, dogam.image)
+        dogam.name?.let { dogam.image?.let { it1 -> holder.bind(it, it1) } }
         holder.layout.dogam_item.setOnClickListener{
 //            Toast.makeText(holder.layout.context, "성공", Toast.LENGTH_SHORT).show()
             val intent = Intent(holder.layout.dogam_item.context, FlowerDetail::class.java)
-            val flowerDetail = dogam.getFlower(dogam.number)
+            val flowerDetail = dogam.number?.let { it1 -> dogam.getFlower(it1) }
             intent.putExtra("title",dogam.name)
             intent.putExtra("image",dogam.image)
             intent.putExtra("language",flowerDetail?.flowerMeaning)
