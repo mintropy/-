@@ -16,17 +16,6 @@ class DogamFragment : Fragment() {
 
     private var _binding: FragmentDogamBinding? = null
     var flowers = listOf(FlowerList("노랑 국화",0, R.drawable.chrysanthemum_yellow),
-        FlowerList("빨간 국화",1, R.drawable.chrysanthemum_red),
-        FlowerList("보라 국화",2, R.drawable.chrysanthemum_purple),
-        FlowerList("붉은 장미",3, R.drawable.rose_red),
-        FlowerList("푸른 장미",4, R.drawable.rose_blue),
-        FlowerList("노랑 장미",5, R.drawable.rose_yellow),
-        FlowerList("주황 튤립",6, R.drawable.tulip_orange),
-        FlowerList("보라 튤립",7, R.drawable.tulip_purple),
-        FlowerList("분홍 튤립",8, R.drawable.tulip_pink),
-        FlowerList("분홍 수국",9, R.drawable.hydrangea_pink),
-        FlowerList("보라 수국",10, R.drawable.hydrangea_purple),
-        FlowerList("파랑 수국",11, R.drawable.hydrangea_blue),
         FlowerList("해바라기",12, R.drawable.sunflower),
         FlowerList("클로버",13, R.drawable.clover),
         FlowerList("개나리",14, R.drawable.forsythia),
@@ -37,7 +26,19 @@ class DogamFragment : Fragment() {
         FlowerList("진달래",19, R.drawable.azalea),
         FlowerList("무궁화",20, R.drawable.rose_of_sharon),
         FlowerList("민들레",21, R.drawable.dandelion),
-        FlowerList("연꽃",22, R.drawable.lotus))
+        FlowerList("연꽃",22, R.drawable.lotus),
+        FlowerList("빨간 국화",1, R.drawable.chrysanthemum_red),
+        FlowerList("보라 국화",2, R.drawable.chrysanthemum_purple),
+        FlowerList("붉은 장미",3, R.drawable.rose_red),
+        FlowerList("푸른 장미",4, R.drawable.rose_blue),
+        FlowerList("노랑 장미",5, R.drawable.rose_yellow),
+        FlowerList("주황 튤립",6, R.drawable.tulip_orange),
+        FlowerList("보라 튤립",7, R.drawable.tulip_purple),
+        FlowerList("분홍 튤립",8, R.drawable.tulip_pink),
+        FlowerList("분홍 수국",9, R.drawable.hydrangea_pink),
+        FlowerList("보라 수국",10, R.drawable.hydrangea_purple),
+        FlowerList("파랑 수국",11, R.drawable.hydrangea_blue))
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
