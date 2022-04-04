@@ -1,4 +1,5 @@
 from datetime import date
+import nltk
 import os
 
 from django.shortcuts import get_object_or_404
@@ -34,6 +35,10 @@ class DiaryViewSet(ViewSet):
     serializer_class = DiarySerializer
     renderer_classes = [CamelCaseJSONRenderer]
     parser_classes = [CamelCaseJSONParser, MultiPartParser, FileUploadParser, FormParser]
+
+    def nltk_download(self, rqeust):
+        nltk.download("popular")
+        return Response(status=status.HTTP_200_OK)
 
     @diary_montly_schema
     def montly(self, request, year, month):
