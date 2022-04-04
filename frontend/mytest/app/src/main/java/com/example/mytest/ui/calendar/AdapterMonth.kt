@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
+
     val center = Int.MAX_VALUE / 2
     var trigger:Boolean = true
     private var calendar = Calendar.getInstance()
@@ -97,8 +98,8 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-//                .baseUrl("http://10.0.2.2:8000/")
-                .baseUrl("http://j6d102.p.ssafy.io/")
+                .baseUrl("http://10.0.2.2:8000/")
+//                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 

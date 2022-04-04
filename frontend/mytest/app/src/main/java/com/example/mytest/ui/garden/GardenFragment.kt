@@ -28,7 +28,7 @@ class GardenFragment : Fragment() {
     ): View {
         val gardenViewModel =
             ViewModelProvider(this).get(GardenViewModel::class.java)
-        val view = inflater.inflate(R.layout.fragment_garden, container, false)
+        val view = inflater.inflate(R.layout.test_garden, container, false)
 
 //        _binding = FragmentGardenBinding.inflate(inflater, container, false)
 //        val root: View = binding.root
@@ -37,7 +37,7 @@ class GardenFragment : Fragment() {
 //        gardenViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
-        val arr = arrayOf("blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow", "red", "blue", "yellow" )
+        val arr = arrayOf("azalea","azalea","cherryblossom","clover","dandelion","forsythia","freesia")
         val length = arr.size
 
         for (i in 1 until (length+1)) {

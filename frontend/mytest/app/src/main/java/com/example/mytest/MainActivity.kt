@@ -182,6 +182,7 @@ class MainActivity : BaseActivity() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
+//                .baseUrl("http://10.0.2.2:8000/")
                 .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
@@ -200,7 +201,7 @@ class MainActivity : BaseActivity() {
             override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
                 if (response?.isSuccessful ) {
                     Log.d("레트로핏 결과2",""+response?.body().toString())
-                    if (response?.body()?.content != null && response?.body()?.photo !=null){
+                    if (response?.body()?.custom_content != null && response?.body()?.photo !=null){
 //
                         var intent= Intent(this@MainActivity, BottomNav::class.java)
 //

@@ -10,7 +10,7 @@ data class DiaryCreate(
     @SerializedName("date")
     val date: Date?,
     @SerializedName("custom_content")
-    val content: String?,
+    val custom_content: String?,
 //    @SerializedName("image")
 //    val photo: MultipartBody.Part?,
     @SerializedName("id")
