@@ -37,7 +37,7 @@ class GardenFragment : Fragment() {
 //        gardenViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
-        val arr = arrayOf("azalea","azalea","cherryblossom")
+        val arr = arrayOf("azalea","azalea","cherryblossom","clover","dandelion","forsythia","freesia")
         val length = arr.size
 
         for (i in 1 until (length+1)) {

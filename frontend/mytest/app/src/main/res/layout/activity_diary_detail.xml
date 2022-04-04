@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FBEEE5"
     tools:context=".DiaryDetail">
 
     <TextView
@@ -15,6 +16,7 @@
         android:gravity="center"
         android:inputType="textPersonName"
         android:text="xx년 xx월 xx일"
+        android:fontFamily="@font/cafe24_oneprettynight"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +29,7 @@
         android:layout_height="172dp"
         android:gravity="center"
         android:text="아직 사진이 없습니다"
+        android:fontFamily="@font/cafe24_oneprettynight"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/diaryPhoto"
         app:layout_constraintEnd_toEndOf="@+id/diaryPhoto"
@@ -54,6 +57,7 @@
         android:inputType="textPersonName"
         android:text="캡셔닝"
         android:textAlignment="center"
+        android:fontFamily="@font/cafe24_oneprettynight"
         app:layout_constraintBottom_toTopOf="@+id/flower"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -79,6 +83,7 @@
         android:gravity="start|top"
         android:hint="여기에 일기를 써보세요"
         android:inputType="textMultiLine"
+        android:fontFamily="@font/cafe24_oneprettynight"
         android:lines="3"
         app:layout_constraintBottom_toBottomOf="@+id/flower"
         app:layout_constraintEnd_toEndOf="@+id/flower"
