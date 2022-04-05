@@ -12,6 +12,12 @@ class FlowerInline(admin.TabularInline):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    list_display = (
+        "id",
+        "username",
+        "flowers_count",
+    )
+    ordering = ("id",)
     fieldsets = UserAdmin.fieldsets + (
         (
             "social",
@@ -24,3 +30,7 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     inlines = (FlowerInline,)
+
+    @admin.display()
+    def flowers_count(self, obj):
+        return obj.flowers.count()
