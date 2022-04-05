@@ -14,8 +14,8 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary
-from ..serializers.diary import DiarySerializer
+from ..models import Diary, Flower
+from ..serializers.diary import DiarySerializer, MonthDiarySerializer
 from accounts.views.user import get_kakao_user_info
 from accounts.models import User
 from .recommend_flower import recommend
@@ -34,8 +34,8 @@ class DiaryViewSet(ViewSet):
         user = get_kakao_user_info(token)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
-        )
-        serializer = DiarySerializer(diaries, many=True)
+        ).order_by('date')
+        serializer = MonthDiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_daily_schema
@@ -52,54 +52,47 @@ class DiaryViewSet(ViewSet):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         try:
-            target_day = date.fromisoformat(request.data['date'])
+            target_day = date.fromisoformat(request.data["date"].replace('"', ""))
         except Exception:
             target_day = date.today()
         if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        photo = request.FILES.get('photo', None)
-        custom_content = request.data.get('custom_content', None)
+        photo = request.FILES.get("photo", None)
 
         if not Diary.objects.filter(user=user, date=target_day).exists():
             if photo is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             diary = Diary.objects.create(user=user, date=target_day, photo=photo)
-            
-            pathh = os.path.join(BASE_DIR,'media',str(target_day)[:4],str(target_day)[5:7],str(target_day)[8:],str(request.FILES['photo']))
-            
-            caption = cap(pathh)
-            diary.en_content = caption
-            diary.ko_content = get_translate(caption)
-            
-            diary.save()
-            
-            # 모델 수정
-            # 번역
-            # 주석 제거
-            # black
-            
-            
-            # 꽃 결과 유저 꽃 목록 추가
-            # API 실험을 위한 꽃 임의 지정, 꽃추천 완료되면 수정 필요
-            # flower = Flower.objects.get(id=1)
-            # 해당 꽃을 유저가 가지고 있는 것으로 추가
-            # user.flowers.add(flower)
+            pathh = os.path.join(
+                BASE_DIR,
+                "media",
+                str(target_day)[:4],
+                str(target_day)[5:7],
+                str(target_day)[8:],
+                str(request.FILES["photo"]),
+            )
+            en_caption = cap(pathh).replace("<unk>", "").replace("  ", " ")
+            flower_id = recommend(en_caption)
+            flower = Flower.objects.get(id=flower_id)
 
-            
-            # 이미지 캡셔닝
-            # 꽃 추천
-            num=recommend(caption)
-            print(num)
+            diary.en_content = en_caption
+            diary.ko_content = get_translate(en_caption)
+            diary.flower = flower
+            diary.save()
+            user.flowers.add(flower)
             serializer = DiarySerializer(diary)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         diary = Diary.objects.get(user=user, date=target_day)
+        custom_content = request.data.get("customContent", None)
         if photo is not None:
             diary.photo = photo
         if custom_content is not None:
-            diary.custom_content = custom_content
+            diary.custom_content = custom_content.replace('"', "")
+        diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     @diary_update_schema
     def update(self, request, year, month, day):

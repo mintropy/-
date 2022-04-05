@@ -46,7 +46,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'accounts',
     'diaries',
-    
+
     'rest_auth',
     'rest_framework',
     'corsheaders',
@@ -179,6 +179,16 @@ REST_FRAMEWORK = {
     ],
     # drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # Parser & Renderer
+    'DEFAULT_RENDERER_CLASSES': (
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FileUploadParser',
+        'rest_framework.parsers.FormParser',
+    ),
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
