@@ -1,4 +1,5 @@
 from datetime import date
+import nltk
 import os
 
 from django.shortcuts import get_object_or_404
@@ -18,13 +19,12 @@ from .schema.diary import (
     diary_update_schema,
     diary_delete_schema,
 )
-from ..models import Diary, Flower
-from ..serializers.diary import DiarySerializer
-from accounts.views.user import get_kakao_user_info
-from accounts.models import User
-from .recommend_flower import recommend
 from .caption_model import cap
+from .recommend_flower import recommend
 from .translate import get_translate
+from ..models import Diary, Flower
+from ..serializers.diary import DiarySerializer, MonthDiarySerializer
+from accounts.views.user import get_kakao_user_info
 from back.settings import BASE_DIR
 from .hanspell import spell_checker
 
@@ -41,14 +41,18 @@ class DiaryViewSet(ViewSet):
         FormParser,
     ]
 
+    def nltk_download(self, rqeust):
+        nltk.download("popular")
+        return Response(status=status.HTTP_200_OK)
+
     @diary_montly_schema
     def montly(self, request, year, month):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
-        )
-        serializer = DiarySerializer(diaries, many=True)
+        ).order_by('date')
+        serializer = MonthDiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_daily_schema
@@ -105,6 +109,7 @@ class DiaryViewSet(ViewSet):
         diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     @diary_update_schema
     def update(self, request, year, month, day):

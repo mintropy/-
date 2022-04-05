@@ -12,7 +12,7 @@ class Flower(models.Model):
         User,
         related_name="flowers",
     )
-    name = models.CharField(max_length=20)
+    name = models.CharField(unique=True, max_length=20)
     symbol = models.CharField(max_length=20)
 
     def __str__(self):
