@@ -140,7 +140,7 @@ class DiaryViewSet(ViewSet):
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def translate(self, request):
+    def spell_check(self, request):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
         try:
@@ -157,9 +157,6 @@ class DiaryViewSet(ViewSet):
             "custom_content": tran_custom_content,
             "user": user.id,
             "date": target_day,
-            "flower_id": diary.flower_id,
-            "ko_content": diary.ko_content,
-            "en_content": diary.en_content,
         }
         serializer = DiarySerializer(diary, data=data)
         if serializer.is_valid():
