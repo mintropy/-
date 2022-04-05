@@ -26,6 +26,7 @@ from ..models import Diary, Flower
 from ..serializers.diary import DiarySerializer, MonthDiarySerializer
 from accounts.views.user import get_kakao_user_info
 from back.settings import BASE_DIR
+from .hanspell import spell_checker
 
 
 class DiaryViewSet(ViewSet):
@@ -33,7 +34,12 @@ class DiaryViewSet(ViewSet):
     queryset = Diary.objects.all()
     serializer_class = DiarySerializer
     renderer_classes = [CamelCaseJSONRenderer]
-    parser_classes = [CamelCaseJSONParser, MultiPartParser, FileUploadParser, FormParser]
+    parser_classes = [
+        CamelCaseJSONParser,
+        MultiPartParser,
+        FileUploadParser,
+        FormParser,
+    ]
 
     def nltk_download(self, rqeust):
         nltk.download("popular")
@@ -133,3 +139,27 @@ class DiaryViewSet(ViewSet):
         diaries = Diary.objects.all()
         serializer = DiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def spell_check(self, request):
+        token = request.headers.get("Authorization", "")
+        user = get_kakao_user_info(token)
+        try:
+            target_day = date.fromisoformat(request.data["date"].replace('"', ""))
+        except Exception:
+            target_day = date.today()
+        if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        diary = Diary.objects.get(user=user, date=target_day)
+        custom_content = request.data.get("customContent", None)
+        dict_result = spell_checker.check(custom_content).as_dict()
+        tran_custom_content = dict_result["checked"]
+        data = {
+            "custom_content": tran_custom_content,
+            "user": user.id,
+            "date": target_day,
+        }
+        serializer = DiarySerializer(diary, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

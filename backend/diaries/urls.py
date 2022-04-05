@@ -16,13 +16,15 @@ diary_daily = DiaryViewSet.as_view(
     }
 )
 nltk_download = DiaryViewSet.as_view({"get": "nltk_download"})
+spell_check = DiaryViewSet.as_view({"post": "spell_check"})
 flower_list = FlowerViewSet.as_view({"get": "list"})
 flower_detail = FlowerViewSet.as_view({"get": "retrieve"})
 flower_user = FlowerViewSet.as_view({"get": "user"})
 
 urlpatterns = [
-    path("nltk-download/", nltk_download),
     path("", diary_list, name="diary_list"),
+    path("nltk-download/", nltk_download),
+    path("spell-check/", spell_check),
     path("<int:year>/<int:month>/", diary_montly),
     path("<int:year>/<int:month>/<int:day>/", diary_daily),
     path("flowers/", flower_list),
