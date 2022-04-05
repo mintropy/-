@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import os
-
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-import tensorflow as tf
-import numpy as np
 import ast
+import numpy as np
+import os
+import tensorflow as tf
 
 from back.settings import BASE_DIR
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 
 def cap(image_):
