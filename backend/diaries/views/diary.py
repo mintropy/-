@@ -45,8 +45,8 @@ class DiaryViewSet(ViewSet):
         user = get_kakao_user_info(token)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
-        )
-        serializer = DiarySerializer(diaries, many=True)
+        ).order_by('date')
+        serializer = MonthDiarySerializer(diaries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @diary_daily_schema
@@ -103,6 +103,7 @@ class DiaryViewSet(ViewSet):
         diary.save()
         serializer = DiarySerializer(diary)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
     @diary_update_schema
     def update(self, request, year, month, day):
