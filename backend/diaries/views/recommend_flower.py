@@ -45,9 +45,10 @@ def recommend(caption):
     score_series = pd.Series(cosine_sim[idx]).sort_values(ascending=False)
     top_indices = list(score_series.iloc[1:2].index)
     rv=random.choice(top_indices)
-    
     recommended_flower.append(list(df['f_name'])[rv])
     
     flower_num = df.index[df["f_name"] == recommended_flower[0]].tolist()[0]
+    if flower_num == 1:
+        flower_num = random.choice(range(23))
     return flower_num
 
