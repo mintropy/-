@@ -3,9 +3,8 @@ import pandas as pd
 from rake_nltk import Rake
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+import random
 
-
-# nltk.download("popular")
 
 def recommend(caption):
     df = pd.read_csv("./diaries/views/flower.csv")
@@ -45,8 +44,10 @@ def recommend(caption):
     idx = indices[indices == captioned_st].index[0]
     score_series = pd.Series(cosine_sim[idx]).sort_values(ascending=False)
     top_indices = list(score_series.iloc[1:2].index)
-
-    for i in top_indices:
-        recommended_flower.append(list(df["f_name"])[i])
+    rv=random.choice(top_indices)
+    
+    recommended_flower.append(list(df['f_name'])[rv])
+    
     flower_num = df.index[df["f_name"] == recommended_flower[0]].tolist()[0]
     return flower_num
+
