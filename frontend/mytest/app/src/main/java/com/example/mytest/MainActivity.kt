@@ -6,7 +6,8 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,11 +32,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -49,8 +48,9 @@ class MainActivity : BaseActivity() {
 
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    var filepath:String? = null
+    var filepath:File? = null
     var date:String? = null
+    var bit:Bitmap? = null
 
 
 
@@ -62,6 +62,8 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         var localDate = Date().time
         var format = SimpleDateFormat("yyyy-MM-dd")
+        var format2 = SimpleDateFormat("yyyy년 MM월 dd일")
+        binding.date.text = format2.format(localDate)
 //        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
         date = format.format(localDate)
 
@@ -80,33 +82,7 @@ class MainActivity : BaseActivity() {
 
         }
         binding.daySelect.setOnClickListener() {
-            var c = Calendar.getInstance()
-            val datePickerDialog = DatePickerDialog(
-                this@MainActivity, R.style.Theme_Holo_Light_Dialog_MinWidth,
-                { view, year, monthOfYear, dayOfMonth ->
-                    // TODO Auto-generated method stub
-                    try {
-                         var year =year.toString()
-                         var month =String.format("%02d",monthOfYear + 1)
-                         var day = String.format("%02d",dayOfMonth)
-                        binding.date.text = year+"년"+month+"월"+day+"일"
-                        date = year+"-"+month+"-"+day
-                        println("date2: "+date)
-                    } catch (e: Exception) {
-
-                        // TODO: handle exception
-                        e.printStackTrace()
-                    }
-                },
-                c[Calendar.YEAR],
-                c[Calendar.MONTH],
-                c[Calendar.DAY_OF_MONTH]
-            )
-            datePickerDialog.getDatePicker().setCalendarViewShown(false);
-
-            datePickerDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent);
-
-            datePickerDialog.show();
+            dialog()
         }
     }
 
@@ -129,7 +105,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun permissionGranted(requestCode: Int) {
-        openGallery()
+        dialog()
     }
 
     override fun permissionDenied(requestCode: Int) {
@@ -142,31 +118,35 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         data?.data?.let { uri ->
             binding.imagePreview.setImageURI(uri)
-            filepath = absolutelyPath(uri)
+            var input = contentResolver.openInputStream(uri)
+            bit = BitmapFactory.decodeStream(input)
+            filepath = convertBitmapToFile(bit)
             testRetrofit(filepath, null)
-
-
         }
     }
 
 //    파일 절대 경로 추출
-    fun absolutelyPath(path: Uri): String? {
-
-        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
-        var c: Cursor? = contentResolver.query(path, proj, null, null, null)
-        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        c?.moveToFirst()
-        return index?.let { c?.getString(it) }
+//    fun absolutelyPath(path: Uri): String? {
+//
+//        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+//        var c: Cursor? = contentResolver.query(path, proj, null, null, null)
+//        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+//        c?.moveToFirst()
+//        return index?.let { c?.getString(it) }
+//    }
+    fun convertBitmapToFile(bitmap: Bitmap?): File? {
+        val newFile = File(applicationContext.filesDir, "picture")
+        val out = FileOutputStream(newFile)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 40, out)
+        return newFile
     }
 
-    private fun testRetrofit(path : String?,custom_content:String?){
+    private fun testRetrofit(path : File?,custom_content:String?){
         //creating a file
         var body : MultipartBody.Part? =null
         if (path != null){
-            val file = File(path)
-            var fileName = "hello"
-            fileName += ".png"
-            var requestBody : RequestBody = RequestBody.create(MediaType.parse("image/*"),file)
+            var fileName = "hello.jpeg"
+            var requestBody : RequestBody = RequestBody.create(MediaType.parse("image/*"),path)
             body  = MultipartBody.Part.createFormData("photo",fileName,requestBody)
 
         }
@@ -187,7 +167,6 @@ class MainActivity : BaseActivity() {
                 .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
-
         //creating our api
 
         var server = retrofit.create(RetrofitService::class.java)
@@ -200,6 +179,7 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
+                println("response: "+response.toString())
                 if (response?.isSuccessful) {
                     Log.d("일기 결과2",""+response?.body().toString())
                     if (response?.body()?.custom_content != null && response?.body()?.photo !=null){
@@ -241,5 +221,34 @@ class MainActivity : BaseActivity() {
     fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(diaryText.windowToken, 0)
+    }
+    fun dialog(){
+        var c = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this@MainActivity, R.style.Theme_Holo_Light_Dialog_MinWidth,
+            { view, year, monthOfYear, dayOfMonth ->
+                // TODO Auto-generated method stub
+                try {
+                    var year =year.toString()
+                    var month =String.format("%02d",monthOfYear + 1)
+                    var day = String.format("%02d",dayOfMonth)
+                    binding.date.text = year+"년"+month+"월"+day+"일"
+                    date = year+"-"+month+"-"+day
+                    println("date2: "+date)
+                    openGallery()
+                } catch (e: Exception) {
+
+                    // TODO: handle exception
+                    e.printStackTrace()
+                    openGallery()
+                }
+            },
+            c[Calendar.YEAR],
+            c[Calendar.MONTH],
+            c[Calendar.DAY_OF_MONTH]
+        )
+        datePickerDialog.getDatePicker().setCalendarViewShown(false)
+        datePickerDialog.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+        datePickerDialog.show()
     }
 }

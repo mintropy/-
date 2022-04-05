@@ -27,10 +27,10 @@ class DogamFragment : Fragment() {
         FlowerList("무궁화",20, R.drawable.rose_of_sharon),
         FlowerList("민들레",21, R.drawable.dandelion),
         FlowerList("연꽃",22, R.drawable.lotus),
-        FlowerList("빨간 국화",1, R.drawable.chrysanthemum_red),
+        FlowerList("빨강 국화",1, R.drawable.chrysanthemum_red),
         FlowerList("보라 국화",2, R.drawable.chrysanthemum_purple),
-        FlowerList("붉은 장미",3, R.drawable.rose_red),
-        FlowerList("푸른 장미",4, R.drawable.rose_blue),
+        FlowerList("빨강 장미",3, R.drawable.rose_red),
+        FlowerList("파랑 장미",4, R.drawable.rose_blue),
         FlowerList("노랑 장미",5, R.drawable.rose_yellow),
         FlowerList("주황 튤립",6, R.drawable.tulip_orange),
         FlowerList("보라 튤립",7, R.drawable.tulip_purple),
@@ -62,11 +62,6 @@ class DogamFragment : Fragment() {
         }
 
         val root: View = binding.root
-
-//        val textView: TextView = binding.textDiary
-//        diaryViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 

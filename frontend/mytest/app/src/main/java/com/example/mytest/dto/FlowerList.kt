@@ -10,12 +10,12 @@ data class FlowerList(
     fun getFlower(int: Int): Flower? {
         var test = FlowerDetail()
         return when (int) {
-            0 -> Flower("노란 국화",test.dogam_1, test.dogam_meaning_1, R.drawable.chrysanthemum_yellow,R.drawable.chrysanthemum_yellow_icon)
-            1 -> Flower("빨간 국화",test.dogam_2, test.dogam_meaning_2, R.drawable.chrysanthemum_red,R.drawable.chrysanthemum_red_icon)
+            0 -> Flower("노랑 국화",test.dogam_1, test.dogam_meaning_1, R.drawable.chrysanthemum_yellow,R.drawable.chrysanthemum_yellow_icon)
+            1 -> Flower("빨강 국화",test.dogam_2, test.dogam_meaning_2, R.drawable.chrysanthemum_red,R.drawable.chrysanthemum_red_icon)
             2 -> Flower("보라 국화",test.dogam_3, test.dogam_meaning_3, R.drawable.chrysanthemum_purple,R.drawable.chrysanthemum_purple_icon)
-            3 -> Flower("붉은 장미",test.dogam_4, test.dogam_meaning_4, R.drawable.rose_red,R.drawable.rose_red_icon)
-            4 -> Flower("푸른 장미",test.dogam_5, test.dogam_meaning_5, R.drawable.rose_blue,R.drawable.rose_blue_icon)
-            5 -> Flower("노란 장미",test.dogam_6, test.dogam_meaning_6, R.drawable.rose_yellow,R.drawable.rose_yellow_icon)
+            3 -> Flower("빨강 장미",test.dogam_4, test.dogam_meaning_4, R.drawable.rose_red,R.drawable.rose_red_icon)
+            4 -> Flower("파랑 장미",test.dogam_5, test.dogam_meaning_5, R.drawable.rose_blue,R.drawable.rose_blue_icon)
+            5 -> Flower("노랑 장미",test.dogam_6, test.dogam_meaning_6, R.drawable.rose_yellow,R.drawable.rose_yellow_icon)
             6 -> Flower("주황 튤립",test.dogam_7, test.dogam_meaning_7, R.drawable.tulip_orange,R.drawable.tulip_orange_icon)
             7 -> Flower("보라 튤립",test.dogam_8, test.dogam_meaning_8, R.drawable.tulip_purple,R.drawable.tulip_purple_icon)
             8 -> Flower("분홍 튤립",test.dogam_9, test.dogam_meaning_9, R.drawable.tulip_pink,R.drawable.tulip_pink_icon)
