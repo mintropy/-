@@ -23,7 +23,7 @@ from .caption_model import cap
 from .recommend_flower import recommend
 from .translate import get_translate
 from ..models import Diary, Flower
-from ..serializers.diary import DiarySerializer
+from ..serializers.diary import DiarySerializer, MonthDiarySerializer
 from accounts.views.user import get_kakao_user_info
 from back.settings import BASE_DIR
 
