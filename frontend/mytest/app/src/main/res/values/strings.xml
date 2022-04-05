@@ -10,8 +10,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_bottom_nav">bottomNav</string>
-    <string name="title_home">Home</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_dogam">Dogam</string>
-    <string name="title_garden">Garden</string>
+    <string name="title_home">일기</string>
+    <string name="title_calendar">달력</string>
+    <string name="title_dogam">도감</string>
+    <string name="title_garden">정원</string>
 </resources>

@@ -2,9 +2,11 @@ package com.example.mytest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.mytest.dto.DailyDiary
+import com.example.mytest.dto.FlowerList
 import com.example.mytest.retrofit.RetrofitService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -42,8 +44,8 @@ class DiaryDetail : AppCompatActivity() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -65,10 +67,23 @@ class DiaryDetail : AppCompatActivity() {
                     if (url != null) {
                         checkFlower()
                     }
-                    diaryText.text = response.body()?.custom_content.toString()
-                    imageCaption.text = response.body()?.ko_content.toString()
-                    flower.setImageResource(R.drawable.chowon)
-                    flower.alpha = 0.3f
+                    var sample = response.body()
+                    if (sample != null) {
+                        diaryText.text = sample.custom_content.toString()
+                        imageCaption.text = sample.ko_content.toString()
+                        diaryText.movementMethod = ScrollingMovementMethod()
+                        var flowerImage = sample.flower?.let {
+                            FlowerList(null, sample.flower,null).getFlower(
+                                it
+                            )
+                        }
+                        if (flowerImage != null) {
+                            flower.setImageResource(flowerImage.image)
+                            flower.alpha = 0.3f
+                        }
+
+                    }
+
                 } else {
                     Log.d("레트로핏 결과2","실패")
                 }
@@ -76,6 +91,7 @@ class DiaryDetail : AppCompatActivity() {
         })
     }
     private fun checkFlower(){
+//        url = "http://10.0.2.2:8000"+url
         url = "http://j6d102.p.ssafy.io/"+url
         Glide.with(this).load(url).into(diaryPhoto)
     }

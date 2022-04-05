@@ -10,9 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytest.databinding.ListItemDayBinding
-import com.example.mytest.dto.DailyDiary
-import com.example.mytest.dto.Diary
-import com.example.mytest.dto.MontlyDiary
+import com.example.mytest.dto.*
 import com.example.mytest.retrofit.RetrofitService
 import com.example.mytest.ui.calendar.DayItems
 import com.google.gson.Gson
@@ -98,8 +96,8 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -144,7 +142,12 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
                 listF?.forEach {
                     var compare = calendar.time.dateToString("yyyy-MM-dd")
                     if (compare == it.date){
-                        dayList[i * 7 + k].flower ="aaaa"
+                        val image = it.flower?.let { it1 ->
+                            FlowerList(null,it.flower,null).getFlower(
+                                it1
+                            )
+                        }
+                        dayList[i * 7 + k].flower =image?.imageIcon
                     }
                 }
 

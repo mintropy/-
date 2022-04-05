@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         var localDate = Date().time
         var format = SimpleDateFormat("yyyy-MM-dd")
-        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+//        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
         date = format.format(localDate)
 
         println("date: "+date)
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity() {
         }
         binding.create.setOnClickListener {
             var custom_content = binding.diaryText.text.toString()
-            testRetrofit(null, custom_content)
+            testRetrofit(filepath, custom_content)
         }
 
         binding.mainActivityLayout.setOnClickListener {
@@ -89,6 +89,7 @@ class MainActivity : BaseActivity() {
                          var year =year.toString()
                          var month =String.format("%02d",monthOfYear + 1)
                          var day = String.format("%02d",dayOfMonth)
+                        binding.date.text = year+"년"+month+"월"+day+"일"
                         date = year+"-"+month+"-"+day
                         println("date2: "+date)
                     } catch (e: Exception) {
@@ -199,8 +200,8 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
-                if (response?.isSuccessful ) {
-                    Log.d("레트로핏 결과2",""+response?.body().toString())
+                if (response?.isSuccessful) {
+                    Log.d("일기 결과2",""+response?.body().toString())
                     if (response?.body()?.custom_content != null && response?.body()?.photo !=null){
 //
                         var intent= Intent(this@MainActivity, BottomNav::class.java)

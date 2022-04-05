@@ -15,10 +15,11 @@ data class DailyDiary(
     var date: String,
     @SerializedName("photo")
     var photo: String,
-    @SerializedName("ko_content")
+    @SerializedName("koContent")
     val ko_content: String?,
-    @SerializedName("custom_content")
+    @SerializedName("customContent")
     val custom_content: String?,
-
+    @SerializedName("flower")
+    val flower:Int?
     )
 

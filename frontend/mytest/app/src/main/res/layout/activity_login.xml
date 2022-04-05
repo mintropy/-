@@ -5,64 +5,54 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/garden"
+    android:background="@drawable/bg3"
     tools:context=".ui.login.LoginActivity">
 
+
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
-        android:alpha="0.5"
-        />
+        android:id="@+id/imageView"
+        android:layout_width="145dp"
+        android:layout_height="107dp"
+        android:background="@drawable/miriflower"
+        app:layout_constraintBottom_toTopOf="@+id/btn_kakao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_login"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.792" />
 
     <TextView
         android:id="@+id/tv_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="232dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:background="@drawable/wongoji"
+        android:fontFamily="@font/sunbatang_medium"
         android:gravity="center"
-        android:text="접 속"
-        android:textColor="@color/white"
-        android:textSize="32sp"
+        android:paddingTop="1dp"
+        android:text=" 로그인 "
+        android:textColor="@color/black"
+        android:letterSpacing="0.1"
+        android:textSize="32dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/btn_kakao"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.802" />
 
     <ImageView
         android:id="@+id/btn_kakao"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="268dp"
-        android:src="@drawable/login_kakao"
-        app:layout_constraintStart_toStartOf="@+id/frameLayout"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/username"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="350dp"
-        android:background="@drawable/login_ev_btn"
-        android:hint="for KaKao"
-        android:includeFontPadding="false"
-        android:paddingLeft="20dp"
-        android:textColorHint="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:src="@drawable/kakao_login_large_narrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.655" />
 
 
-    </androidx.appcompat.widget.AppCompatButton>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

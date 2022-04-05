@@ -9,7 +9,7 @@ data class DiaryCreate(
 //    val token:String?,
     @SerializedName("date")
     val date: Date?,
-    @SerializedName("custom_content")
+    @SerializedName("customContent")
     val custom_content: String?,
 //    @SerializedName("image")
 //    val photo: MultipartBody.Part?,

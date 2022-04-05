@@ -18,6 +18,8 @@ import com.example.mytest.BottomNav
 import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 import com.example.mytest.dto.DailyDiary
+import com.example.mytest.dto.FlowerDetail
+import com.example.mytest.dto.FlowerList
 import com.example.mytest.retrofit.RetrofitService
 import com.example.mytest.ui.login.LoginActivity
 import com.google.gson.Gson
@@ -41,6 +43,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var url:String? = null
+    var flower:Int? = null
 
 
     override fun onCreateView(
@@ -60,12 +63,14 @@ class HomeFragment : Fragment() {
         var year = onlyDate.dateToString("yyyy")
         var month = onlyDate.dateToString("MM")
         var day = onlyDate.dateToString("dd")
+        var year2 = onlyDate.dateToString("yy")
+        binding.date.text = year2+"년 "+month+"월 "+day+"일"
         testRetrofit(year,month,day)
-        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
-            }
-        homeViewModel.image.observe(viewLifecycleOwner) {
-                imageView.setImageResource(it)
-            }
+//        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
+//            }
+//        homeViewModel.image.observe(viewLifecycleOwner) {
+//                imageView.setImageResource(it)
+//            }
 
         binding.imageHome.setOnClickListener {
             activity?.let{
@@ -108,8 +113,8 @@ class HomeFragment : Fragment() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -127,10 +132,9 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<DailyDiary>, response: Response<DailyDiary>) {
                 if (response?.isSuccessful ) {
                     Log.d("레트로핏 결과2",""+response?.body().toString())
-                    url = response.body()?.photo.toString()
-                    if (url != null) {
-                        checkFlower()
-                    }
+                    flower = response?.body()?.flower
+//                    url = response.body()?.photo.toString()
+                    flower?.let { checkFlower(it) }
                 } else {
                     Log.d("레트로핏 결과2","실패")
                 }
@@ -138,10 +142,14 @@ class HomeFragment : Fragment() {
         })
 
     }
-    private fun checkFlower(){
-        url = "http://10.0.2.2:8000"+url
-//        url = "http://j6d102.p.ssafy.io"+url
-        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+    private fun checkFlower(int: Int){
+//        url = "http://10.0.2.2:8000"+url
+////        url = "http://j6d102.p.ssafy.io"+url
+//        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+        val flowerNum = FlowerList(null,int,null).getFlower(int)
+        flowerNum?.let { binding.imageHome.setImageResource(it.image) }
+        binding.flowerLanguage.text =flowerNum?.flowerMeaning
+        binding.flowerName.text = flowerNum?.flowerName
     }
     private fun Date.dateToString(format: String): String {
         //simple date formatter

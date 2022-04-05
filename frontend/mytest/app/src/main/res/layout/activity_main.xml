@@ -5,7 +5,7 @@
     android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBEEE5"
+    android:background="#F2EDE4"
     tools:context=".MainActivity">
 
 
@@ -25,58 +25,48 @@
         android:id="@+id/imagePreview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginBottom="56dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/create"
+        app:layout_constraintBottom_toTopOf="@+id/diaryText"
+        app:layout_constraintDimensionRatio="1:1.1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014"
+        app:layout_constraintWidth_percent="0.9"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/buttonGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
         android:text="사진앨범"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagePreview"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintEnd_toStartOf="@+id/create"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintStart_toEndOf="@+id/daySelect" />
 
     <EditText
         android:id="@+id/diaryText"
         android:layout_width="302dp"
         android:layout_height="138dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="28dp"
         android:background="@drawable/diary_border"
         android:ems="10"
         android:gravity="start|top"
         android:hint="여기에 일기를 써보세요"
         android:inputType="textMultiLine"
         android:lines="3"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGallery"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGallery"
-        app:layout_constraintVertical_bias="0.269" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/imageCaption"
+    <TextView
+        android:id="@+id/date"
         android:layout_width="268dp"
         android:layout_height="47dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:text=""
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/imagePreview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,20 +74,20 @@
         android:id="@+id/create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="302dp"
         android:text="create"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonGallery"
-        app:layout_constraintTop_toBottomOf="@+id/imagePreview" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/daySelect" />
 
     <Button
         android:id="@+id/daySelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
         android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/create"
-        app:layout_constraintEnd_toStartOf="@+id/create" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonGallery" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

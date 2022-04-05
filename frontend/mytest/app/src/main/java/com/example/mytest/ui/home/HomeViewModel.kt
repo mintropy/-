@@ -9,10 +9,10 @@ import com.example.mytest.R
 class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "오늘의 꽃을 심어보세요"
     }
     private val _image = MutableLiveData<Int>().apply{
-        value = R.drawable.login_kakao
+        value = R.drawable.gross
     }
 
     val text: LiveData<String> = _text

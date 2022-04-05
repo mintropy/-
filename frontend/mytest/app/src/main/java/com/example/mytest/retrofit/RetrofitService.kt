@@ -24,7 +24,7 @@ interface RetrofitService {
    fun createDiary(
                     @Header("Authorization")token: String,
                     @Part("date")date: String?,
-                    @Part("custom_content") custom_content: String?,
+                    @Part("customContent") custom_content: String?,
                     @Part image: MultipartBody.Part?,
 //                    @Part ("id") id:String?,
 //                    @Part ("photos")photos:Array<Photos>?,
