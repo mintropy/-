@@ -44,8 +44,8 @@ class DiaryDetail : AppCompatActivity() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -91,8 +91,8 @@ class DiaryDetail : AppCompatActivity() {
         })
     }
     private fun checkFlower(){
-        url = "http://10.0.2.2:8000"+url
-//        url = "http://j6d102.p.ssafy.io/"+url
+//        url = "http://10.0.2.2:8000"+url
+        url = "http://j6d102.p.ssafy.io/"+url
         Glide.with(this).load(url).into(diaryPhoto)
     }
 }

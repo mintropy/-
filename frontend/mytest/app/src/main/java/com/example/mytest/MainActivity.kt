@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         var localDate = Date().time
         var format = SimpleDateFormat("yyyy-MM-dd")
-        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
+//        format.timeZone = TimeZone.getTimeZone("Asia/Seoul")
         date = format.format(localDate)
 
         println("date: "+date)
@@ -89,6 +89,7 @@ class MainActivity : BaseActivity() {
                          var year =year.toString()
                          var month =String.format("%02d",monthOfYear + 1)
                          var day = String.format("%02d",dayOfMonth)
+                        binding.date.text = year+"년"+month+"월"+day+"일"
                         date = year+"-"+month+"-"+day
                         println("date2: "+date)
                     } catch (e: Exception) {
@@ -182,8 +183,8 @@ class MainActivity : BaseActivity() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 

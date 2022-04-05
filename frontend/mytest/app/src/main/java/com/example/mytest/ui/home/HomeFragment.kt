@@ -63,12 +63,14 @@ class HomeFragment : Fragment() {
         var year = onlyDate.dateToString("yyyy")
         var month = onlyDate.dateToString("MM")
         var day = onlyDate.dateToString("dd")
+        var year2 = onlyDate.dateToString("yy")
+        binding.date.text = year2+"년 "+month+"월 "+day+"일"
         testRetrofit(year,month,day)
-        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
-            }
-        homeViewModel.image.observe(viewLifecycleOwner) {
-                imageView.setImageResource(it)
-            }
+//        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
+//            }
+//        homeViewModel.image.observe(viewLifecycleOwner) {
+//                imageView.setImageResource(it)
+//            }
 
         binding.imageHome.setOnClickListener {
             activity?.let{
@@ -111,8 +113,8 @@ class HomeFragment : Fragment() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/")
-//                .baseUrl("http://j6d102.p.ssafy.io/")
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 
@@ -146,6 +148,8 @@ class HomeFragment : Fragment() {
 //        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
         val flowerNum = FlowerList(null,int,null).getFlower(int)
         flowerNum?.let { binding.imageHome.setImageResource(it.image) }
+        binding.flowerLanguage.text =flowerNum?.flowerMeaning
+        binding.flowerName.text = flowerNum?.flowerName
     }
     private fun Date.dateToString(format: String): String {
         //simple date formatter
