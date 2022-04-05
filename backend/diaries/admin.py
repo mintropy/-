@@ -5,11 +5,16 @@ from .models import Diary, Flower
 @admin.register(Diary)
 class DiaryAdmin(admin.ModelAdmin):
     list_display = (
-        'user', 'date', 'flower', 'is_photo', 'is_ko_content', 'is_en_content',
+        "user",
+        "date",
+        "flower",
+        "is_photo",
+        "is_ko_content",
+        "is_en_content",
     )
-    ordering = ('-date',)
-    list_filter = ('user',)
-    
+    ordering = ("-date",)
+    list_filter = ("user",)
+
     @admin.display(
         boolean=True,
     )
@@ -17,6 +22,7 @@ class DiaryAdmin(admin.ModelAdmin):
         if obj.photo is None:
             return False
         return True
+
     @admin.display(
         boolean=True,
     )
@@ -24,6 +30,7 @@ class DiaryAdmin(admin.ModelAdmin):
         if obj.ko_content is None:
             return False
         return True
+
     @admin.display(
         boolean=True,
     )
@@ -35,11 +42,16 @@ class DiaryAdmin(admin.ModelAdmin):
 
 @admin.register(Flower)
 class FlowerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'symbol', 'count_user',)
-    ordering = ('id',)
-    list_display_links = ('name',)
-    filter_horizontal  = ('users',)
-    
+    list_display = (
+        "id",
+        "name",
+        "symbol",
+        "count_user",
+    )
+    ordering = ("id",)
+    list_display_links = ("name",)
+    filter_horizontal = ("users",)
+
     @admin.display()
     def count_user(self, obj):
         return obj.users.count()
