@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.374"
         app:layout_constraintWidth_percent="0.11"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_2"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.352"
         app:layout_constraintWidth_percent="0.11"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_3"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.342"
         app:layout_constraintWidth_percent="0.11"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_4"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.331"
         app:layout_constraintWidth_percent="0.11"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_5"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.446"
         app:layout_constraintWidth_percent="0.115"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_6"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.415"
         app:layout_constraintWidth_percent="0.115"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_7"
@@ -104,7 +104,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.404"
         app:layout_constraintWidth_percent="0.115"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_8"
@@ -118,7 +118,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.39"
         app:layout_constraintWidth_percent="0.115"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_9"
@@ -132,7 +132,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.39"
         app:layout_constraintWidth_percent="0.115"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_10"
@@ -146,7 +146,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.488"
         app:layout_constraintWidth_percent="0.119"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_11"
@@ -160,7 +160,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.47"
         app:layout_constraintWidth_percent="0.119"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_12"
@@ -174,7 +174,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.448"
         app:layout_constraintWidth_percent="0.119"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_13"
@@ -188,7 +188,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.48"
         app:layout_constraintWidth_percent="0.119"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_14"
@@ -202,7 +202,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.439"
         app:layout_constraintWidth_percent="0.119"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_15"
@@ -216,7 +216,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.557"
         app:layout_constraintWidth_percent="0.13"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_16"
@@ -230,7 +230,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.525"
         app:layout_constraintWidth_percent="0.129"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_17"
@@ -244,7 +244,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.516"
         app:layout_constraintWidth_percent="0.126"
-        app:srcCompat="@drawable/azalea" />
+         />
 
 
 
@@ -260,7 +260,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.643"
         app:layout_constraintWidth_percent="0.14"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_19"
@@ -274,7 +274,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.761"
         app:layout_constraintWidth_percent="0.145"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_20"
@@ -288,7 +288,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.745"
         app:layout_constraintWidth_percent="0.14"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_21"
@@ -302,7 +302,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.715"
         app:layout_constraintWidth_percent="0.143"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_22"
@@ -316,7 +316,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.833"
         app:layout_constraintWidth_percent="0.143"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_23"
@@ -330,7 +330,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.821"
         app:layout_constraintWidth_percent="0.143"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_24"
@@ -344,7 +344,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.807"
         app:layout_constraintWidth_percent="0.15"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_25"
@@ -358,7 +358,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.785"
         app:layout_constraintWidth_percent="0.15"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_26"
@@ -372,7 +372,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.905"
         app:layout_constraintWidth_percent="0.15"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_27"
@@ -386,7 +386,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.869"
         app:layout_constraintWidth_percent="0.15"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_28"
@@ -400,7 +400,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.867"
         app:layout_constraintWidth_percent="0.16"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_29"
@@ -414,7 +414,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.954"
         app:layout_constraintWidth_percent="0.153"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_30"
@@ -428,7 +428,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.94"
         app:layout_constraintWidth_percent="0.155"
-        app:srcCompat="@drawable/azalea" />
+         />
 
     <ImageView
         android:id="@+id/flower_31"
@@ -442,7 +442,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.939"
         app:layout_constraintWidth_percent="0.16"
-        app:srcCompat="@drawable/azalea" />
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
