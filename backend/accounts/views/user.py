@@ -38,13 +38,14 @@ def get_kakao_user_info(token: str) -> User:
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
     }
     response = requests.get(user_url, headers=headers)
+    print(response)
     if response.status_code == status.HTTP_401_UNAUTHORIZED:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return None
     user_info = response.text
     user_info = json.loads(user_info)
     user_id = user_info.get("id", None)
     if user_id is None:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return None
     user, created = User.objects.get_or_create(social="KA", social_id=user_id)
     if created:
         user.username = user_info["properties"]["nickname"]
