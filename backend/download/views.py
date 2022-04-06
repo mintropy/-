@@ -1,15 +1,27 @@
+import os
+import mimetypes
+
+from django.http import HttpResponse
+
 from rest_framework.viewsets import ViewSet
-from django.http import FileResponse
+from wsgiref.util import FileWrapper
 
 from back.settings import BASE_DIR
 
-import os
 
 class DownloadViewset(ViewSet):
-    
-    def download(self, request):
-        print(BASE_DIR)
-        file_dir = os.path.join(".", "urls.py")
-        file_dir = open(file_dir, 'r', encoding="utf-8")
-        response = FileResponse(file_dir)
+    def send_file2(self, request):
+        """
+        Send a file through Django without loading the whole file into
+        memory at once. The FileWrapper will turn the file object into an
+        iterator for chunks of 8KB.
+        """
+        file_name = "app.apk"
+        filePath = os.path.join(BASE_DIR, "download", file_name)
+        file = open(filePath, "rb")
+        wrapper = FileWrapper(file)
+        mime_type, _ = mimetypes.guess_type(filePath)
+        response = HttpResponse(wrapper, content_type=mime_type)
+        response["Content-Disposition"] = "attachment; filename=%s" % file_name
+        response["Content-Length"] = os.path.getsize(filePath)
         return response
