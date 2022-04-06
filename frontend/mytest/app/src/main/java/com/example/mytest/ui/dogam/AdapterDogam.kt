@@ -17,13 +17,14 @@ import com.example.mytest.MainActivity
 import com.example.mytest.R
 import com.example.mytest.dto.Flower
 import com.example.mytest.dto.FlowerList
+import com.example.mytest.dto.HaveFlower
 import kotlinx.android.synthetic.main.dagam_item.view.*
 import kotlinx.android.synthetic.main.list_item_day.view.*
 import java.io.File
 import java.nio.file.Paths
 
 //class AdapterDogam (val flowerList: MutableList<String>): RecyclerView.Adapter<AdapterDogam.DogamView>() {
-class AdapterDogam(val flowerList: List<FlowerList>) : RecyclerView.Adapter<AdapterDogam.DogamView>() {
+class AdapterDogam(val flowerList: List<HaveFlower>) : RecyclerView.Adapter<AdapterDogam.DogamView>() {
 
     init {
         setHasStableIds(true)
@@ -43,9 +44,15 @@ class AdapterDogam(val flowerList: List<FlowerList>) : RecyclerView.Adapter<Adap
         private val flowerName:TextView = itemView.findViewById(R.id.flower_name)
         private val flowerImage: ImageView = itemView.findViewById(R.id.flower_image)
 
-        fun bind(item: String,flower: Int){
-            flowerName.text = item
-            flowerImage.setImageResource(flower)
+        fun bind(flower: Flower?,bool:Boolean){
+            if (flower != null) {
+                flowerName.text = flower?.flowerName
+                if (bool) {
+                    flowerImage.setImageResource(flower.image)
+                }else{
+                    flowerImage.setImageResource(flower.imageShad)
+                }
+            }
         }
     }
 
@@ -53,17 +60,22 @@ class AdapterDogam(val flowerList: List<FlowerList>) : RecyclerView.Adapter<Adap
 
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: DogamView, position: Int) {
-        val dogam = flowerList[position]
-        dogam.name?.let { dogam.image?.let { it1 -> holder.bind(it, it1) } }
+        var have=flowerList[position]
+        val dogam = FlowerList(null).getFlower(have.number)
+        holder.bind(dogam,have.have)
         holder.layout.dogam_item.setOnClickListener{
 //            Toast.makeText(holder.layout.context, "성공", Toast.LENGTH_SHORT).show()
             val intent = Intent(holder.layout.dogam_item.context, FlowerDetail::class.java)
-            val flowerDetail = dogam.number?.let { it1 -> dogam.getFlower(it1) }
-            intent.putExtra("title",dogam.name)
-            intent.putExtra("image",dogam.image)
-            intent.putExtra("language",flowerDetail?.flowerMeaning)
-            intent.putExtra("story",flowerDetail?.flowerStory)
-            ContextCompat.startActivity(holder.layout.dogam_item.context, intent,null)
+            intent.putExtra("title",dogam?.flowerName)
+            intent.putExtra("image",dogam?.image)
+            intent.putExtra("language",dogam?.flowerMeaning)
+            intent.putExtra("story",dogam?.flowerStory)
+            if(have.have) {
+
+                ContextCompat.startActivity(holder.layout.dogam_item.context, intent, null)
+            }else{
+                holder.layout.flower_name.text = "???"
+            }
         }
     }
 

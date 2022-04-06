@@ -143,7 +143,7 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
                     var compare = calendar.time.dateToString("yyyy-MM-dd")
                     if (compare == it.date){
                         val image = it.flower?.let { it1 ->
-                            FlowerList(null,it.flower,null).getFlower(
+                            FlowerList(it.flower).getFlower(
                                 it1
                             )
                         }

@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
 //        url = "http://10.0.2.2:8000"+url
 ////        url = "http://j6d102.p.ssafy.io"+url
 //        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
-        val flowerNum = FlowerList(null,int,null).getFlower(int)
+        val flowerNum = FlowerList(int).getFlower(int)
         flowerNum?.let { binding.imageHome.setImageResource(it.image) }
         binding.flowerLanguage.text =flowerNum?.flowerMeaning
         binding.flowerName.text = flowerNum?.flowerName

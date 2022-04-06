@@ -12,12 +12,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.mytest.databinding.ActivityMain2Binding
 import com.example.mytest.databinding.ActivityMainBinding
 import com.example.mytest.dto.DiaryCreate
+import com.example.mytest.dto.SpellCheck
 import com.example.mytest.retrofit.RetrofitService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -53,7 +56,6 @@ class MainActivity : BaseActivity() {
     var bit:Bitmap? = null
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +71,7 @@ class MainActivity : BaseActivity() {
 
         println("date: "+date)
         //2. 앨범 버튼이 클릭되면 수정 가능
-        binding.buttonGallery.setOnClickListener {
+        binding.photo.setOnClickListener {
             openGallery()
         }
         binding.create.setOnClickListener {
@@ -79,10 +81,16 @@ class MainActivity : BaseActivity() {
 
         binding.mainActivityLayout.setOnClickListener {
             hideKeyboard()
-
         }
-        binding.daySelect.setOnClickListener() {
+        binding.date.setOnClickListener() {
             dialog()
+        }
+        binding.diaryText.movementMethod = ScrollingMovementMethod()
+        binding.spell.setOnClickListener{
+            spellCheck(binding.diaryText.text.toString())
+        }
+        binding.diaryText.setOnClickListener{
+
         }
     }
 
@@ -117,7 +125,7 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         data?.data?.let { uri ->
-            binding.imagePreview.setImageURI(uri)
+            binding.photo.setImageURI(uri)
             var input = contentResolver.openInputStream(uri)
             bit = BitmapFactory.decodeStream(input)
             filepath = convertBitmapToFile(bit)
@@ -143,6 +151,7 @@ class MainActivity : BaseActivity() {
 
     private fun testRetrofit(path : File?,custom_content:String?){
         //creating a file
+        binding.imageCaption.text = "사진을 분석중이예요"
         var body : MultipartBody.Part? =null
         if (path != null){
             var fileName = "hello.jpeg"
@@ -177,19 +186,55 @@ class MainActivity : BaseActivity() {
             override fun onFailure(call: Call<DiaryCreate>, t: Throwable) {
                 Log.d("test","에러"+t.message.toString())
             }
-
             override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
                 println("response: "+response.toString())
                 if (response?.isSuccessful) {
                     Log.d("일기 결과2",""+response?.body().toString())
+                    binding.imageCaption.text = response.body()?.ko_content
                     if (response?.body()?.custom_content != null && response?.body()?.photo !=null){
-//
                         var intent= Intent(this@MainActivity, BottomNav::class.java)
-//
                         startActivity(intent)
                         finish()
                     }
 
+                } else {
+                    Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
+                }
+            }
+        })
+    }
+    private fun spellCheck(custom_content:String?){
+        //The gson builder
+        var gson : Gson =  GsonBuilder()
+            .setLenient()
+            .create()
+
+        var testToken2 = TokenManager.instance.getToken()
+        var head = "Bearer "+testToken2?.accessToken
+
+        var retrofit =
+            Retrofit.Builder()
+//                .baseUrl("http://10.0.2.2:8000/")
+                .baseUrl("http://j6d102.p.ssafy.io/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        //creating our api
+
+        var server = retrofit.create(RetrofitService::class.java)
+
+        // 파일, 사용자 아이디, 파일이름
+
+        server.spellCheck(head,custom_content).enqueue(object:Callback<SpellCheck>{
+            override fun onFailure(call: Call<SpellCheck>, t: Throwable) {
+                Log.d("test","에러"+t.message.toString())
+            }
+
+            override fun onResponse(call: Call<SpellCheck>, response: Response<SpellCheck>) {
+                println("response: "+response.toString())
+                if (response?.isSuccessful) {
+                    Log.d("일기 결과2",""+response?.body().toString())
+                    println(response.body()?.customContent)
+                    binding.diaryText.setText(response.body()?.customContent)
                 } else {
                     Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
                 }

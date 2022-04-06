@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg7_2"
+    android:background="@drawable/bg9"
     tools:context=".ui.home.HomeFragment">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="34sp"
+        android:textSize="34dp"
         app:layout_constraintBottom_toTopOf="@+id/text_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,14 +38,14 @@
         android:id="@+id/image_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.7"
-        app:layout_constraintDimensionRatio="1:1.1"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="160dp"
         android:src="@drawable/gross"
+        app:layout_constraintDimensionRatio="1:1.1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
 
     <Button
         android:id="@+id/kakao_logout_button"
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
-        android:textSize="20dp"
+        android:textSize="23dp"
         app:layout_constraintBottom_toTopOf="@+id/flowerLanguage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -77,6 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25dp"
+        android:fontFamily="@font/sunbatang_medium"
+        android:text="오늘은 어떠셨나요?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

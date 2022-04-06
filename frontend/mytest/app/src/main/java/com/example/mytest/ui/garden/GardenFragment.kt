@@ -121,14 +121,11 @@ class GardenFragment : Fragment() {
             cnt += 1
             val flowerNum = list[i - 1].flower
             if (flowerNum != null){
-                val flower = FlowerList(null, flowerNum, null).getFlower(flowerNum)
+                val flower = FlowerList(flowerNum).getFlower(flowerNum)
                 val imageViewId =
                     resources.getIdentifier("flower_$cnt", "id", requireContext().packageName)
                 val imageView = view.findViewById<ImageView>(imageViewId)
                 flower!!.image?.let { imageView?.setImageResource(it) }
-                println(flowerNum)
-                println(imageViewId)
-                println(imageView)
             }else{cnt -= 1}
 
         }

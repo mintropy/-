@@ -7,7 +7,8 @@ data class Flower(
     val flowerStory: String,
     val flowerMeaning: String,
     val image: Int,
-    val imageIcon:Int
+    val imageIcon:Int,
+    val imageShad: Int
 )
 
 
