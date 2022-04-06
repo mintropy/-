@@ -49,6 +49,8 @@ class DiaryViewSet(ViewSet):
     def montly(self, request, year, month):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
+        if user is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         diaries = Diary.objects.filter(
             user_id=user.id, date__year=year, date__month=month
         ).order_by('date')
@@ -59,6 +61,8 @@ class DiaryViewSet(ViewSet):
     def daily(self, request, year, month, day):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
+        if user is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         target_day = date(year, month, day)
         diary = get_object_or_404(Diary, user_id=user.id, date=target_day)
         serializer = DiarySerializer(diary)
@@ -68,6 +72,8 @@ class DiaryViewSet(ViewSet):
     def create(self, request):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
+        if user is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         try:
             target_day = date.fromisoformat(request.data["date"].replace('"', ""))
         except Exception:
@@ -143,14 +149,20 @@ class DiaryViewSet(ViewSet):
     def spell_check(self, request):
         token = request.headers.get("Authorization", "")
         user = get_kakao_user_info(token)
+        if user is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         try:
             target_day = date.fromisoformat(request.data["date"].replace('"', ""))
         except Exception:
             target_day = date.today()
         if target_day < date(1900, 1, 1) or target_day >= date(2050, 1, 1):
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        if not Diary.objects.filter(user=user, date=target_day).exists():
+            return Response(status=status.HTTP_404_NOT_FOUND)
         diary = Diary.objects.get(user=user, date=target_day)
         custom_content = request.data.get("customContent", None)
+        if custom_content is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         dict_result = spell_checker.check(custom_content).as_dict()
         tran_custom_content = dict_result["checked"]
         data = {
