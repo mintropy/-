@@ -2,7 +2,8 @@
 
 ## 와이어 프레임 & 화면 정의서
 - [피그마](https://www.figma.com/file/zq49A74YZ9E5p9uN7ghcRG/특화-PJT-team-library?node-id=0%3A1)
-- [화면 정의서](https://mintropy.notion.site/UI-0e6a29fdbc5346e2ad4a3544df18f61a)
+- [화면 정의서](https://mintropy.notion.site/UI-0e6a29fdbc5346e2ad4a3544df18f61a)<br>
+
 ![화면정의서](%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98%EC%84%9C1.jpg)
 
 ## ERD
@@ -85,7 +86,7 @@ back ->> db : 일기 내용 저장
 db ->> back : 일기 내용
 back ->> front : 일기
 front ->> client : 일기
-```
+```  
 
 ## 시스템 구성도
 ![diagram](시스템%20구성도.png)
