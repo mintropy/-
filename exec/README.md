@@ -8,7 +8,7 @@
 ## ERD
 - [ERD](https://www.notion.so/mintropy/ERD-f6074c6dd90c4306b3d17e3c07e3a165)
 
-![ERD](ERD1.PNG)
+![ERD](ERD1.png)
 
 - 각 유저가 일기를 작성
     - 일기와 함께 사진 업로드
