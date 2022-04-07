@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'accounts',
     'diaries',
+    'download',
 
     'rest_auth',
     'rest_framework',
@@ -203,6 +204,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-# SITE_ID = 1
+SITE_ID = 1
 
 AUTH_USER_MODEL = "accounts.User"
