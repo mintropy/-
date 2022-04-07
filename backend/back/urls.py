@@ -46,6 +46,7 @@ urlpatterns = [
     path(f"{url_preset}accounts/", include("accounts.urls")),
     path(f"{url_preset}accounts/", include("allauth.urls")),
     path(f"{url_preset}diaries/", include("diaries.urls")),
+    path(f"{url_preset}download/", include("download.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

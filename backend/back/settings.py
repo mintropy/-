@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'accounts',
     'diaries',
+    'download',
 
     'rest_auth',
     'rest_framework',
