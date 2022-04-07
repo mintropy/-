@@ -2,54 +2,20 @@
 
 ## 와이어 프레임 & 화면 정의서
 - [피그마](https://www.figma.com/file/zq49A74YZ9E5p9uN7ghcRG/특화-PJT-team-library?node-id=0%3A1)
-
+- [화면 정의서](https://mintropy.notion.site/UI-0e6a29fdbc5346e2ad4a3544df18f61a)
 ![화면정의서](%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98%EC%84%9C1.jpg)
 
 ## ERD
 - [ERD](https://www.notion.so/mintropy/ERD-f6074c6dd90c4306b3d17e3c07e3a165)
 
-![ERD](ERD1.png)
+![ERD](ERD1.PNG)
 
 - 각 유저가 일기를 작성
     - 일기와 함께 사진 업로드
     - 일기에 해당하는 꽃을 추천
 
 ## 시퀀스 다이어그램
-```mermaid
-sequenceDiagram
-participant client
-participant front
-participant back
-participant db
-
-client ->> front : 카카오 로그인 요청
-front ->> back: 카카오 로그인 요청(account/logins)
-back ->> back : 카카오 서버에 인증 코드 요청 및 전달(redirect)
-back ->> back : 인증 코드로 토큰 요청 및 전달(kauth.kakao.com/oauth/token)
-back ->> db : 토큰(id) 기반 유저 확인 및 저장
-db ->> back : 유저 정보 반환
-back ->> front : 유저 정보 반환
-front ->> client : 유저 정보 반환 및 로그인
-```
-
-```mermaid
-sequenceDiagram
-participant client
-participant front
-participant back
-participant db
-
-client ->> front : 요청
-front ->> back : 요청
-back ->> back : 카카오 인증
-back ->> front : 토큰 유효하지 않음
-front ->> front : 카카오 토큰 요청(refresh token으로)
-front -->> client : 로그인(refresh token 만료시)
-front ->> client : 토큰 저장
-front ->> back : 요청
-back ->> front : 요청 반환
-front ->> client : 요청 반환
-```
+- [시퀀스 다이어그램](https://www.notion.so/mintropy/5551842c096a450a83cc807df7069583)
 
 ```mermaid
 sequenceDiagram
@@ -75,24 +41,51 @@ participant front
 participant back
 participant db
 
-client ->> front: 일기 작성
+client ->> front: 일기 작성(화분 선택)
+front ->> client: 앨범에서 사진 선택
+client ->> front : 사진 전달
+front ->> back : 사진 전달
+back ->> back : 사진에서 문장 출력(영어)
+back ->> back : 캡셔닝에서 꽃 추천
+back ->> back : 문장 번역(API)
+back ->> db : 사진 & 캡셔닝 문장 정리
+
+back ->> front : 캡셔닝 문장(한글)
+back ->> front : 오늘의 꽃
+front ->> client : 일기 작성 페이지
+client ->> front : 작성 일기 반환
 front ->> back : 일기 작성
+back ->> back : 일기 맞춤법 API
+
 back ->> db : 일기 내용 저장
-back ->> back : 일기 내용 생성
+db ->> back : 일기 내용
+back ->> front : 일기(사진 + 캡셔닝 + 개인일기)
+front ->> client : 일기
+```
+
+```mermaid
+sequenceDiagram
+participant client
+participant front
+participant back
+participant db
+
+client ->> front: 일기 작성
+front ->> client: 앨범에서 사진 선택
+client ->> front : 사진 전달
+front ->> back : 사진 전달
+back ->> db : 사진 수정
+
+back ->> front : 사진
+front ->> client : 일기 작성 페이지
+client ->> front : 작성 일기 반환
+front ->> back : 일기 작성
+back ->> back : 일기 맞춤법 API
+back ->> db : 일기 내용 저장
+db ->> back : 일기 내용
 back ->> front : 일기
 front ->> client : 일기
 ```
 
 ## 시스템 구성도
-
-### 프론트엔드
-- Kotlin, Android
-
-### 백엔드
-- Python
-- Django
-    - DRF
-
-### AI
-- Python
-- TensorFlow
+![diagram](시스템%20구성도.png)
