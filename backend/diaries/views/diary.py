@@ -151,8 +151,11 @@ class DiaryViewSet(ViewSet):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         diary = Diary.objects.get(user=user, date=target_day)
         custom_content = request.data.get("customContent", None)
+        if custom_content is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        custom_content = custom_content[1:-1]
         dict_result = spell_checker.check(custom_content).as_dict()
-        tran_custom_content = dict_result["checked"]
+        tran_custom_content = dict_result["checked"].replace('\\"', '!@!')
         data = {
             "custom_content": tran_custom_content,
             "user": user.id,
