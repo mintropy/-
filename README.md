@@ -18,7 +18,8 @@ SSAFY 6기의 특화 프로젝트 인공지능(영상) 트랙, 🐯호랑2 팀�
         - pandas 1.3.5
         - scipy 1.7.3
 - FE
-    - 
+    - Android Studio 2021.1.1
+        - Kotlin 
 - 주요 기술
     - AI Image Captioning Data Preprocessing
     - Content Based Filtering(Recommendation)
@@ -61,3 +62,4 @@ SSAFY 6기의 특화 프로젝트 인공지능(영상) 트랙, 🐯호랑2 팀�
 
 - [Docker-Compose](exec/README.md)
 - [BackEnd](backend/README.md)
+- [FrontEnd](frontend/mytest/README.md)
