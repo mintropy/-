@@ -17,15 +17,18 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.example.mytest.databinding.ActivityMain2Binding
+import androidx.core.content.ContextCompat
+import com.example.mytest.databinding.ActivityEditDiaryBinding
 import com.example.mytest.databinding.ActivityMainBinding
 import com.example.mytest.dto.DiaryCreate
 import com.example.mytest.dto.SpellCheck
 import com.example.mytest.retrofit.RetrofitService
+import com.example.mytest.ui.dogam.FlowerDetail
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.TokenManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dagam_item.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -71,14 +74,14 @@ class MainActivity : BaseActivity() {
 
         println("date: "+date)
         //2. 앨범 버튼이 클릭되면 수정 가능
-        binding.photo.setOnClickListener {
+        binding.photos.setOnClickListener {
             openGallery()
         }
         binding.create.setOnClickListener {
             var custom_content = binding.diaryText.text.toString()
             testRetrofit(filepath, custom_content)
+            finish()
         }
-
         binding.mainActivityLayout.setOnClickListener {
             hideKeyboard()
         }
@@ -86,11 +89,18 @@ class MainActivity : BaseActivity() {
             dialog()
         }
         binding.diaryText.movementMethod = ScrollingMovementMethod()
-        binding.spell.setOnClickListener{
-            spellCheck(binding.diaryText.text.toString())
-        }
         binding.diaryText.setOnClickListener{
+//            val intent = Intent(this, EditDiary::class.java)
+//            intent.putExtra("text",binding.diaryText.text.toString())
+//            ContextCompat.startActivity(binding.diaryText.context,intent,null)
+            val target = EditDialog(this)
+            target.showDia(binding.diaryText.text.toString())
+            target.setOnClickListener(object: EditDialog.DiaryComplete{
+                override fun createClicked(content: String) {
+                    binding.diaryText.text = content
+                }
 
+            })
         }
     }
 
@@ -125,7 +135,7 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         data?.data?.let { uri ->
-            binding.photo.setImageURI(uri)
+            binding.photos.setImageURI(uri)
             var input = contentResolver.openInputStream(uri)
             bit = BitmapFactory.decodeStream(input)
             filepath = convertBitmapToFile(bit)
@@ -133,15 +143,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-//    파일 절대 경로 추출
-//    fun absolutelyPath(path: Uri): String? {
-//
-//        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
-//        var c: Cursor? = contentResolver.query(path, proj, null, null, null)
-//        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-//        c?.moveToFirst()
-//        return index?.let { c?.getString(it) }
-//    }
     fun convertBitmapToFile(bitmap: Bitmap?): File? {
         val newFile = File(applicationContext.filesDir, "picture")
         val out = FileOutputStream(newFile)
@@ -153,8 +154,12 @@ class MainActivity : BaseActivity() {
         //creating a file
         binding.imageCaption.text = "사진을 분석중이예요"
         var body : MultipartBody.Part? =null
+//        println("path:" +path.toString())
         if (path != null){
-            var fileName = "hello.jpeg"
+            var fileName:String? = "hello.png"
+            var name = (1..999999).random().toString()
+            fileName = "a"+name + ".png"
+
             var requestBody : RequestBody = RequestBody.create(MediaType.parse("image/*"),path)
             body  = MultipartBody.Part.createFormData("photo",fileName,requestBody)
 
@@ -203,46 +208,6 @@ class MainActivity : BaseActivity() {
             }
         })
     }
-    private fun spellCheck(custom_content:String?){
-        //The gson builder
-        var gson : Gson =  GsonBuilder()
-            .setLenient()
-            .create()
-
-        var testToken2 = TokenManager.instance.getToken()
-        var head = "Bearer "+testToken2?.accessToken
-
-        var retrofit =
-            Retrofit.Builder()
-//                .baseUrl("http://10.0.2.2:8000/")
-                .baseUrl("http://j6d102.p.ssafy.io/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-        //creating our api
-
-        var server = retrofit.create(RetrofitService::class.java)
-
-        // 파일, 사용자 아이디, 파일이름
-
-        server.spellCheck(head,custom_content).enqueue(object:Callback<SpellCheck>{
-            override fun onFailure(call: Call<SpellCheck>, t: Throwable) {
-                Log.d("test","에러"+t.message.toString())
-            }
-
-            override fun onResponse(call: Call<SpellCheck>, response: Response<SpellCheck>) {
-                println("response: "+response.toString())
-                if (response?.isSuccessful) {
-                    Log.d("일기 결과2",""+response?.body().toString())
-                    println(response.body()?.customContent)
-                    binding.diaryText.setText(response.body()?.customContent)
-                } else {
-                    Toast.makeText(getApplicationContext(), "Some error occurred...", Toast.LENGTH_LONG).show();
-                }
-            }
-        })
-    }
-
-
     override fun onBackPressed() {
         if(diaryText.text.toString().trim().isEmpty()){
             super.onBackPressed()

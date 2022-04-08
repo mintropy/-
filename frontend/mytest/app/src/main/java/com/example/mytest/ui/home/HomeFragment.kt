@@ -18,22 +18,17 @@ import com.example.mytest.BottomNav
 import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 import com.example.mytest.dto.DailyDiary
-import com.example.mytest.dto.FlowerDetail
 import com.example.mytest.dto.FlowerList
 import com.example.mytest.retrofit.RetrofitService
-import com.example.mytest.ui.login.LoginActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.TokenManager
-import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeFragment : Fragment() {
@@ -79,20 +74,20 @@ class HomeFragment : Fragment() {
 
             }
         }
-        binding.kakaoLogoutButton.setOnClickListener {
-
-            UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Toast.makeText(activity, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
-                }else {
-                    Toast.makeText(activity, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                }
-                val intent = Intent(activity, LoginActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
-
-            }
-        }
+//        binding.kakaoLogoutButton.setOnClickListener {
+//
+//            UserApiClient.instance.logout { error ->
+//                if (error != null) {
+//                    Toast.makeText(activity, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+//                }else {
+//                    Toast.makeText(activity, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+//                }
+//                val intent = Intent(activity, LoginActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+//
+//            }
+//        }
         return root
     }
 
@@ -101,6 +96,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
     private fun testRetrofit(year:String,month:String,day:String){
+
         //The gson builder
         var gson : Gson =  GsonBuilder()
             .setLenient()

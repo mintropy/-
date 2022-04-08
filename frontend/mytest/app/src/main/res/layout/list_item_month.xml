@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#F2EDE4"
+    android:background="@drawable/cala"
     >
 
     <Button
@@ -11,9 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_margin="15dp"
         android:gravity="center"
         android:background="#00000000"
         android:text="6월"
+        android:fontFamily="@font/sunbatang_medium"
         android:textSize="22dp"
         android:textColor="@color/black"
         android:textStyle="bold" />
@@ -22,12 +24,15 @@
         android:id="@+id/days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="일"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="#ff0000"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -36,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="월"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -44,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="화"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -52,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="수"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -60,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="목"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -68,6 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="금"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -76,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="토"
+            android:fontFamily="@font/sunbatang_medium"
             android:textColor="#0000ff"
             android:gravity="center"
             android:textSize="18dp"/>
@@ -86,8 +97,8 @@
         android:id="@+id/item_month_day_list"
         android:layout_width="match_parent"
         android:layout_height="651dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         />
 
 </LinearLayout>

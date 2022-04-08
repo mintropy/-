@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.mytest.AdapterMonth
 import com.example.mytest.R
 import com.example.mytest.dto.DailyDiary
 import com.example.mytest.dto.FlowerList
@@ -17,7 +15,6 @@ import com.example.mytest.retrofit.RetrofitService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.TokenManager
-import kotlinx.android.synthetic.main.test_garden.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,16 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-//import com.example.mytest.databinding.FragmentGardenBinding
-
 
 class GardenFragment : Fragment() {
 
-//    private var _binding: FragmentGardenBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-//    private val binding get() = _binding!!
     var listF:List<DailyDiary>? = null
     private var calendar = Calendar.getInstance()
 
@@ -50,23 +40,11 @@ class GardenFragment : Fragment() {
         var date = Date(calendar.timeInMillis)
         var year = date.dateToString("yyyy")
         var month = date.dateToString("MM")
-//        _binding = FragmentGardenBinding.inflate(inflater, container, false)
-//        val root: View = binding.root
-//
-//        val textView: TextView = binding.textGarden
-//        gardenViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-//        val arr = arrayOf("azalea","azalea","cherryblossom","clover","dandelion","forsythia","freesia")
         testRetrofit(year,month,view)
 
         return view
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
     private fun testRetrofit(year:String,month:String,view: View){
         //The gson builder
         var gson : Gson =  GsonBuilder()

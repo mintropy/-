@@ -10,15 +10,6 @@ import java.util.*
 
 interface RetrofitService {
 
-    var testToken2: OAuthToken?
-        get() = TokenManager.instance.getToken()
-        set(value) = TODO()
-    val token: String?
-        get() = testToken2?.accessToken
-    @GET("api/accounts/logins/")
-    fun getLogin(): Call<User>
-
-
     @Multipart
     @POST("api/diaries/")
    fun createDiary(

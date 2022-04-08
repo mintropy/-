@@ -19,7 +19,6 @@ class AdapterDay(private val tempMonth:Int, private val dayList: MutableList<Day
         setHasStableIds(true)
     }
     private val ROW = 6
-    var url:String? = null
     inner class DayView(val layout: View): RecyclerView.ViewHolder(layout){
 
     }

@@ -57,7 +57,7 @@
         android:ems="10"
         android:fontFamily="@font/cafe24_oneprettynight"
         android:gravity="center"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:text="캡셔닝"
         android:singleLine="false"
         android:textAlignment="center"

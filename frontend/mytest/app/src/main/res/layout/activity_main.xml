@@ -5,11 +5,11 @@
     android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg8_2"
+    android:background="@drawable/create"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/photos"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
@@ -21,17 +21,17 @@
         app:layout_constraintWidth_percent="0.60"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <EditText
+    <TextView
         android:id="@+id/diaryText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/diary_border"
         android:ems="10"
         android:gravity="start|top"
         android:hint="여기에 일기를 써보세요"
         android:inputType="textMultiLine"
         android:lines="3"
+        android:fontFamily="@font/sunbatang_medium"
         android:scrollbars="vertical"
         android:textSize="20sp"
         app:layout_constraintDimensionRatio="1:0.6"
@@ -45,7 +45,8 @@
         android:id="@+id/date"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/sunbatang_medium"
         android:gravity="center"
         android:text=""
         android:textAlignment="center"
@@ -55,37 +56,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/create"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintDimensionRatio="1:0.6"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="87dp"
-        android:text="작성"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="5sp"
+        android:layout_marginBottom="88dp"
         android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:text="작 성"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:fontFamily="@font/cafe24_oneprettynight"
+        android:gravity="center"
+        android:background="@drawable/buyytt"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.635"
-        app:layout_constraintStart_toEndOf="@+id/spell" />
-
-    <Button
-        android:id="@+id/spell"
-        app:layout_constraintWidth_percent="0.2"
         app:layout_constraintDimensionRatio="1:0.6"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="87dp"
-        android:text="맞춤법"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="5sp"
-        android:autoSizeMaxTextSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.192"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2" />
 
     <TextView
         android:id="@+id/imageCaption"
@@ -95,15 +85,18 @@
         android:autoSizeMaxTextSize="20sp"
         android:autoSizeMinTextSize="5sp"
         android:autoSizeTextType="uniform"
+        android:inputType="textMultiLine"
         android:gravity="center"
         android:singleLine="false"
         android:text="아직 사진이 없어요"
-        android:textSize="20sp"
+        android:fontFamily="@font/sunbatang_medium"
         app:layout_constraintBottom_toTopOf="@+id/diaryText"
         app:layout_constraintDimensionRatio="1:0.11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photos"
+        app:layout_constraintVertical_bias="0.783"
         app:layout_constraintWidth_percent="0.7" />
 
 
