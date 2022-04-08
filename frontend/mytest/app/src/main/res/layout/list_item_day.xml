@@ -5,10 +5,9 @@
     android:id="@+id/item_day_layout"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
     android:gravity="right"
+    android:layout_margin="2dp"
+    android:background="@drawable/teduri"
     android:orientation="vertical">
 
     <TextView
@@ -16,13 +15,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="9"
-        android:textSize="16sp" />
+        android:layout_margin="3dp"
+        android:textSize="16dp" />
 
     <ImageView
         android:id="@+id/item_day_image"
         android:layout_width="wrap_content"
         android:layout_height="90dp"
         android:layout_weight="1"
+        android:layout_margin="3dp"
         tools:srcCompat="@tools:sample/avatars" />
 
 
