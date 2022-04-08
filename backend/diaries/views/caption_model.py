@@ -2,11 +2,14 @@
 import ast
 import numpy as np
 import os
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 import tensorflow as tf
 
 from back.settings import BASE_DIR
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 
 
 def cap(image_):
