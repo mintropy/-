@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DiaryDetail">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="279dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="xx년 xx월 xx일"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/NoneImage"
+        android:layout_width="154dp"
+        android:layout_height="172dp"
+        android:gravity="center"
+        android:text="아직 사진이 없습니다"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/diaryPhoto"
+        app:layout_constraintEnd_toEndOf="@+id/diaryPhoto"
+        app:layout_constraintStart_toStartOf="@+id/diaryPhoto"
+        app:layout_constraintTop_toTopOf="@+id/diaryPhoto" />
+
+
+    <ImageView
+        android:id="@+id/diaryPhoto"
+        android:layout_width="328dp"
+        android:layout_height="233dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/imageCaption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/imageCaption"
+        android:layout_width="268dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="캡셔닝"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/flower"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/flower"
+        android:layout_width="347dp"
+        android:layout_height="249dp"
+        android:layout_marginBottom="28dp"
+        android:alpha="0.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/diaryText"
+        android:layout_width="322dp"
+        android:layout_height="233dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="여기에 일기를 써보세요"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        app:layout_constraintBottom_toBottomOf="@+id/flower"
+        app:layout_constraintEnd_toEndOf="@+id/flower"
+        app:layout_constraintStart_toStartOf="@+id/flower"
+        app:layout_constraintTop_toTopOf="@+id/flower" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

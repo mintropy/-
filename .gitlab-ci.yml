@@ -1,0 +1,23 @@
+stages:
+  - build 
+  - deploy
+
+build:
+  stage: build
+  only:
+    - develop@s06-ai-image-sub2/S06P22D102
+  script:
+    - docker-compose build
+  tags:
+    - dev
+
+deploy:
+  stage: deploy
+  only:
+    - develop@s06-ai-image-sub2/S06P22D102
+  script:
+    - docker-compose up -d
+    - docker-compose run backend python manage.py migrate
+    - docker-compose run backend python manage.py loaddata flower.json
+  tags:
+    - dev
