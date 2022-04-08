@@ -14,6 +14,7 @@ import com.kakao.sdk.auth.TokenManager
 
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,32 +46,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-//        service.getLogin()?.enqueue(object : Callback<User>{
-//            override fun onResponse(call: Call<User>, response: Response<User>) {
-//                println(response.toString())
-//                if(response.isSuccessful){
-//                    var result: User? = response.body()
-//                    Log.d("Test","성공"+result?.socialId.toString())
-//                }else{
-//                    Log.d("test","실패")
-//                }
-//
-//            }
-//
-//            override fun onFailure(call: Call<User>, t: Throwable) {
-//                Log.d("test","에러"+t.message.toString())
-//            }
-//        })
-
-
-
-
 ////        token값 불러오는 코드: 해당값을 api 통신으로 보내면 된다.
 
-////        val keyHash = Utility.getKeyHash(this)
-////        Log.d("Hash", keyHash)
-//
-//
+//        val keyHash = Utility.getKeyHash(this)
+//        Log.d("Hash", keyHash)
+
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -99,43 +79,21 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
                     }
                     else -> { // Unknown
-                        Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "기타 에러"+error.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-
-//                service.createDiary(head)?.enqueue(object : Callback<DiaryCreate>{
-//                    override fun onResponse(call: Call<DiaryCreate>, response: Response<DiaryCreate>) {
-//                        println("qwer"+response.toString())
-//                        if(response.isSuccessful){
-//                            var result: DiaryCreate? = response.body()
-//                            Log.d("Test","성공")
-//                        }else{
-//                            Log.d("test","실패")
-//                        }
-//
-//                    }
-
-//                    override fun onFailure(call: Call<DiaryCreate>, t: Throwable) {
-//                        Log.d("test","에러"+t.message.toString())
-//                    }
-//                })
-
                 val intent = Intent(this, BottomNav::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
         }
 
-
-
-
         binding.btnKakao?.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
-
 
             }else{
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)

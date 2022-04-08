@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\USER\\Desktop\\project\\S06P22D102\\apk_key\\bihwa_key.jks')
+            storePassword 'horang22'
+            keyAlias 'bihwa'
+            keyPassword 'horang22'
+        }
+    }
     compileSdk 32
 
     defaultConfig {

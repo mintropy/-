@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.mytest.dto.DailyDiary
 import com.example.mytest.dto.FlowerList
@@ -12,7 +13,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kakao.sdk.auth.TokenManager
 import kotlinx.android.synthetic.main.activity_diary_detail.*
-import kotlinx.android.synthetic.main.list_item_day.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +28,8 @@ class DiaryDetail : AppCompatActivity() {
         var month = intent.getStringExtra("month").toString()
         var day = intent.getStringExtra("day").toString()
         date.text = "${year.toInt()%100}년 ${month.toInt()}월 ${day.toInt()}일"
-
+        val textview = findViewById<TextView>(R.id.diaryText)
+        textview.movementMethod = ScrollingMovementMethod()
         testRetrofit(year,month,day)
     }
     private fun testRetrofit(year:String,month:String,day:String){
@@ -73,7 +74,7 @@ class DiaryDetail : AppCompatActivity() {
                         imageCaption.text = sample.ko_content.toString()
                         diaryText.movementMethod = ScrollingMovementMethod()
                         var flowerImage = sample.flower?.let {
-                            FlowerList(null, sample.flower,null).getFlower(
+                            FlowerList( sample.flower).getFlower(
                                 it
                             )
                         }

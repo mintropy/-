@@ -13,7 +13,7 @@ class FlowerDetail : Activity() {
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.flower_dialog)
         val title = intent.getStringExtra("title")
         val image = intent.getIntExtra("image", 0)

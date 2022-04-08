@@ -34,8 +34,6 @@ class CalendarFragment : Fragment() {
 
         val root: View = binding.root
 
-
-
         val monthListManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         val monthListAdapter = AdapterMonth()
 ////      이 밑은 페이지슬라이드 기능 이다

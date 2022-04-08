@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="9"
         android:layout_margin="3dp"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
     <ImageView
         android:id="@+id/item_day_image"

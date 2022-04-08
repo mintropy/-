@@ -5,40 +5,9 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg3"
+    android:background="@drawable/login"
     tools:context=".ui.login.LoginActivity">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="145dp"
-        android:layout_height="107dp"
-        android:background="@drawable/miriflower"
-        app:layout_constraintBottom_toTopOf="@+id/btn_kakao"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_login"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792" />
-
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="90dp"
-        android:background="@drawable/wongoji"
-        android:fontFamily="@font/sunbatang_medium"
-        android:gravity="center"
-        android:paddingTop="1dp"
-        android:text=" 로그인 "
-        android:textColor="@color/black"
-        android:letterSpacing="0.1"
-        android:textSize="32dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_kakao"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802" />
 
     <ImageView
         android:id="@+id/btn_kakao"
@@ -47,12 +16,10 @@
         android:src="@drawable/kakao_login_large_narrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.377"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.655" />
-
-
+        app:layout_constraintVertical_bias="0.55" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
