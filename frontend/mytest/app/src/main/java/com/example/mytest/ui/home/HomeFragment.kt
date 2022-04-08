@@ -18,6 +18,7 @@ import com.example.mytest.BottomNav
 import com.example.mytest.MainActivity
 import com.example.mytest.databinding.FragmentHomeBinding
 import com.example.mytest.dto.DailyDiary
+import com.example.mytest.dto.FlowerList
 import com.example.mytest.retrofit.RetrofitService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -28,8 +29,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeFragment : Fragment() {
@@ -39,6 +38,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     var url:String? = null
+    var flower:Int? = null
 
 
     override fun onCreateView(
@@ -58,12 +58,14 @@ class HomeFragment : Fragment() {
         var year = onlyDate.dateToString("yyyy")
         var month = onlyDate.dateToString("MM")
         var day = onlyDate.dateToString("dd")
+        var year2 = onlyDate.dateToString("yy")
+        binding.date.text = year2+"년 "+month+"월 "+day+"일"
         testRetrofit(year,month,day)
-        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
-            }
-        homeViewModel.image.observe(viewLifecycleOwner) {
-                imageView.setImageResource(it)
-            }
+//        homeViewModel.text.observe(viewLifecycleOwner) { textView.text = it
+//            }
+//        homeViewModel.image.observe(viewLifecycleOwner) {
+//                imageView.setImageResource(it)
+//            }
 
         binding.imageHome.setOnClickListener {
             activity?.let{
@@ -72,6 +74,20 @@ class HomeFragment : Fragment() {
 
             }
         }
+//        binding.kakaoLogoutButton.setOnClickListener {
+//
+//            UserApiClient.instance.logout { error ->
+//                if (error != null) {
+//                    Toast.makeText(activity, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+//                }else {
+//                    Toast.makeText(activity, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+//                }
+//                val intent = Intent(activity, LoginActivity::class.java)
+//                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+//                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+//
+//            }
+//        }
         return root
     }
 
@@ -80,6 +96,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
     private fun testRetrofit(year:String,month:String,day:String){
+
         //The gson builder
         var gson : Gson =  GsonBuilder()
             .setLenient()
@@ -92,6 +109,7 @@ class HomeFragment : Fragment() {
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
+//                .baseUrl("http://10.0.2.2:8000/")
                 .baseUrl("http://j6d102.p.ssafy.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
@@ -110,10 +128,9 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<DailyDiary>, response: Response<DailyDiary>) {
                 if (response?.isSuccessful ) {
                     Log.d("레트로핏 결과2",""+response?.body().toString())
-                    url = response.body()?.photo.toString()
-                    if (url != null) {
-                        checkFlower()
-                    }
+                    flower = response?.body()?.flower
+//                    url = response.body()?.photo.toString()
+                    flower?.let { checkFlower(it) }
                 } else {
                     Log.d("레트로핏 결과2","실패")
                 }
@@ -121,9 +138,14 @@ class HomeFragment : Fragment() {
         })
 
     }
-    private fun checkFlower(){
-        url = "http://j6d102.p.ssafy.io/"+url
-        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+    private fun checkFlower(int: Int){
+//        url = "http://10.0.2.2:8000"+url
+////        url = "http://j6d102.p.ssafy.io"+url
+//        activity?.let { Glide.with(it).load(url).into(binding.imageHome) }
+        val flowerNum = FlowerList(int).getFlower(int)
+        flowerNum?.let { binding.imageHome.setImageResource(it.image) }
+        binding.flowerLanguage.text =flowerNum?.flowerMeaning
+        binding.flowerName.text = flowerNum?.flowerName
     }
     private fun Date.dateToString(format: String): String {
         //simple date formatter
@@ -132,4 +154,5 @@ class HomeFragment : Fragment() {
         //return the formatted date string
         return dateFormatter.format(this)
     }
+
 }

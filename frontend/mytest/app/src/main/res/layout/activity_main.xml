@@ -5,98 +5,99 @@
     android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/create"
     tools:context=".MainActivity">
 
-
-    <!--    <Button-->
-    <!--        android:id="@+id/buttonCamera"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="카메라"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.247"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.499" />-->
-
     <ImageView
-        android:id="@+id/imagePreview"
+        android:id="@+id/photos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginTop="12dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/create"
+        app:layout_constraintDimensionRatio="1:0.9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014"
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintWidth_percent="0.60"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/buttonGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:text="사진앨범"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagePreview"
-        app:layout_constraintVertical_bias="0.032" />
-
-    <EditText
+    <TextView
         android:id="@+id/diaryText"
-        android:layout_width="302dp"
-        android:layout_height="138dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/diary_border"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="여기에 일기를 써보세요"
         android:inputType="textMultiLine"
         android:lines="3"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/sunbatang_medium"
+        android:scrollbars="vertical"
+        android:textSize="20sp"
+        app:layout_constraintDimensionRatio="1:0.6"
+        app:layout_constraintBottom_toTopOf="@+id/create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGallery"
-        app:layout_constraintVertical_bias="0.269" />
+        app:layout_constraintWidth_percent="0.7" />
 
-    <EditText
-        android:id="@+id/imageCaption"
+    <TextView
+        android:id="@+id/date"
         android:layout_width="268dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/sunbatang_medium"
+        android:gravity="center"
         android:text=""
+        android:textAlignment="center"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="302dp"
-        android:text="create"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="88dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:text="작 성"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:fontFamily="@font/cafe24_oneprettynight"
+        android:gravity="center"
+        android:background="@drawable/buyytt"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/buttonGallery"
-        app:layout_constraintTop_toBottomOf="@+id/imagePreview" />
+        app:layout_constraintDimensionRatio="1:0.6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2" />
 
-    <Button
-        android:id="@+id/daySelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/create"
-        app:layout_constraintEnd_toStartOf="@+id/create" />
+    <TextView
+        android:id="@+id/imageCaption"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeTextType="uniform"
+        android:inputType="textMultiLine"
+        android:gravity="center"
+        android:singleLine="false"
+        android:text="아직 사진이 없어요"
+        android:fontFamily="@font/sunbatang_medium"
+        app:layout_constraintBottom_toTopOf="@+id/diaryText"
+        app:layout_constraintDimensionRatio="1:0.11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photos"
+        app:layout_constraintVertical_bias="0.783"
+        app:layout_constraintWidth_percent="0.7" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

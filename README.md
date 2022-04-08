@@ -63,3 +63,9 @@ SSAFY 6기의 특화 프로젝트 인공지능(영상) 트랙, 🐯호랑2 팀�
 - [Docker-Compose](exec/README.md)
 - [BackEnd](backend/README.md)
 - [FrontEnd](frontend/mytest/README.md)
+
+---
+
+## apk 파일 다운로드
+
+j6d102.p.ssafy.io/api/download/

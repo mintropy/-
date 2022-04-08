@@ -15,8 +15,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AdapterDay(private val tempMonth:Int, private val dayList: MutableList<DayItems>): RecyclerView.Adapter<AdapterDay.DayView>() {
+    init {
+        setHasStableIds(true)
+    }
     private val ROW = 6
-    var url:String? = null
     inner class DayView(val layout: View): RecyclerView.ViewHolder(layout){
 
     }
@@ -36,7 +38,7 @@ class AdapterDay(private val tempMonth:Int, private val dayList: MutableList<Day
         val day = dayList[position].day?.dateToString("dd")
 
         if (dayList[position].flower !=null){
-            holder.layout.item_day_image.setImageResource(R.drawable.login_kakao)
+            dayList[position].flower?.let { holder.layout.item_day_image.setImageResource(it) }
         }
 
         holder.layout.item_day_text.setTextColor(when(position % 7) {

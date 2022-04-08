@@ -1,18 +1,13 @@
 package com.example.mytest
 
-import android.app.DatePickerDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mytest.databinding.ListItemDayBinding
-import com.example.mytest.dto.DailyDiary
-import com.example.mytest.dto.Diary
-import com.example.mytest.dto.MontlyDiary
+import com.example.mytest.dto.*
 import com.example.mytest.retrofit.RetrofitService
 import com.example.mytest.ui.calendar.DayItems
 import com.google.gson.Gson
@@ -29,6 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
+
     val center = Int.MAX_VALUE / 2
     var trigger:Boolean = true
     private var calendar = Calendar.getInstance()
@@ -51,8 +47,6 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
     override fun onBindViewHolder(holder: MonthView, position: Int) {
 
         holder.layout.days.setOnClickListener{
-//            트리거 변경 확인용 토스트
-//            Toast.makeText(holder.layout.context, "${trigger}", Toast.LENGTH_SHORT).show()
             val animation1 = AnimationUtils.loadAnimation(holder.layout.context,
                 R.anim.fade_in)
             val animation2 = AnimationUtils.loadAnimation(holder.layout.context,
@@ -64,8 +58,6 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
                 holder.layout.days.startAnimation(animation1)
                 trigger = true
             }
-
-
         }
 
         calendar.time = Date()
@@ -93,7 +85,6 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
         var testToken2 = TokenManager.instance.getToken()
         var head = "Bearer "+testToken2?.accessToken
 
-//        var content = binding.diaryText.text.toString()
         //creating retrofit object
         var retrofit =
             Retrofit.Builder()
@@ -143,7 +134,12 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthView>() {
                 listF?.forEach {
                     var compare = calendar.time.dateToString("yyyy-MM-dd")
                     if (compare == it.date){
-                        dayList[i * 7 + k].flower ="aaaa"
+                        val image = it.flower?.let { it1 ->
+                            FlowerList(it.flower).getFlower(
+                                it1
+                            )
+                        }
+                        dayList[i * 7 + k].flower =image?.imageIcon
                     }
                 }
 
